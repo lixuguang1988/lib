@@ -1,7 +1,6 @@
 ;(function($){
 	$.fn.dialog = function(options){
 		var defaults = {
-			init : false,
 			width : 500,
 			top : 30,
 			pos : 'fixed', //fixed, absolute
