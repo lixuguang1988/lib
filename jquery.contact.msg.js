@@ -11,7 +11,7 @@
 		
 		this.on('click', function(){
 			var _id = $(this).html(),
-				_top = $("#" + _id).offset().top - config.offset;
+			    _top = $("#" + _id).offset().top - config.offset;
 				
 			//清楚上次的提示
 			$("#popMsg").remove(); 
