@@ -7,6 +7,7 @@
 			timer : false
 		};
 		var config = $.extend(defaults, options);
+		//通讯录的上面有fixed定位的三个元素
 		config.offset = parseInt($(".contacts").css('paddingTop'));
 		
 		this.on('click', function(){
