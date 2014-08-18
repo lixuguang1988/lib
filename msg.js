@@ -22,3 +22,19 @@ function closeMsg(){
         $("#msg").remove();
     });
 }
+
+
+/*
+.msg{background: #000;padding:10px;color:#fff;font-size: 14px;position: fixed;width: 200px;top: 45%;left:50%;text-align: center;
+    -webkit-border-radius: 10px;
+        -moz-border-radius:10px;
+            border-radius: 10px;
+}
+
+msg({
+  message : "提示消息",
+  delay : 1000, //1s之后关闭
+  wrapClass : 'wrap-msg'
+});
+
+*/
