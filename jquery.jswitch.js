@@ -1,3 +1,20 @@
+/*
+*
+* $(".slide").jswitch({
+*	autoplay : true ,  // true, false 自动切换
+*	interval : 5000, //切换的时间间隔
+*	prev : ".slide-prev", // 可无 上一帧
+*	next : ".slide-next",// 可无 下一帧
+*	triggerClass : "slide-trigger", // trigger的类名
+*	trigger : true, //true(有trigger), false(无trigger), classname(用页面已有的dom来控制切换) 
+*	duration : 500, //动画延续的时间
+*	effect : 'fade' // fade, slideLeft, -slideUp未实现-
+*  })
+*
+*
+*/
+
+
 (function($, window, undefined){
 	var Jswitch =  function(options, _$){
 		this.cfg = options;
