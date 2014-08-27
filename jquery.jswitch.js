@@ -1,5 +1,8 @@
 /*
 *
+* ex : https://web-c9-lixuguang.c9.io/slide.html
+*
+*
 * $(".slide").jswitch({
 *	autoplay : true ,  // true, false 自动切换
 *	interval : 5000, //切换的时间间隔
