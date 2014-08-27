@@ -15,14 +15,26 @@
 	};
 	
 	Jswitch.prototype.init = function(){
-		this._content.css({
-			'position' : 'relative'
-		});
-		this._items.css({
-			'position' : 'absolute',
-			'zIndex' : '5',
-			'width' : this._width
-		}).eq(0).css('zIndex', '6');
+	    if(this.cfg.effet === "slideLeft"){
+    		this._content.css({
+    			'position' : 'relative'
+    		});
+    		this._items.css({
+    			'position' : 'absolute',
+    			'zIndex' : '5',
+    			'width' : this._width,
+    			'left' : this._width
+    		}).eq(0).css( 'left',  '0');
+	    }else{
+    		this._content.css({
+    			'position' : 'relative'
+    		});
+    		this._items.css({
+    			'position' : 'absolute',
+    			'zIndex' : '5',
+    			'width' : this._width
+    		}).eq(0).css('zIndex', '6');	        
+	    }
 		
 		this.auto();
 	};
@@ -47,7 +59,7 @@
 		
 		this._triggers.on('click', function(){
 		    var	index = $(this).index();
-			_.switchTo(index);
+			_.switchTo(index, (index > _._index ? 1 : -1));
 		}).eq(0).addClass('current'); //并绑定点击事件,激活当前类
 	
 		
@@ -59,18 +71,18 @@
 		if(this.cfg.prev){
 		    $(this.cfg.prev).on('click', function(){
 		       var index = (_._index + _._len - 1) % _._len;
-		        _.switchTo(index);
+		        _.switchTo(index, -1);
 		    });
 		}
 		if(this.cfg.next){
 		    $(this.cfg.next).on('click', function(){
 		       var index = (_._index + 1) % _._len;
-		        _.switchTo(index);
+		        _.switchTo(index, 1);
 		    });
 		}
 	};
 	
-	Jswitch.prototype.switchTo =  function(index){
+	Jswitch.prototype.switchTo =  function(index, flag){
 		var _ = this;
 		
 		if(index == _._index || _.switching){return;} //避免快速点击动画频闪及到本身的点击
@@ -78,22 +90,38 @@
 		_.switching = true;
 		clearTimeout(_.timer);
 		
-		_._items.eq(index).css({
-			opacity : '0',
-			zIndex : '7'
-		}).animate({
-			opacity : "1"
-		}, _.cfg.duration, function(){
-			$(this).css('zIndex', '6');
-			_.switching = false; //更新图片轮转表示为false
-			_.auto(); // 开启定时器
-		});
+		if(_.cfg.effet ==="slideLeft"){
+    		_._items.eq(index).css({
+    			left : flag * _._width
+    		}).animate({
+    			left : "0"
+    		}, _.cfg.duration, function(){
+    			_.switching = false; //更新图片轮转表示为false
+    			_.auto(); // 开启定时器
+    		});
+    		
+    		_._items.eq(this._index).animate({
+    			left : - flag * _._width
+    		}, _.cfg.duration);		    
+		}else{
 		
-		_._items.eq(this._index).animate({
-			opacity : '0'
-		}, _.cfg.duration, function(){
-			$(this).css('zIndex', '5');
-		});
+    		_._items.eq(index).css({
+    			opacity : '0',
+    			zIndex : '7'
+    		}).animate({
+    			opacity : "1"
+    		}, _.cfg.duration, function(){
+    			$(this).css('zIndex', '6');
+    			_.switching = false; //更新图片轮转表示为false
+    			_.auto(); // 开启定时器
+    		});
+    		
+    		_._items.eq(this._index).animate({
+    			opacity : '0'
+    		}, _.cfg.duration, function(){
+    			$(this).css('zIndex', '5');
+    		});
+		}
 		
 		_._index = index;  //更新_index
 		_.updateTrigger(); //更新trigger
@@ -122,7 +150,7 @@
 			triggerClass : "slide-trigger",
 			trigger : true,
 			duration : 500,
-			effect : 'fade' // fade, slideLeft, slideUp
+			effect : 'fade' // fade, slideLeft, /*slideUp*/
 		};
 		defaults = $.extend(defaults, options);
 		var slide = new Jswitch(defaults, $(this));
