@@ -45,7 +45,17 @@
 		    i = 0,
 		    trigger;
 		    
-		if(!this.cfg.trigger){return false;}   
+		if(!this.cfg.trigger){return false;}  
+		
+		if(typeof this.cfg.trigger !== 'boolean' ){
+			this._triggers = $(this.cfg.trigger).find('li');
+			this._triggers.on('click', function(){
+				var index = $(this).index();
+				if(index  >= _._len){return false;}
+				_.switchTo(index, (index > _._index ? 1 : -1));
+			});
+			return false;
+		}
 		for( ; i < this._len; i++){
 			arr.push("<li>"+ (i+1) +"</li>");
 		}
