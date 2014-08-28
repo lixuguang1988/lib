@@ -1,8 +1,5 @@
 /*
 *
-* ex : https://web-c9-lixuguang.c9.io/slide.html
-*
-*
 * $(".slide").jswitch({
 *	autoplay : true ,  // true, false 自动切换
 *	interval : 5000, //切换的时间间隔
@@ -18,7 +15,7 @@
 */
 
 
-(function($, window, undefined){
+;(function($, window, undefined){
 	var Jswitch =  function(options, _$){
 		this.cfg = options;
 		this._content = _$.children('.slide-content');
@@ -35,7 +32,7 @@
 	};
 	
 	Jswitch.prototype.init = function(){
-	    if(this.cfg.effet === "slideLeft"){
+	    if(this.cfg.effect === "slideLeft"){
     		this._content.css({
     			'position' : 'relative'
     		});
@@ -120,7 +117,7 @@
 		_.switching = true;
 		clearTimeout(_.timer);
 		
-		if(_.cfg.effet ==="slideLeft"){
+		if(_.cfg.effect ==="slideLeft"){
     		_._items.eq(index).css({
     			left : flag * _._width
     		}).animate({
@@ -132,7 +129,9 @@
     		
     		_._items.eq(this._index).animate({
     			left : - flag * _._width
-    		}, _.cfg.duration);		    
+    		}, _.cfg.duration,function(){
+    			$(this).css('left', _._width);
+    		});		    
 		}else{
 		
     		_._items.eq(index).css({
@@ -167,7 +166,7 @@
 	    if(_.cfg.autoplay){
 	        _.timer = setTimeout(function(){
 	            var index = (_._index + 1) % _._len ;
-	            _.switchTo(index);
+	            _.switchTo(index, 1);
 	        }, 5000);
 	    }
 	};
@@ -181,9 +180,13 @@
 			trigger : true,
 			duration : 500,
 			effect : 'fade' // fade, slideLeft, /*slideUp*/
-		};
+		},
+		el = [];
 		defaults = $.extend(defaults, options);
-		var slide = new Jswitch(defaults, $(this));
+		this.each(function(i, v){
+			el[i]	= new Jswitch(defaults, $(this));
+		});
+		
 		return this; 
 	};
 	
