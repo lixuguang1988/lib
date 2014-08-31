@@ -4,12 +4,26 @@
     <meta chareset="utf-8">
     <title>scrollLeft scrollTop</title>
     <script src="js/viewoffset.js"></script>
+    <style>
+      #log span{display: block;}
+    </style>
   </head>
-  <body>
+  <body style="width:2000px;height:3000px;">
+    <div id="log"></div>
     <script>
-      var scroll = getScrollOffsets();
-      for(va i in scroll){
-        alert(scroll[i]);
+      if(window.addEventListener){
+        window.addEventListener('scroll', xscroll, false);
+      }else{
+        window.attachEvent('onscroll', xscroll);
+      }
+      function xscroll(){
+        var scroll = getScrollOffsets();
+        var log = document.getElementById('log');
+        for(var i in scroll){
+          var span = document.createElement('span');
+          span.innerHTML = i +":::" + scroll[i];
+          log.appendChild(span);
+        }
       }
     </script>
   </body>
