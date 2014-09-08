@@ -1,3 +1,4 @@
+//javascript the definitive guide 
 var whenReady = (function (){
   var funcs = [];
   var ready = false;
@@ -27,8 +28,11 @@ var whenReady = (function (){
   }
   
   return function whenReady(f){
-    if(ready) f.call(document);
-    else funcs.push(f);
+    if(ready){
+      f.call(document);
+    }else{
+      funcs.push(f);
+    } 
   };
   
 
