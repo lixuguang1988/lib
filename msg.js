@@ -26,7 +26,7 @@
 }(jQuery));
 
 /*
-.msg{background: #000;padding:10px;color:#fff;font-size: 12px;position: absolute;width: 200px;top: 25%;left:50%;text-align: center;
+.msg{background: #000;padding:10px;color:#fff;font-size: 12px;line-height:18px;position: absolute;width: 200px;top: 25%;left:50%;text-align: center;
     -webkit-border-radius: 10px;
         -moz-border-radius:10px;
             border-radius: 10px;
