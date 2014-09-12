@@ -17,7 +17,7 @@ function msg(options){
 
 function closeMsg(){
     $("#msg").animate({
-    	opacity : 0,
+    	opacity : 0
     	}, 800, function(){
         $("#msg").remove();
     });
