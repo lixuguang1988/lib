@@ -19,51 +19,53 @@
     <body style="height: 600px">
 		<div  class="col-list">
 			<pre>
-			   setTimeout(function(){
-        		$.msg({
-					  message : "错误消息",
-					  delay : 1000, //1s之后关闭
-					  wrapClass : 'danger-msg'
-					});
-        	}, 500);
+		setTimeout(function(){
+			$.msg({
+				message : "错误消息",
+				delay : 1000, //1s之后关闭
+				wrapClass : 'danger-msg'
+			});
+		}, 500);
+ 
+		setTimeout(function(){
+			$.msg({
+				message : "提示消息",
+				delay : 1000 //1s之后关闭
+			});
+		}, 5000);       	
         	
-        	setTimeout(function(){
-        		$.msg({
-					  message : "提示消息",
-					  delay : 1000
-					});
-        	}, 5000);
         	
-        	setTimeout(function(){
-        		$.msg({
-					  message : "不关闭的信息窗"
-					});
-        	}, 10000);  
+ 		setTimeout(function(){
+			$.msg({
+				message : "不关闭的信息窗"
+			});
+		}, 10000);   
+
 			</pre>
 		</div>
-        <script src="js/jquery.1.7.2.js"></script>
+        <script src="js/jquery.1.7.2.min.js"></script>
         <script src="js/message.js"></script>
         <script>
         	//
         	setTimeout(function(){
         		$.msg({
-					  message : "错误消息",
-					  delay : 1000, //1s之后关闭
-					  wrapClass : 'danger-msg'
-					});
+				message : "错误消息",
+				delay : 1000, //1s之后关闭
+				wrapClass : 'danger-msg'
+			});
         	}, 500);
         	
         	setTimeout(function(){
         		$.msg({
-					  message : "提示消息",
-					  delay : 1000
-					});
+				message : "提示消息",
+				delay : 1000
+			});
         	}, 5000);
         	
         	setTimeout(function(){
         		$.msg({
-					  message : "不关闭的信息窗"
-					});
+				message : "不关闭的信息窗"
+			});
         	}, 10000);        	
         	
         </script>
