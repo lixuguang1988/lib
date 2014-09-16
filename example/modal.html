@@ -1,0 +1,119 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>PAGE</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/normalize.css">
+        <link rel="stylesheet" href="../jquery.jmodal.css">
+        <style>
+         	ul,li{list-style: none;margin:0;padding:0;}
+        	.example{width:900px;margin: 60px auto 20px;}
+        	.example h1{margin:0;}
+        	.example pre{background:#555;color:#fff;font-family:arial;font-size:12px;padding:20px 10px;}
+        	.hide{display:none;}
+        	
+        	.renwu-modal .jmodal-body{padding:20px 30px;line-height:26px;font-family:"microsoft yahei";font-size:14px;}
+        	.renwu-modal .jmodal-body p{text-indent:2em;margin-bottom:10px;}
+        </style>
+    </head>
+    <body>
+		<div class="example">
+			<h1>AJAX加载内容</h1>
+			<a class="ex-modal-ajax" data-url="./app/login.php" href="javascript:void(0);">AJAX加载内容</a>
+			<select name="d">
+				<option value="1">iframe</option>
+				<option value="1" selected>iframe selected</option>
+			<select>
+<pre>
+	&lt;a class="ex-modal-ajax" data-url="./app/login.php" href="javascript:void(0);"&gt;AJAX加载内容&lt;/a&gt;
+	&lt;script&gt;
+       $('.ex-modal-ajax').jmodal({
+       		type : "ajax",
+       		title : "用户登陆"
+       });
+    &lt;/script&gt;
+</pre>			
+		</div>
+		
+		
+		<div class="example">
+			<h1>iframe加载内容./iframe.html</h1>
+			<select name="d">
+				<option value="1" selected>iframe</option>
+			<select>
+			<a class="ex-modal-iframe" data-url="http://192.168.60.41/web/iframe.html" href="http://192.168.60.41/web/iframe.html">iframe加载内容./iframe.html</a>
+<pre>
+	&lt;a class="ex-modal-iframe" data-url="./iframe.html" href="http://192.168.60.41/web/iframe.1.html"&gt;iframe加载内容./iframe.html&lt;/a&gt;
+	&lt;script&gt;
+       $('.ex-modal-iframe').jmodal({
+       		type : "iframe",
+       		title : "用户登陆"
+       });
+    &lt;/script&gt;
+</pre>		
+<div class="note">&lt;a class="ex-modal-iframe" data-url="./iframe.html" href="javascript:void(0);"&gt;iframe加载内容./iframe.html&lt;/a&gt;这种会导致IE6iframe无法加载</div>	
+		</div>
+
+
+		<div class="example">
+			<h1>iframe加载内容./iframe.1.html</h1>
+			<a class="ex-modal-iframe" data-url="http://192.168.60.41/web/iframe.1.html" href="http://192.168.60.41/web/iframe.1.html">iframe加载内容./iframe.1.html</a>
+<pre>
+	&lt;a class="ex-modal-iframe" data-url="./iframe.1.html" href="http://192.168.60.41/web/iframe.1.html"&gt;iframe加载内容./iframe.1.html&lt;/a&gt;
+	&lt;script&gt;
+       $('.ex-modal-ajax').jmodal({
+       		type : "iframe",
+       		title : "用户登陆"
+       });
+    &lt;/script&gt;
+</pre>			
+		</div>
+
+		<div class="example">
+			<h1>inline加载页面内容</h1>
+			<a class="ex-modal-inline" data-id="wmz" href="javascript:void(0);">显示伍美珍简介</a>
+			<div class="hide">
+			    <div id="wmz">
+			        <p>伍美珍，毕业于安徽大学中文系，被称为“阳光姐姐”。现为安徽大学文学院副教授，安徽大学儿童文学创研中心主任，曾是“阳光姐姐热线”主持人。自2000年起，在内地和港台三地共出版了70余部题材的小说和报告文学作品，出版反映少年成长生活的作品20余部约300余万字，著有长篇小说《同桌冤家》、《愿望树》，报告文学《花季心事》等文学著作40余部。曾获文化部“蒲公英少儿读物奖”及新闻出版总署“全国优秀少儿图书奖”“冰心儿童图书奖”等。</p>
+			        <p>生活和职业的经历，使她走上青少年创作之道路，作品多次登上全国少儿书畅销榜，2013年12月5日，伍美珍荣登2013第八届中国作家富豪榜，引发广泛关注[2] 。被《文汇读书周报》评选为“2005年十大少儿精品图书”；作品“阳光姐姐小书房”系列被《中国图书商报》评选为“2007年10大童书品牌”之一。多次被选入新闻出版总署及全国各地教育部门向中小学生推荐优秀书目</p>
+			    </div>
+			</div>
+<pre>
+	&lt;a class="ex-modal-inline" data-id="wmz" href="javascript:void(0);"&gt;显示伍美珍简介./iframe.1.html&lt;/a&gt;
+	&lt;script&gt;
+       $('.ex-modal-ajax').jmodal({
+       		type : "iframe",
+       		title : "用户登陆"
+       });
+    &lt;/script&gt;
+</pre>			
+		</div>
+		
+        <script src="js/jquery.1.7.2.js"></script>
+        <script src="../jquery.jmodal.js"></script>
+        <script>
+	           $('.ex-modal-ajax').jmodal({
+	           		type : "ajax",
+	           		title : "用户登陆"
+	           });
+        	   $('.ex-modal-iframe').jmodal({
+        	   		title : "标题",
+	           		type : "iframe",
+	           		width : 800,
+	           		height : 400,
+	           		top : 20
+	           });
+	           $(".ex-modal-inline").jmodal({
+	               type : "inline",
+	               title : "导师简介",
+	               top : 50,
+	               overlay : false,
+	               wrapClass : "renwu-modal"
+	           });
+        
+        </script>
+    </body>
+</html>
