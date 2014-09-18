@@ -1,0 +1,137 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>JTab</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/normalize.css">
+        <style>
+         	ul,li{list-style: none;margin:0;padding:0;}
+        	.example{width:900px;margin: 20px auto 60px;}
+        	.example h1{margin:0;}
+        	.example pre{background:#555;color:#fff;font-family:arial;font-size:12px;padding:20px 10px;}
+        	.hide{display:none;}
+        	.jtab, .ex-2, .ex-3{border:1px solid #dedede;position:relative;}
+        	.jtab-nav{height:38px;border-bottom:1px solid #dedede;
+        	   background:-webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#f6f6f6));
+			   background:-moz-linear-gradient(top, #ffffff, #f6f6f6);
+			   background:-webkit-linear-gradient(top, #ffffff, #f6f6f6);/*new gradient for Webkit*/
+			   background:-o-linear-gradient(top, #ffffff, #f6f6f6); /*Opera11*/
+			   background:-ms-linear-gradient(top, #ffffff, #f6f6f6); /*IE10*/
+			   filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffff,endColorstr=#f6f6f6,grandientType=1);
+			   -ms-filter: "progid:DXImageTransform.Microsoft.gradient (GradientType=0, startColorstr=#ffffff,endColorstr=#f6f6f6)";/*IE8+*/
+			  _background:#f6f6f6;
+        	}
+        	.jtab-nav li{float:left;line-height:38px;}
+        	.jtab-nav .current{background: #fff;border-bottom:1px solid #FFF;}
+        	.jtab-nav li a{color:#333;text-decoration:none;display:block;padding:0 20px;border-right:1px solid #dedede;}
+        	.jtab-more{position:absolute;right:8px;top:8px}
+        	.jtab-more a{font-size:12px;text-decoration:none;color:#31AFD8}
+        	.jtab-panel{padding:20px;}
+        	
+        </style>
+    </head>
+    <body>
+		<div class="example">
+<pre>
+.jtab-nav, .jtab-panels, jtab-more[可有]三个类名是必须的，操作的是他们的第一级子节点
+.jtab-nav里面的超链接不是必须的
+&lt;div class="example"&gt;
+	&lt;ul class="jtab-nav"&gt;
+		&lt;li class="current"&gt;&lt;a href="http://www.baidu.com"&gt;Baidu&lt;/a&gt;&lt;/li&gt;
+		&lt;li&gt;&lt;a href="http://www.alibaba.com"&gt;Alibaba&lt;/a&gt;&lt;/li&gt;
+		&lt;li&gt;&lt;a href="http://www.qq.com"&gt;Tencent&lt;/a&gt;&lt;/li&gt;
+	&lt;/ul&gt;
+	&lt;div class="jtab-more"&gt;
+		&lt;a href="http://www.baidu.com"&gt;more&gt;&gt;&lt;/a&gt;
+		&lt;a class="hide" href="http://www.alibaba.com"&gt;more&gt;&gt;&lt;/a&gt;
+		&lt;a class="hide" href="http://www.qq.com"&gt;more&gt;&gt;&lt;/a&gt;
+	&lt;/div&gt;
+	&lt;div class="jtab-panels"&gt;
+		&lt;div class="jtab-panel"&gt;上海市密云路幼儿园管理员组1&lt;/div&gt;
+		&lt;div class="jtab-panel hide"&gt;上海市密云路幼儿园管理员组2&lt;/div&gt;
+		&lt;div class="jtab-panel hide"&gt;上海市密云路幼儿园管理员组2&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+&lt;script&gt;
+       $('.example').jtab({
+			trigger : "mouseover", //触发事件[mouseover, click]
+			currentClass : "current", //tab-nav上的当前类
+			preventDefault : true  //阻止默认事件 [true, false]
+      	 });
+&lt;/script&gt;
+</pre>
+		</div>
+		<div class="example">
+			<h1>TAB</h1>
+			<div class="jtab">
+				<ul class="jtab-nav">
+					<li class="current"><a href="http://www.baidu.com">Baidu</a></li>
+					<li><a href="http://www.alibaba.com">Alibaba</a></li>
+					<li><a href="http://www.qq.com">Tencent</a></li>
+				</ul>
+				<div class="jtab-more">
+					<a href="http://www.baidu.com">more>></a>
+					<a class="hide" href="http://www.alibaba.com">more>></a>
+					<a class="hide" href="http://www.qq.com">more>></a>
+				</div>
+				<div class="jtab-panels">
+					<div class="jtab-panel">上海市密云路幼儿园管理员组1</div>
+					<div class="jtab-panel hide">上海市密云路幼儿园管理员组2</div>
+					<div class="jtab-panel hide">上海市密云路幼儿园管理员组3</div>
+				</div>
+			</div>		
+		</div>
+		<div class="example">
+			<h1>TAB</h1>
+			<div class="ex-2">
+				<div class="ex-nav">
+					<ul class="jtab-nav">
+						<li class="current"><a href="http://www.baidu.com">Baidu</a></li>
+						<li><a href="http://www.alibaba.com">Alibaba</a></li>
+						<li><a href="http://www.qq.com">Tencent</a></li>
+					</ul>
+					<div class="jtab-more">
+						<a href="http://www.baidu.com">more>></a>
+						<a class="hide" href="http://www.alibaba.com">more>></a>
+						<a class="hide" href="http://www.qq.com">more>></a>
+					</div>
+				</div>
+				<div class="jtab-panels">
+					<div class="jtab-panel">上海市密云路幼儿园管理员组1</div>
+					<div class="jtab-panel hide">上海市密云路幼儿园管理员组2</div>
+					<div class="jtab-panel hide">上海市密云路幼儿园管理员组3</div>
+				</div>
+			</div>		
+		</div>		
+		<div class="example">
+			<h1>TAB</h1>
+			<div class="ex-3">
+				<ul class="jtab-nav">
+					<li class="current"><a href="http://www.baidu.com">Baidu</a></li>
+					<li><a href="http://www.alibaba.com">Alibaba</a></li>
+					<li><a href="http://www.qq.com">Tencent</a></li>
+				</ul>
+				<div class="jtab-panels">
+					<div class="jtab-panel">上海市密云路幼儿园管理员组1</div>
+					<div class="jtab-panel hide">上海市密云路幼儿园管理员组2</div>
+					<div class="jtab-panel hide">上海市密云路幼儿园管理员组3</div>
+				</div>
+			</div>		
+		</div>		
+        <script src="js/jquery.1.7.2.js"></script>
+        <script src="../jquery.jtab.js"></script>
+        <script>
+	           $('.jtab').jtab();
+	           $('.ex-2').jtab({
+	           	trigger : "click",
+	           	preventDefault : true
+	       
+	           });
+	           $('.ex-3').jtab({
+	           	trigger : "click"});	 
+        </script>
+    </body>
+</html>
