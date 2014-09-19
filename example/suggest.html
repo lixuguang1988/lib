@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>PAGE</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/normalize.css">
+        <style>
+         	ul,li{list-style: none;margin:0;padding:0;}
+        	.example{width:900px;margin: 60px auto 20px;}
+        	.example h1{margin:0;}
+        	.text{width:450px;padding:5px;border:1px solid #dedede;height:20px;line-height:20px;
+				-webkit-transition:all .2s linear;
+				   -moz-transition:all .2s linear;
+				    -ms-transition:all .2s linear;
+					 -o-transition:all .2s linear;
+						transition:all .2s linear;
+        	}
+        	.text:focus{border-color:#31AFD8;outline:none;
+        		-webkit-box-shadow: 2px 2px 3px rgba(65, 169, 203, .3);
+        		   -moz-box-shadow: 2px 2px 3px rgba(65, 169, 203, .3);
+        		    -ms-box-shadow: 2px 2px 3px rgba(65, 169, 203, .3);
+        		     -o-box-shadow: 2px 2px 3px rgba(65, 169, 203, .3);
+        				box-shadow: 2px 2px 3px rgba(65, 169, 203, .3);
+        	}
+        	.submit{height:32px;border:none;background:#31AFD8;width:60px;color:#fff;margin:0 10px;}
+        	.submit:disabled{background:#bebebe;}
+        	.submit:active{background:#1B7795}
+        	.submit:focus{outline:none;}
+        	
+        	
+      	 /*jquery.jsuggest.js的默认样式*/
+      	.jsuggest-inner{border:1px solid #dedede;border-top:none;background:#fff;line-height:6px;line-height:26px;font-size:12px;font-family: "microsoft yahei";}
+      	.jsuggest-content{padding:0 0;}
+      	.jsuggest-content li{width:100%;overflow:hidden;cursor:pointer;}
+      	.jsuggest-content li:hover{background:#F6F6F6;cursor:pointer;}
+      	.jsuggest-name{padding-left:10px;float:left;cursor:pointer;color:#666a6f}
+      	.jsuggest-desc{padding-left:10px;float:left;cursor:pointer;color:#999}
+      	.jsuggest-span{padding-right:10px;float:right;cursor:pointer;color:#999}
+      	.jsuggest-bar{border-top:1px solid #dedede;text-align:right;padding-right:10px;cursor:pointer;background:#F6F6F6;color:#999}	
+      	
+        </style>
+    </head>
+    <body>
+		<div class="example">
+			<form action="./suggest.html" method="post">
+				<input class="text ex-2" autocomplete="off" type="text" name="keyword" data-suggesturl="./data/suggest.nexus.json" data-suggesthot="./data/suggest.hot.json"><input class="submit" type="submit" />
+			</form>
+		</div>
+		
+        <script src="js/jquery.1.7.2.js"></script>
+        <script src="../jquery.jsuggest.js"></script>
+        <script>
+	           $('.ex-2').jsuggest({
+	           		
+	           });
+        	   
+        
+        </script>
+    </body>
+</html>
