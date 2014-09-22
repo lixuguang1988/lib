@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>PAGE</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/normalize.css">
+        <style>
+        	ul,li{list-style: none;margin:0;padding:0;}
+        	.slide{position: relative;width:620px;height:300px;margin:40px auto;overflow:hidden;}
+        	.slide-content{margin:0;padding:0;overflow:hidden;height:100%;width:100%;}
+        	.slide .slide-item{background:#369;font-size:24px;text-align:center;line-height:300px;}
+        	.slide .slide-trigger{position:absolute;bottom:10px;left:50%;margin-left:-40px;width:80px;z-index:12;text-align:center;}
+        	.slide .slide-trigger li{width:10px;height:10px;margin-right:10px;float:left;background:#525654;color:#fff;overflow:hidden;text-indent:2em;cursor:pointer;
+        	    -webkit-border-radius:10px;
+        	   -moz-border-radius:10px;
+        	   border-radius:10px;
+        	}
+        	.slide li a{text-decoration:none;color:#fff;}
+        	.slide .slide-trigger .current{background:#000;}
+        	.slide-prev, .slide-next{z-index:13;position:absolute;top:50%;margin-top:-18px;width:36px;height:36px;background:url(./images/arrow.png) no-repeat;}
+        	.slide-prev{left:0;background-position:0 -38px;}
+        	.slide-next{right:0;background-position:0 0;}
+        	.slide-prev:hover{background-position:-38px -38px;}
+        	.slide-next:hover{background-position:-38px 0;}
+        	
+        	.text-center{text-align:center;}
+        </style>
+    </head>
+    <body>
+    	<div class="col-list" style="width: 960px;margin:0 auto;">
+<pre>
+HTML:
+&lt;div class="ex"&gt;
+	&lt;ul class="slide-content"&gt;
+		&lt;li class="slide-item"&gt;&lt;a href="#"&gt;&lt;img src="./images/20140812093652cc4ef.jpg"&gt;&lt;/a&gt;&lt;/li&gt;
+		&lt;li class="slide-item"&gt;&lt;a href="#"&gt;&lt;img src="./images/201408070902533104d.png"&gt;&lt;/a&gt;&lt;/li&gt;
+		&lt;li class="slide-item"&gt;&lt;a href="#"&gt;&lt;img src="./images/20140818075649a75e5.jpg"&gt;&lt;/a&gt;&lt;/li&gt;
+		&lt;li class="slide-item"&gt;&lt;a href="#"&gt;&lt;img src="./images/20140827090154c47ff.jpg"&gt;&lt;/a&gt;&lt;/li&gt;
+	&lt;/ul&gt;	
+&lt;/div&gt;
+CSS:
+.slide-content>.slide-item 父子级关系都是必须的
+js:
+ $(".ex").jswitch({
+	autoplay : true ,  // true, false 自动切换
+	interval : 5000, //切换的时间间隔
+	prev : ".slide-prev", // 可无 上一帧
+	next : ".slide-next",// 可无 下一帧
+	triggerClass : "slide-trigger", // trigger的类名未实现
+	trigger : true, //true(有trigger), false(无trigger), classname(用页面已有的dom来控制切换) 
+	duration : 500, //动画延续的时间
+	effect : 'fade' // fade, slideLeft, -slideUp未实现-
+  })
+</pre>
+    	</div>
+		<div  class="col-list">
+			<div class="slide s1">
+				<ul class="slide-content">
+					<li class="slide-item"><a href="http://www.baidu.com/"><img src="./images/20140812093652cc4ef.jpg" width="620" height="300"></a></li>
+					<li class="slide-item"><a href="http://www.baidu.com/"><img src="./images/201408070902533104d.png" width="620" height="300"></a></li>
+					<li class="slide-item"><a href="http://www.baidu.com/"><img src="./images/20140818075649a75e5.jpg" width="620" height="300"></a></li>
+					<li class="slide-item"><a href="http://www.baidu.com/"><img src="./images/20140827090154c47ff.jpg" width="620" height="300"></a></li>
+				</ul>
+				<a class="slide-prev" href="javascript:void(0);"></a><a class="slide-next" href="javascript:void(0);"></a>
+			</div>
+			<h2 class="text-center">第二个</h2>
+			<div class="slide s2">
+				<ul class="slide-content">
+					<li class="slide-item"><a href="http://www.baidu.com/"><img src="./images/20140812093652cc4ef.jpg" width="620" height="300"></a></li>
+					<li class="slide-item"><a href="http://www.baidu.com/"><img src="./images/201408070902533104d.png" width="620" height="300"></a></li>
+					<li class="slide-item"><a href="http://www.baidu.com/"><img src="./images/20140818075649a75e5.jpg" width="620" height="300"></a></li>
+					<li class="slide-item"><a href="http://www.baidu.com/"><img src="./images/20140827090154c47ff.jpg" width="620" height="300"></a></li>
+				</ul>
+			</div>
+		</div>
+        <script src="js/jquery.1.7.2.js"></script>
+        <script src="../jquery.jswitch.js"></script>
+        <script>
+            $(".s1").jswitch({
+        	    effect : 'slideLeft',
+        	    next : ".s1 .slide-next",
+        	    prev : ".s1 .slide-prev"
+        	}).addClass('d1');
+        	
+        	$(".s2").jswitch().addClass('d2');
+        	
+        
+        </script>
+    </body>
+</html>

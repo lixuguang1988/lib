@@ -1,13 +1,12 @@
 /*
 *
-* ex https://web-c9-lixuguang.c9.io/slide.html
 *
 * $(".slide").jswitch({
 *	autoplay : true ,  // true, false 自动切换
 *	interval : 5000, //切换的时间间隔
 *	prev : ".slide-prev", // 可无 上一帧
 *	next : ".slide-next",// 可无 下一帧
-*	triggerClass : "slide-trigger", // trigger的类名
+*	triggerClass : "slide-trigger", // trigger的类名未实现
 *	trigger : true, //true(有trigger), false(无trigger), classname(用页面已有的dom来控制切换) 
 *	duration : 500, //动画延续的时间
 *	effect : 'fade' // fade, slideLeft, -slideUp未实现-
@@ -25,7 +24,6 @@
 		this._items = this._content.children('.slide-item');
 		this._len = this._items.size();
 		this._index = 0;
-		this.switching = false;
 		this.timer = false;
 		
 		this.init(); //初始化
@@ -114,10 +112,10 @@
 	Jswitch.prototype.switchTo =  function(index, flag){
 		var _ = this;
 		
-		if(index == _._index || _.switching){return;} //避免快速点击动画频闪及到本身的点击
+		if(index == _._index ){return;} //避免快速点击动画频闪及到本身的点击
 		
-		_.switching = true;
 		clearTimeout(_.timer);
+		_._items.stop(true, true);
 		
 		if(_.cfg.effect ==="slideLeft"){
     		_._items.eq(index).css({
@@ -125,7 +123,6 @@
     		}).animate({
     			left : "0"
     		}, _.cfg.duration, function(){
-    			_.switching = false; //更新图片轮转表示为false
     			_.auto(); // 开启定时器
     		});
     		
@@ -143,7 +140,6 @@
     			opacity : "1"
     		}, _.cfg.duration, function(){
     			$(this).css('zIndex', '6');
-    			_.switching = false; //更新图片轮转表示为false
     			_.auto(); // 开启定时器
     		});
     		
@@ -165,11 +161,12 @@
 	
 	Jswitch.prototype.auto =  function(){
 	    var  _ = this;
+	    clearTimeout(_.timer);
 	    if(_.cfg.autoplay){
 	        _.timer = setTimeout(function(){
 	            var index = (_._index + 1) % _._len ;
 	            _.switchTo(index, 1);
-	        }, 5000);
+	        }, _.cfg.interval);
 	    }
 	};
 	

@@ -7,6 +7,8 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="css/normalize.css">
+		<script src="js/jquery.1.7.2.js"></script>
+        <script src="../jquery.jsuggest.js"></script>
         <style>
          	ul,li{list-style: none;margin:0;padding:0;}
         	.example{width:900px;margin: 60px auto 20px;}
@@ -25,7 +27,7 @@
         		     -o-box-shadow: 2px 2px 3px rgba(65, 169, 203, .3);
         				box-shadow: 2px 2px 3px rgba(65, 169, 203, .3);
         	}
-        	.submit{height:32px;border:none;background:#31AFD8;width:60px;color:#fff;margin:0 10px;}
+        	.submit{height:32px;border:none;background:#31AFD8;width:60px;color:#fff;margin:0 10px;font-size: 12px;}
         	.submit:disabled{background:#bebebe;}
         	.submit:active{background:#1B7795}
         	.submit:focus{outline:none;}
@@ -35,6 +37,7 @@
       	.jsuggest-inner{border:1px solid #dedede;border-top:none;background:#fff;line-height:6px;line-height:26px;font-size:12px;font-family: "microsoft yahei";}
       	.jsuggest-content{padding:0 0;}
       	.jsuggest-content li{width:100%;overflow:hidden;cursor:pointer;}
+      	.jsuggest-content li a{text-decoration:none}
       	.jsuggest-content li:hover{background:#F6F6F6;cursor:pointer;}
       	.jsuggest-name{padding-left:10px;float:left;cursor:pointer;color:#666a6f}
       	.jsuggest-desc{padding-left:10px;float:left;cursor:pointer;color:#999}
@@ -45,19 +48,16 @@
     </head>
     <body>
 		<div class="example">
-			<form action="./suggest.html" method="post">
-				<input class="text ex-2" autocomplete="off" type="text" name="keyword" data-suggesturl="./data/suggest.nexus.json" data-suggesthot="./data/suggest.hot.json"><input class="submit" type="submit" />
+			<form action="http://www.baidu.com/" target="_blank" method="post">
+				<input class="text ex-2" value="" autocomplete="off" type="text" name="keyword" data-suggesturl="./data/suggest.nexus.json" data-suggesthot="./data/suggest.hot.json"><input value="搜索" class="submit" type="submit" />
 			</form>
 		</div>
-		
-        <script src="js/jquery.1.7.2.js"></script>
-        <script src="../jquery.jsuggest.js"></script>
+
         <script>
-	           $('.ex-2').jsuggest({
-	           		
-	           });
-        	   
-        
+        $(document).ready(function(){
+        	$('.ex-2').jsuggest();
+        });
+	           
         </script>
     </body>
 </html>
