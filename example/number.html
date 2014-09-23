@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Jnumber</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/normalize.css">
+        <script src="js/jquery.1.7.2.js"></script>
+        <script src="../jquery.jnumber.js"></script>
+        <style>
+         	ul,li{list-style: none;margin:0;padding:0;}
+        	.example{width:900px;margin: 20px auto 60px;}
+        	.example h1{margin:0;}
+        	.example pre{background:#555;color:#fff;font-family:arial;font-size:12px;padding:20px 10px;}
+        	.hide{display:none;}
+        	.jtab, .ex-2, .ex-3{border:1px solid #dedede;position:relative;}
+        	.ex{padding:0 20px;height:50px;position:relative;line-height:30px;}
+        	.ex input{width:40px;height:20px;line-height:20px;padding:5px;border:1px solid #dedede;float:left;}
+        	.ex input:focus{outline:none}
+        	.jnumber-plus, .jnumber-reduce{border:1px solid #dedede;float:left;height:30px;width:30px;background:#ededed;line-height:30px;font-size:16px;font-weight:700;text-align:center;font-family:"Arial Narrow";cursor:pointer}
+        	.ex .jnumber-reduce{border-right:none;}
+        	.ex .jnumber-plus{border-left:none;}
+        	.ex .disabled{color:#999;}
+        	.ex .random{float:left;margin:0 0 0 10px;font-size:12px;color:#555;}
+.ex .jnumber-info{top:-30px;left:15px;font-size:12px;color:#fff;background:#c00;padding:5px;-webkit-border-radius:5px;border-radius:5px;position: absolute;font-style:normal;line-height:14px;}
+        	.ex .jnumber-info s{position:absolute;width:0;height:0;bottom:-10px;_display:none;left:50%;margin-left:-2px;border:5px solid yellow;border-color:#c00 transparent  transparent  transparent;}
+
+        	
+        </style>
+    </head>
+    <body>
+		<div class="example">
+<pre>
+data-maxnum 可接受的最大值
+data-minum 可接受的最小值
+data-stepnum 步进值	
+&lt;div class="ex"&gt;
+	&lt;input type="text" name="count" value="1" data-maxnum = "20" data-minum="1" data-stepnum="2"&gt;
+&lt;/div&gt;
+&lt;script&gt;
+       $('.ex input').jnumber();
+&lt;/script&gt;
+js执行过的HTML
+&lt;div class="ex"&gt;
+	&lt;span class="jnumber-reduce"&gt;-&lt;/span&gt;
+	&lt;input type="text" name="count" value="1" data-maxnum="20" data-minum="1" data-stepnum="2"&gt;
+	&lt;span class="jnumber-plus"&gt;+&lt;/span&gt;
+	&lt;i class="jnumber-info" style="display:none;"&gt;&lt;s&gt;&lt;/s&gt;&lt;/i&gt;
+&lt;/div&gt;
+</pre>
+		</div>
+		<div class="example">
+				<div class='ex'><input type="text" name="count" value="1" data-maxnum = "20" data-minum="1" data-stepnum="2"></div>
+				
+				<div class='ex'><input type="text" name="count" value="1000" data-maxnum = "20000" data-minum="1000" data-stepnum="1000"><span class="random">[1000, 20000]</span></div>
+		</div>
+
+        <script>
+	           $('.ex input').jnumber();
+        </script>
+    </body>
+</html>
