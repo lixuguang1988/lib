@@ -13,7 +13,8 @@
         <script>
         	$('#newImage').on("click", function(){
        			var img = new Image(),
-       				url = "http://img20.360buyimg.com/vc/jfs/t148/253/235187761/296049/e1b92e6c/538541ceN7660bb85.jpg";
+       			    url = "http://img20.360buyimg.com/vc/jfs/t148/253/235187761/296049/e1b92e6c/538541ceN7660bb85.jpg";
+       			    
        			img.src=url;
 		       	/*
 		       	if(img.addEventListener){
@@ -32,7 +33,6 @@
 		       		console.log(img.width + "x" + img.height);
 		       		$('#newImage').after('<img src="' + url + '">');
 		       	});
-		       	
 		       	//IE6~8同一张图片连续多次点击只能触发一次load事件，可以加随机数, 
 		       	//记住已经加载过的图片,就不用烦了
         	});	 
