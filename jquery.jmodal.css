@@ -12,6 +12,9 @@ filter: progid:DXImageTransform.Microsoft.gradient(startcolorstr=#4d000000,endco
 .jmodal-body{color: #434343;font-size:16px;}
 .jmodal-body h1, .jmodal-body h2, .jmodal-body h3, .jmodal-body p{margin:0;}
 .jmodal-loading{padding:50px;text-align:center;color: #666;font-size: 14px;font-family: "microsoft yahei";}
+.jmodal-btn{text-align:center;padding:20px 0;}
+.jmodal-btn a{display:inline-block;margin:0 10px;width:120px;height:40px;line-height:40px;background:#31afd8;font-size:16px;color:#fff;text-align:center;text-decoration:none;}
 
 .jmodal-backdrop{display:none;position:fixed;top:0;left:0;width: 100%;height:100%;background:#000;opacity: .4;filter:alpha(opacity=40);z-index:10004;_position:absolute;_height:expression(eval(document.documentElement.clientHeight)); }
 iframe.jmodal-backdrop{z-index:10003};
+

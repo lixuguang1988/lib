@@ -15,11 +15,31 @@
         	.example pre{background:#555;color:#fff;font-family:arial;font-size:12px;padding:20px 10px;}
         	.hide{display:none;}
         	
-        	.renwu-modal .jmodal-body{padding:20px 30px;line-height:26px;font-family:"microsoft yahei";font-size:14px;}
+        	.renwu-modal .jmodal-body{padding:20px 30px 0;line-height:26px;font-family:"microsoft yahei";font-size:14px;}
         	.renwu-modal .jmodal-body p{text-indent:2em;margin-bottom:10px;}
         </style>
     </head>
     <body>
+		<div class="example">
+<pre>
+	&lt;script&gt;
+       $('.example').jmodal({
+			width : 500, //number 单位px
+			height : "auto", //[number, auto] 单位px
+			top : 120,
+			scrolling : 'auto',
+			cancle : "取消",
+			oncancle : function(){alert("点击取消的回调函数");},
+			confirm : "确定",
+			onconfirm : function(){alert("点击确认的回调函数");},
+			onopen : function(){alert("before open");},
+			onclose : function(){alert("before close");}, 
+			pos : 'fixed', //[fixed, absolute]
+			type : 'inline' //[inline, html, ajax, iframe]
+       });
+    &lt;/script&gt;
+</pre>			
+		</div>
 		<div class="example">
 			<h1>AJAX加载内容</h1>
 			<a class="ex-modal-ajax" data-url="./app/login.php" href="javascript:void(0);">AJAX加载内容</a>
@@ -111,7 +131,15 @@
 	               title : "导师简介",
 	               top : 50,
 	               overlay : false,
-	               wrapClass : "renwu-modal"
+	               wrapClass : "renwu-modal",
+	               cancle : "取消",
+	               oncancle : function(){alert("点击取消的回调函数");},
+	               confirm : "确定",
+	               onconfirm : function(){
+	               	alert("点击确认的回调函数,同时return false就不关闭窗口");
+	               	return false;//return false可以组织关闭窗口
+	               },
+	               onopen : function(){alert("before open");}
 	           });
         
         </script>

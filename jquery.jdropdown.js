@@ -14,20 +14,24 @@
  * example上加减.drop-dt-on
  * 
  * JS
- * $(.example).jdropmenu();
+ * $(.example).jdropmenu({
+ * 	duration : 200
+ * });
  * 
  * 
  */
 
 ;(function(){
-  $.fn.jdropmenu = function(){
+  $.fn.jdropmenu = function(options){
+  	var defaults = $.extend({duration : 200}, options);
+ 		
     return this.each(function(){
     	$(this).on({
     		mouseenter :  function(){
-    			$(this).addClass("drop-dt-on").find('.dropdown').stop(true, true).delay(100).slideDown(200);
+    			$(this).addClass("drop-dt-on").find('.dropdown').stop(true, true).delay(100).slideDown(defaults.duration);
     		},
     		mouseleave : function(){
-    			$(this).find('.dropdown').stop(true, true).slideUp(200, function(){
+    			$(this).find('.dropdown').stop(true, true).slideUp(defaults.duration, function(){
     				$(this).removeClass("drop-dt-on");
     			});
     		}

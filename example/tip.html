@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>PAGE</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/normalize.css">
+        <style>
+        	/*jtip默认样式*/
+        	.jtip{padding:10px;position:absolute;background:#000;color:#fff;font-size:12px;border-radius:5px;line-height:22px;z-index:8003;left:-999px;top:-999px}
+        	.jtip s{border:8px solid #111;position: absolute;width:0;height:0;overflow:hidden;}
+        	.jtip-bottom s{top:0;left:50%;margin:-16px 0 0 -8px;border-color:transparent transparent #000;}
+        	.jtip-left s{top:50%;right:0;margin:-8px -16px 0 0;border-color:transparent transparent transparent #000;}
+        	.jtip-top s{bottom:0;left:50%;margin:0 0 -16px -8px;border-color:#000 transparent transparent;}
+        	.jtip-right s{top:50%;margin:-8px 0 0 -16px;left:0;border-color:transparent #000 transparent transparent ;}
+        	/*IE 6
+        	.jtip s{border:none;background:url(./images/tip.png) no-repeat}
+        	.jtip-bottom s{margin:-8px 0 0 -16px;width:32px;height:8px}
+        	.jtip-left s{margin:-16px -8px 0 0;width:8px;height:32px;background-position:-24px 0 }
+        	.jtip-top s{bottom:0;left:50%;margin: 0 0 -6px -16px;background-position: 0 -24px;width: 32px;height: 8px;}
+        	.jtip-right s{margin:-16px 0 0 -8px;width:8px;height:32px}
+        	*/	        
+
+
+
+        
+        	.ex-0{width:900px;margin:20px auto;background:#ddd;padding:20px;line-height: 26px}
+        	.ex-0 span{border-bottom:1px dotted #000;}
+        	.ex-1, .ex-4, .ex-5{margin:60px 0 0 200px;height:26px;width:200px;background:#dedede;font-size:12px;line-height:26px;text-align:center}
+        	.ex-2{margin:60px 0 0 200px;height:26px;width:200px;background:#dedede;font-size:12px;line-height:26px;text-align:center}
+        	.ex-3{margin:0 60px 0 0;height:56px;width:200px;background:#dedede;font-size:12px;line-height:56px;text-align:center;float:right;clear:both;}
+        </style>
+    </head>
+    <body>
+    	<div class="ex-1" data-tip="我是提示信息">点我可以查看更多信息</div>
+
+		<div class="ex-1" data-tip="计葵生先生现任陆金所董事长。历任麦肯锡大中华地区董事，台湾台新金融控股公司首席运营执行官，在国际金融投资领域拥有超过20年的跨国工作经验，对银行消费信用业务的建立及亚洲银行业的发展有独到见解，曾荣获“2012沪上十大金融创新人物”、“2013年中国互联网金融十大领军人物”称号。">计葵生先生 点击</div>
+		
+		<div class="ex-0"><span data-tip="现任陆金所董事长">计葵生先生</span>。历任麦肯锡大中华地区董事，台湾台新金融控股公司首席运营执行官，在国际金融投资领域拥有超过20年的跨国工作经验，对银行消费信用业务的建立及亚洲银行业的发展有独到见解，曾荣获“2012沪上十大金融创新人物”、“2013年中国互联网金融十大领军人物”称号。</div>
+
+		
+		<div class="ex-2" data-tip="2222">2222</div>
+		
+		<div class="ex-3" data-tip="戴修宪先生于2011年11月加入陆金所，主要负责金融产品开发、营销及品牌管理。戴修宪先生历任当当网高级副总裁、雅虎电子商务平台负责人、eBay、埃森哲及Oracle等公司项目负责人，是带领当当网成为中国第一家盈利B2C电子商务上市公司的核心高管之一。">戴修宪先生</div>
+		
+		<div class="ex-4" data-tip="樊方智先生历任东亚银行台湾区（台北及高雄分行）副行长、华一银行总行行助兼苏州分行行长等职，拥有20余年银行管理经验，曾在台资、港资、外资三种银行体系中任职并多次拿下业务冠军。">樊方智先生 </div>
+		<div class="ex-5" data-tip="石京魁先生历任平安国际融资租赁有限公司总经理助理、平安人寿上海分公司总经理、平安人寿深圳分公司总经理、平安集团人力资源部副总经理兼上海分部总经理等职，在人力资源管理方面有着丰富经验，曾荣获“中国十大保险经理人”、“平安集团十佳杰出经理人”、“平安二级勋章”等荣誉。">石京魁先生  </div>
+        <script src="js/jquery.1.7.2.js"></script>
+        <script src="../jquery.jtip.js"></script>
+        <script>
+            $(".ex-1").jtip({
+            	width : "200px",
+            	trigger : "click"
+            });
+            $(".ex-2, .ex-0 span").jtip();
+            $(".ex-3").jtip({
+            	width : "200px",
+            	position : "left"
+            });
+            $(".ex-4").jtip({
+            	width : "200px",
+            	position : "right"
+            });
+            $(".ex-5").jtip({
+            	width : "200px",
+            	position : "top"
+            });
+        </script>
+    </body>
+</html>

@@ -56,11 +56,9 @@
 		        }
 		    });
 		}
-		
 		if(_.cfg.type === "iframe"  && _.cfg.url){
 		    _.$body.html('<iframe  id="fancybox-frame" name="fancybox-frame' + new Date().getTime() + '"  hspace="0" ' + ($.browser.msie ? 'allowtransparency="true"' : '') + ' src="' + _.cfg.url + '" width="'+ _.cfg.width +'"  height="'+ _.cfg.height +'" scrolling="' + _.cfg.scrolling + '" frameborder="0" ></iframe>'); 
 		}
-
 	};
 	
 	JModal.prototype.pos = function(){
@@ -82,9 +80,9 @@
 			display : 'block'
 		}).attr('class', "jmodal");
 		
+		//定位的方式[absolute, fixed]
 		if(_.cfg.pos == "absolute"){
 			_.$modal.css("top", (_top + _.cfg.top) + "px");
-			$(window).off('scroll', _.fixed);
 		}else{
 			_.$modal.css("top", _.cfg.top + "px").addClass('jmodal-fixed');
 			if(_.isIE6){
@@ -95,6 +93,7 @@
 			}
 		}
 		
+		//把遮罩层覆盖整个窗口
 		if(_.isIE6){
 			_.$backdrop.css('height', Math.max($(window).height(), $('body').height()) );
 		}
@@ -103,9 +102,7 @@
 		if(_.cfg.overlay == false){
 			_.$backdrop.hide();
 		}
-		
 	};
-	
 	
 	JModal.prototype.close = function(){
 		//关闭jmodal之前调用回调函数
@@ -127,7 +124,7 @@
 		str.push('<div class="jmodal"><div class="jmodal-content">');
 		str.push('<div class="jmodal-header"></div>');
 		str.push('<div class="jmodal-body"></div>');
-		str.push('<div class="jmodal-btn></div>"');
+		str.push('<div class="jmodal-btn"></div>');
 		str.push('</div></div>');
 		str.push('<div class="jmodal-backdrop"></div>');
 		if(_.isIE6){
@@ -144,6 +141,44 @@
 		_.$backdrop.on('click',  $.proxy(_.close, _));
 	};
 	
+	JModal.prototype.btn =  function(){
+		var _ = this,
+			_flag = true;
+		if(!this.cfg.cancle && !this.cfg.confirm){
+			this.$btn.hide();
+		}
+		if(this.cfg.cancle){
+			$("<a/>",{
+			    "href" : "javascript:void(0)",
+			    "html" : this.cfg.cancle,
+			    "click" : function(ev){
+			    	ev.preventDefault();
+			    	if(typeof _.cfg.oncancle === "function"){
+			    		_flag =  _.cfg.oncancle();
+			    	}
+			    	if(_flag !== false){
+			    		_.close();
+			    	}
+			    }
+			}).appendTo(_.$btn);
+		}
+		if(this.cfg.confirm){
+			$("<a/>",{
+			    "href" : "javascript:void(0)",
+			    "html" : this.cfg.confirm,
+			    "click" : function(ev){
+			    	ev.preventDefault();
+			    	if(typeof _.cfg.onconfirm === "function"){
+			    		_flag = _.cfg.onconfirm();
+			    	}
+			    	if(_flag !== false){
+			    		_.close();
+			    	}
+			    }
+			}).appendTo(_.$btn);
+		}
+	};
+	
 	$.fn.jmodal = function(options){
 		var defaults = $.extend({
 			width : 500, //number 单位px
@@ -151,8 +186,10 @@
 			top : 120,
 			scrolling : 'auto',
 			//cancle : "取消",
+			//oncancle : function(){alert("点击取消的回调函数");},
 			//confirm : "确定",
-			//onopen : function(){alert("before open");}
+			//onconfirm : function(){alert("点击确认的回调函数");},
+			//onopen : function(){alert("before open");},
 			//onclose : function(){alert("before close");}, 
 			pos : 'fixed', //[fixed, absolute]
 			type : 'inline' //[inline, html, ajax, iframe]
