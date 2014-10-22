@@ -1,0 +1,11 @@
+.wrap{width:1100px;margin:20px auto;}
+.clear{clear:both;}
+#map{width:800px;height:600px;float:left}
+#result{float:right;width:280px;}
+
+.busline-example{margin-top:10px}
+.busline-example a{text-decoration: none;margin-right:10px}
+
+ul, li{margin:0;list-style:none}
+
+#line li{float:left;width:20px;list-style:none;}

@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+  <title>公交/地铁线路查询</title>
+  <link href="../css/normalize.css" rel="stylesheet">
+  <link href="../css/bmap.css" rel="stylesheet">  
+  <script src="http://api.map.baidu.com/api?v=2.0&ak=32MXh0p8LL95E45AF78RlQ5m"></script>
+  <script src="../js/jquery.1.7.2.js"></script>
+</head>
+<body>
+  <div class="wrap">
+      <div class="busline-search">输入公交线路名称:<input class="text" id="buslineName" type="text" value="2路"><input class="" type="submit" id="bsearch" value="搜素"></div>
+      <div class="busline-example"><span>试一试：</span><a href="javascript:void(0);">2路</a><a href="javascript:void(0);">游2路</a><a href="javascript:void(0);">地铁2号线</a><a href="javascript:void(0);">20路</a><a href="javascript:void(0);">江宁区20路</a></div>
+  </div>
+  <div class="wrap">
+    <div id="map"></div>
+    <div id="result"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="wrap" id="line"><ul></ul></div>
+</body>
+</html>
+<script type="text/javascript">
+  // 百度地图API功能
+  var map = new BMap.Map("map");            // 创建Map实例
+  map.centerAndZoom(new BMap.Point(118.778, 32.057), 12);
+
+  var busline = new BMap.BusLineSearch(map,{
+      renderOptions:{map:map,panel:"result"},
+      onGetBusListComplete: function(result){
+         if(result) {
+           var fstLine = result.getBusListItem(0);//获取第一个公交列表显示到map上
+           console.log(fstLine);
+           busline.getBusLine(fstLine);
+         }
+      },
+      onGetBusLineComplete: function(result){
+       //得到某条线路
+        console.log(result);
+        var busStation = null,
+          i = 0,
+          str = "";
+        if(!result){return false;}
+        
+        for(; i < result.getNumBusStations();i++){
+          busStation = result.getBusStation(i);
+          str +='<li>' + busStation.name + '</li>';
+        }
+        $("#line ul").empty().append(str);
+        
+      }
+  });
+  function busSearch(busName){
+    busline.getBusList(busName);
+  }
+  
+  
+  $("#bsearch").on("click", function(ev){
+    ev.preventDefault();
+    busSearch($("#buslineName").val());
+  }).trigger("click");;
+  
+  $(".busline-example a").on('click', function(ev){
+    ev.preventDefault();
+    $("#buslineName").val(this.innerHTML);
+    $("#bsearch").trigger("click");
+  });
+</script>

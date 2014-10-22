@@ -72,7 +72,7 @@
 		return this.on(defaults.trigger, function(ev){
 			Jtip = new JTip($(this), defaults);
 		}).on("mouseout", function(){
-			if(typeof Jtip ==="undefined"){return;}
+			if(typeof Jtip === "undefined"){return;}
 			Jtip.destory();
 		});
 	};
