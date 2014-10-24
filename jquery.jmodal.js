@@ -35,9 +35,10 @@
 	    
 		_.$body.html('<div class="jmodal-loading">正在加载...</div>').css("height", _.cfg.height);
 
-		//console.log(options);
+		console.log(_.cfg);
 		if(_.cfg.type === "inline" && _.cfg.id){
-			_.$body.html($("#"+_.cfg.id).clone(true));
+			_.$body.html($("#" + _.cfg.id));
+			$("#" + _.cfg.id).show();
 		}
 		if(_.cfg.type === "html"){
 			_.$body.html(_.cfg.html);
@@ -108,6 +109,9 @@
 		//关闭jmodal之前调用回调函数
 		if(typeof this.cfg.onclose === 'function'){
 			this.cfg.onclose();
+		}
+		if(this.cfg.type === "inline" && this.cfg.id){
+			$("#" + this.cfg.id).hide().appendTo($('body'));
 		}
 		this.$modal.remove();
 		this.$backdrop.remove();

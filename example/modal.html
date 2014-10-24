@@ -73,6 +73,7 @@
        		title : "用户登陆"
        });
     &lt;/script&gt;
+    data-url="./iframe.1.html" 是定义加载那个页面
 </pre>		
 <div class="note">&lt;a class="ex-modal-iframe" data-url="./iframe.html" href="javascript:void(0);"&gt;iframe加载内容./iframe.html&lt;/a&gt;这种会导致IE6iframe无法加载</div>	
 		</div>
@@ -89,8 +90,26 @@
        		title : "用户登陆"
        });
     &lt;/script&gt;
+    data-url="./iframe.1.html" 是定义加载那个页面
 </pre>			
 		</div>
+
+        <div class="example">
+            <h1>显示页面内ID</h1>
+            <a class="ex-modal-id" data-id="modalID1"  href="javascript:void(0);">显示页面内ID</a>
+<pre>
+    &lt;a class="ex-modal-id" data-id="modalID1" href="javascript:void(0);"&gt;显示页面内ID&lt;/a&gt;
+    &lt;script&gt;
+       $('.ex-modal-id').jmodal({
+            type : "inline",
+            title : "页面内元素",
+            top : 50,
+            overlay : true
+       });
+    &lt;/script&gt;
+    data-id="modalID1" 是定义显示哪一个元素
+</pre>          
+        </div>
 
 		<div class="example">
 			<h1>inline加载页面内容</h1>
@@ -111,6 +130,7 @@
     &lt;/script&gt;
 </pre>			
 		</div>
+		<div id="modalID1" class='hide' style="padding:10px 20px;line-height:24px;text-indent:2em;font-size:12px;"><p>伍美珍，毕业于安徽大学中文系，被称为“阳光姐姐”。现为安徽大学文学院副教授，安徽大学儿童文学创研中心主任，曾是“阳光姐姐热线”主持人。自2000年起，在内地和港台三地共出版了70余部题材的小说和报告文学作品，出版反映少年成长生活的作品20余部约300余万字，著有长篇小说《同桌冤家》、《愿望树》，报告文学《花季心事》等文学著作40余部。曾获文化部“蒲公英少儿读物奖”及新闻出版总署“全国优秀少儿图书奖”“冰心儿童图书奖”等。</p></div>
 		
         <script src="js/jquery.1.7.2.js"></script>
         <script src="../jquery.jmodal.js"></script>
@@ -137,11 +157,17 @@
 	               confirm : "确定",
 	               onconfirm : function(){
 	               	alert("点击确认的回调函数,同时return false就不关闭窗口");
-	               	return false;//return false可以组织关闭窗口
+	               	return false;//return false可以阻止关闭窗口
 	               },
 	               onopen : function(){alert("before open");}
 	           });
-        
+               $(".ex-modal-id").jmodal({
+                   type : "inline",
+                   title : "页面内元素",
+                   top : 50,
+                   overlay : true
+               }); 
+               $("#modalID1 p").on('click', function(){alert("p");})
         </script>
     </body>
 </html>

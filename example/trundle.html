@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>PAGE</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/normalize.css">
+        <style>
+        ul,li{margin:0;padding:0;list-style:none;}
+        .wrap{width:1000px;margin:20px auto;background:rgb(247, 198, 96)}
+		.roll{position:relative;padding:20px;}
+		.roll-wrap{position:relative;overflow:hidden;width:100%;height:150px;}
+		.roll ul{position:absolute;left:0;top:0;width:100%;}
+		.roll li{float:left;width:300px;text-align:center;line-height:18px;margin:0 10px;height:150px;display:inline}
+		
+		.prev-btn, .next-btn{width:36px;height:36px;background:url(./images/arrow.png) no-repeat;position:absolute;top:80px;display:none;}
+		.jtd-hover .prev-btn, .jtd-hover .next-btn{display:block}
+		.jtd-hover .disabled{display:none}
+        .prev-btn{left:0;background-position:0 -38px} .next-btn{right:0;}
+        .prev-btn:hover{background-position:-38px -38px} .next-btn:hover{background-position:-38px 0}
+        </style>
+    </head>
+    <body>
+        <div class="wrap">
+            <div class="roll" id="roll">
+                <div class="roll-wrap">
+                    <ul class="jtd-content">
+                        <li><img src="./images/20140812093652cc4ef.jpg" width="300" height="150"></li>
+                        <li><img src="./images/620300_0826.jpg" width="310" height="150"></li>
+                        <li><img src="./images/20140818075649a75e5.jpg" width="300" height="150"></li>
+                        <li><img src="./images/20140827090154c47ff.jpg" width="300" height="150"></li>
+                        <li><img src="./images/201408070902533104d.png" width="300" height="150"></li>
+                    </ul>
+                </div>
+                <a class="prev-btn" href="javascript:void(0);"></a>
+                <a class="next-btn" href="javascript:void(0);"></a>
+            </div>
+        </div>
+        <script src="js/jquery.1.7.2.js"></script>
+        <script src="../jquery.jtrundle.js"></script>
+        <script>
+            $("#roll").trundle();
+        </script>
+    </body>
+</html>
