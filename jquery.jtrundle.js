@@ -1,5 +1,5 @@
 ;(function($){
-	$.fn.trundle = function(options){
+	$.fn.jtrundle = function(options){
 		var defaults = $.extend({
 			content : ".jtd-content", //要移动元素的class名 $(this).find(content)
 			prevButton : ".prev-btn", //下一个按钮class名 $(this).find(prevButton)
