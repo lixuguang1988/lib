@@ -63,8 +63,7 @@
 	};
 	
 	JModal.prototype.pos = function(){
-		var _ = this,
-			_top = $(window).scrollTop();
+		var _ = this, _top = $(window).scrollTop();
 		
 		//显示背景
 		_.$backdrop.css({
@@ -122,8 +121,7 @@
 	};
 	
 	JModal.prototype.init = function(){
-		var _ = this,
-			str = [];
+		var _ = this, str = [];
 			
 		str.push('<div class="jmodal"><div class="jmodal-content">');
 		str.push('<div class="jmodal-header"></div>');
@@ -146,8 +144,8 @@
 	};
 	
 	JModal.prototype.btn =  function(){
-		var _ = this,
-			_flag = true;
+		var _ = this, _flag = true;
+		
 		if(!this.cfg.cancle && !this.cfg.confirm){
 			this.$btn.hide();
 		}
@@ -200,21 +198,21 @@
 		}, options);
 		
 		return this.on('click', function(ev){
-			var config  = {},
-				modal;
+			var config  = {}, modal;
+			
 			ev.preventDefault();
 			
-    		if(defaults.type === 'inline'){
-    			config.id = $(this).data('id');
-    		}
-    		if(defaults.type === 'ajax' || defaults.type === 'iframe'){
-    			config.url = $(this).data('url');
-    			//config.data = $(this).data("postData");
-    		}
-
-    		config  = $.extend(defaults, config);
-    		
-    		modal = new JModal(config);
+	    		if(defaults.type === 'inline'){
+	    			config.id = $(this).data('id');
+	    		}
+	    		if(defaults.type === 'ajax' || defaults.type === 'iframe'){
+	    			config.url = $(this).data('url');
+	    			//config.data = $(this).data("postData");
+	    		}
+	
+	    		config  = $.extend(defaults, config);
+	    		
+	    		modal = new JModal(config);
 			modal.open();
 			modal.title();
 			modal.pos();
