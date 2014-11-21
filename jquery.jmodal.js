@@ -35,9 +35,9 @@
 	    
 		_.$body.html('<div class="jmodal-loading">正在加载...</div>').css("height", _.cfg.height);
 
-		console.log(_.cfg);
+		//console.log(_.cfg);
 		if(_.cfg.type === "inline" && _.cfg.id){
-			_.$body.html($("#" + _.cfg.id));
+			_.$body.empty().append($("#" + _.cfg.id));
 			$("#" + _.cfg.id).show();
 		}
 		if(_.cfg.type === "html"){

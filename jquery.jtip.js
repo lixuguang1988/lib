@@ -64,14 +64,14 @@
 		var defaults = $.extend({
 			width : "auto", //[auto, width]
 			wrapClass : "",
-			trigger : "mouseover", //[mouseover, click]
+			trigger : "mouseenter", //[mouseenter, click]
 			position : "bottom"//[bottom, top, left, right]
 		}, options),
 		Jtip;
 		
 		return this.on(defaults.trigger, function(ev){
 			Jtip = new JTip($(this), defaults);
-		}).on("mouseout", function(){
+		}).on("mouseleave", function(){
 			if(typeof Jtip === "undefined"){return;}
 			Jtip.destory();
 		});
