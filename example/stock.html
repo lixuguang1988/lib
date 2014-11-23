@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>PAGE</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/normalize.css">
+		    <script src="js/jquery.1.7.2.js"></script>
+        
+    </head>
+    <body>
+			
+			  <h1>cjht.baidu.com不同源JS抓不到 </h1>
+			  <iframe style="display: none" src="http://cjhq.baidu.com/quote?s2=000001.sh,399001.sz,399300.sz,N225.jp,TWII.tw,STI.sg,FTSE.uk,DAX.de,DJI.us,IXIC.us,SPI.us,CRUDE.nme,GOLD.nme,COPPER.lme,SLIVER.nme,SOYBEAN.cbt,CORN.usb,WHEAT.cbt,HSI001.hk,CCI001.hk,CEI001.hk"></iframe>
+        <iframe style="display: none" src="./quote.html"></iframe>
+        <script>
+        
+        function bdcallback(json){
+          console.log(json);
+          /*
+          $.each(json, function(i, v){
+            console.log(i + ": " + v);
+          });
+          */
+        }
+	           
+        </script>
+    </body>
+</html>
