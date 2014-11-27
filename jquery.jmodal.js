@@ -58,7 +58,7 @@
 		    });
 		}
 		if(_.cfg.type === "iframe"  && _.cfg.url){
-		    _.$body.html('<iframe  id="fancybox-frame" name="fancybox-frame' + new Date().getTime() + '"  hspace="0" ' + ($.browser.msie ? 'allowtransparency="true"' : '') + ' src="' + _.cfg.url + '" width="'+ _.cfg.width +'"  height="'+ _.cfg.height +'" scrolling="' + _.cfg.scrolling + '" frameborder="0" ></iframe>'); 
+		    _.$body.html('<iframe  id="jmodal-frame" name="jmodal-frame' + new Date().getTime() + '"  hspace="0" ' + ($.browser.msie ? 'allowtransparency="true"' : '') + ' src="' + _.cfg.url + '" width="'+ _.cfg.width +'"  height="'+ _.cfg.height +'" scrolling="' + _.cfg.scrolling + '" frameborder="0" ></iframe>'); 
 		}
 	};
 	
