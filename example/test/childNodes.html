@@ -13,27 +13,25 @@
         </style>
     </head>
     <body>
-		<div id="sibling">xxx
-			<h1>sibling</h1>
-			<div class='sec-box'>
-				<span  onclick="alert(this.nextSibling.nodeType +':'+ this.nodeType);">第一个行内元素</span><span  onclick="alert(this.nextSibling.nodeType +':'+ this.nodeType);">第二个行内元素</span><span  onclick="alert(this.nextSibling.nodeType +':'+ this.nodeType);">第三个行内元素</span>
-				<span  onclick="alert(this.nextSibling.nodeType +':'+ this.nodeType);">第四个行内元素</span>
+	<div id="sibling">xxx
+		<h1>sibling</h1>
+		<div class='sec-box'>
+			<span  onclick="alert(this.nextSibling.nodeType +':'+ this.nodeType);">第一个行内元素</span><span  onclick="alert(this.nextSibling.nodeType +':'+ this.nodeType);">第二个行内元素</span><span  onclick="alert(this.nextSibling.nodeType +':'+ this.nodeType);">第三个行内元素</span><span  onclick="alert(this.nextSibling.nodeType +':'+ this.nodeType);">第四个行内元素</span>
 			</div>
 		</div>
 		<div id="log"></div>
         <script>
         	var sibling = document.getElementById("sibling"),
-        		log = document.getElementById('log');
-        	
-        	var cns = sibling.childNodes,
+        		log = document.getElementById('log'),
+        		cns = sibling.childNodes,
         		div = null,
         		text = null;
-        
+        	
+        	//fixed ie6 trim	
         	String.prototype.trim = function() {
-			    return this.replace(/^\s+|\s+$/g,"");
-			};
-        	
-        	
+			return this.replace(/^\s+|\s+$/g,"");
+		};
+		
         	for(var i in cns){
         		var node = cns[i];
         		
