@@ -1,0 +1,58 @@
+<!doctype html>
+<html class="no-js" ng-app>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>TODO with Angular</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/normalize.css">
+        <style>
+        	.done-true { text-decoration: line-through; color: grey; }
+        	.log{margin: 120px 0 0}
+        </style>
+    </head>
+    <body>
+		<div id="sibling">xxx
+			<h1>sibling</h1>
+			<div class='sec-box'>
+				<span  onclick="alert(this.nextSibling.nodeType +':'+ this.nodeType);">第一个行内元素</span><span  onclick="alert(this.nextSibling.nodeType +':'+ this.nodeType);">第二个行内元素</span><span  onclick="alert(this.nextSibling.nodeType +':'+ this.nodeType);">第三个行内元素</span>
+				<span  onclick="alert(this.nextSibling.nodeType +':'+ this.nodeType);">第四个行内元素</span>
+			</div>
+		</div>
+		<div id="log"></div>
+        <script>
+        	var sibling = document.getElementById("sibling"),
+        		log = document.getElementById('log');
+        	
+        	var cns = sibling.childNodes,
+        		div = null,
+        		text = null;
+        
+        	String.prototype.trim = function() {
+			    return this.replace(/^\s+|\s+$/g,"");
+			};
+        	
+        	
+        	for(var i in cns){
+        		var node = cns[i];
+        		
+        		alert(i);
+        		div = document.createElement('div');
+        		if(node.nodeType == 1){
+        			text = document.createTextNode('tagName:' + node.tagName);
+        		}else if(node.nodeType == 3){
+        			text = node.nodeValue;
+        			text = text.trim();
+        			text = document.createTextNode(text ? text : "空白字符");
+        		}else{
+        			continue; //cns里面还有可枚举的length/item; for in(此处为装逼)换成普通的数组循环就避免了
+        		}
+        		div.appendChild(text);
+        		log.appendChild(div);
+        		
+        	}
+        	
+        </script>
+    </body>
+</html>
