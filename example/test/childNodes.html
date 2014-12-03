@@ -16,14 +16,15 @@
 	<div id="sibling">xxx
 		<h1>sibling</h1>
 		<div class='sec-box'>
-			<span  onclick="alert(this.nextSibling.nodeType +':'+ this.nodeType);">第一个行内元素</span><span  onclick="alert(this.nextSibling.nodeType +':'+ this.nodeType);">第二个行内元素</span><span  onclick="alert(this.nextSibling.nodeType +':'+ this.nodeType);">第三个行内元素</span><span  onclick="alert(this.nextSibling.nodeType +':'+ this.nodeType);">第四个行内元素</span>
-			</div>
+			<span>第一个行内元素</span><span>第二个行内元素</span><span>第三个行内元素</span><span>第四个行内元素</span>
 		</div>
-		<div id="log"></div>
+	</div>
+	<div id="log"></div>
         <script>
         	var sibling = document.getElementById("sibling"),
         		log = document.getElementById('log'),
         		cns = sibling.childNodes,
+        		node = null,
         		div = null,
         		text = null;
         	
@@ -33,9 +34,9 @@
 		};
 		
         	for(var i in cns){
-        		var node = cns[i];
-        		
-        		alert(i);
+        		alert(i);        		
+        		node = cns[i];
+
         		div = document.createElement('div');
         		if(node.nodeType == 1){
         			text = document.createTextNode('tagName:' + node.tagName);
