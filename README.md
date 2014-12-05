@@ -98,8 +98,4 @@ noDispatchEvent 设置true，表示不触发窗口的关闭回调函数
 <pre>
 url : 指定加载的url地址
 其他参数同插件本身
-<<<<<<< HEAD
 </pre>
-=======
-</pre>
->>>>>>> origin/master
