@@ -34,6 +34,10 @@ $('.example').jmodal({
 });
 </code>
 </pre>
-*  __width__  指定弹窗窗口的宽度
-*  __height__ 指定弹窗窗口的高度, tips: type值为ajax,iframe时,最好设置弹出窗口的高度
-*  
+###  __width__  指定弹窗窗口的宽度
+### __height__ 指定弹窗窗口的高度, tips: type值为ajax,iframe时,最好设置弹出窗口的高度
+###  __wrapClass__ 为弹窗自定义类名
+###  __title__
+
+
+
