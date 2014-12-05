@@ -6,6 +6,7 @@
 一个图片轮转jquery插件.支持左右滑动,淡入淡出效果   
 示例：example/slide.html
 
+******
 
 ## jquery.jmodal.js
 
