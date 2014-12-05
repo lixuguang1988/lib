@@ -27,8 +27,8 @@ $('.example').jmodal({
      onconfirm : null, //点击确认的回调函数(函数返回===false不关闭窗口)
      onopen : null, //窗口打开前的回调函数
      onclose : null, //窗口关闭前的回调函数
-     pos : 'fixed', //[fixed, absolute]
-     type : 'inline', //[inline, html, ajax, iframe]
+     pos : 'fixed', //['fixed', 'absolute'] 指定弹窗的定位方式
+     type : 'inline', //['inline', 'html', 'ajax', 'iframe']
      scrolling : 'auto', //当type=iframe 指定iframe的滚动条
      html : '' //当type=html 设置弹出窗口的显示的html内容
 });
@@ -44,5 +44,31 @@ $('.example').jmodal({
 指定弹窗窗口的标题
 #####  top  ['center', number] 默认值 center
 指定弹出窗口离视口顶端的距离
+#####  easing  [200, 400, 600, number] 默认值 600
+弹出窗口显示出来的时间
+#####  cancle  string
+指定取消的文字
+#####  oncancle  function
+点击取消的回调函数, 函数返回__===false__不关闭窗口
+#####  confirm  string
+指定确认的文字
+#####  onconfirm  function 
+点击确认的回调函数, 函数返回__===false__不关闭窗口
+#####  onopen  function 
+窗口打开前的回调函数
+#####  onclose  function 
+窗口关闭前的回调函数
+#####  pos  ['fixed', 'absolute'] 默认 absolute
+指定弹窗的定位方式
+#####  type  ['inline', 'html', 'ajax', 'iframe'] 默认inline
+<pre>
+窗口关闭前的回调函数
+type为inline时 ,从触发的元素data-id = "xx"中取页面中id为xx的元素显示弹窗的内容
+type为ajax,iframe时 , 从触发的元素data-url = "xx"的值加载页面xx为弹窗的内容
+</pre>
+#####  scrolling  ['no', 'auto'] 默认 auto
+当type=iframe 指定iframe的滚动条
+#####  html  string 
+当type=html 设置弹出窗口的显示的html内容
 
-
+***
