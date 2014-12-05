@@ -12,6 +12,8 @@
 一个弹出层jquery插件.支持ajax(必须http(s)://来访问),html,ID及各种回调函数   
 示例：example/modal.html
 
+<pre>
+<code>
 $('.example').jmodal({
      width : 500, //number 单位px
      height : 'auto', //[number, auto] 单位px
@@ -30,3 +32,5 @@ $('.example').jmodal({
      scrolling : 'auto', //当type=iframe 指定iframe的滚动条
      html : '' //当type=html 设置弹出窗口的显示的html内容
 });
+</code>
+</pre>
