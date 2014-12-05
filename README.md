@@ -35,6 +35,7 @@ $('.example').jmodal({
 });
 </code>
 </pre>
+####参数
 #####  width  [number]
 指定弹窗窗口的宽度
 #####  height [number]
@@ -71,5 +72,30 @@ type为ajax,iframe时 , 从触发的元素data-url = "xx"的值加载页面xx为
 当type=iframe 指定iframe的滚动条
 #####  html  string 
 当type=html 设置弹出窗口的显示的html内容
-
-***
+####静态方法
+##### $.fn.jmodal.destory
+<pre>
+index :关闭那个弹出窗口,有多个弹出窗口的时候
+noDispatchEvent 设置true，表示不触发窗口的关闭回调函数
+ 关闭所有弹窗
+ <code>
+ $.fn.jmodal.destory();
+ </code>
+  关闭所有第一个弹窗
+ <code>
+ $.fn.jmodal.destory(0);
+ </code>
+   关闭第一个弹窗且不触发关闭的回调函数
+ <code>
+ $.fn.jmodal.destory(0, true);
+ </code>
+    关闭所有弹窗且不触发关闭的回调函数
+ <code>
+ $.fn.jmodal.destory(null, true);
+ </code>
+</pre>
+##### $.fn.jmodal.open
+<pre>
+url : 指定加载的url地址
+其他参数同插件本身
+</pre>
