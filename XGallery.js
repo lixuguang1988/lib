@@ -148,5 +148,4 @@ XGallery.prototype.close =  function(){
 	}, 400, function(){
 		_.gallerySkeleton.remove();
 	});
-};
-    
+};  
