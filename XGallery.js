@@ -76,7 +76,7 @@ XGallery.prototype.reRender = function(){
 		'height' : this.height
 	});
 	this.renderImg(this.imgWidth, this.imgHeight);
-}
+};
 
 
 XGallery.prototype.showPrevNext =  function(event){
@@ -109,7 +109,7 @@ XGallery.prototype.show =  function(imgsource){
 	};
 	img.src = imgsource;	
 	//img.style.display = "none";
-}
+};
 
 XGallery.prototype.renderImg =  function(width, height){
     var _ = this,
@@ -132,7 +132,7 @@ XGallery.prototype.renderImg =  function(width, height){
         }
     }
     _.galleryContent.css({"width" : width, "height": height, 'margin-left': -(width/2), 'margin-top' : -(height/2) }).find('img').css({"width" : width, "height": height}).hide().fadeIn(600);        
-}
+};
 
 XGallery.prototype.close =  function(){
 	var _ = this;
@@ -148,5 +148,5 @@ XGallery.prototype.close =  function(){
 	}, 400, function(){
 		_.gallerySkeleton.remove();
 	});
-}
+};
     
