@@ -19,6 +19,7 @@ $('.example').jmodal({
      width : 500, //number 单位px
      height : 'auto', //[number, auto] 单位px
      wrapClass : '',  //指定弹窗自定义的类名
+     overlay : true, //背景色 boolean
      title : '', //指定弹窗窗口的名称
      top : 'center', //['center', number] 弹出窗口里视口顶端的距离
      easing : 600, //弹出窗口显示出来的时间
@@ -39,10 +40,12 @@ $('.example').jmodal({
 #####  width  [number]
 指定弹窗窗口的宽度
 #####  height [number]
- 指定弹窗窗口的高度, tips: type值为ajax,iframe时,最好设置弹出窗口的高度
-#####  wrapClass [string]
- 为弹窗自定义类名
-#####  title [string]
+指定弹窗窗口的高度, tips: type值为ajax,iframe时,最好设置弹出窗口的高度
+#####  wrapClass string
+为弹窗自定义类名
+#####  overlay boolean
+背景色 boolean
+#####  title string
 指定弹窗窗口的标题
 #####  top  ['center', number] 默认值 center
 指定弹出窗口离视口顶端的距离
@@ -50,16 +53,32 @@ $('.example').jmodal({
 弹出窗口显示出来的时间
 #####  cancle  string
 指定取消的文字
-#####  oncancle  function
+#####  oncancle  function(elem, cfg, obj)
 点击取消的回调函数, 函数返回__===false__不关闭窗口
+elem是当前dom对象的引用 得到jq对象$(elem)
+cfg是option对象的引用 
+obj是构造函数Modal的引用
 #####  confirm  string
 指定确认的文字
-#####  onconfirm  function 
+#####  onconfirm  function(elem, cfg, obj) 
 点击确认的回调函数, 函数返回__===false__不关闭窗口
+elem是当前dom对象的引用 得到jq对象$(elem)
+cfg是option对象的引用 
+obj是构造函数Modal的引用
 #####  onopen  function 
 窗口打开前的回调函数
-#####  onclose  function 
+elem是当前dom对象的引用 得到jq对象$(elem)
+cfg是option对象的引用 
+更改jmodal的自定义类名
+<code>cfg.wrapClass = "custome-modal";</code>
+更改html的内容
+<code>cfg.html = "我是实际的html内容";</code>
+obj是构造函数Modal的引用
+#####  onclose  function(elem, cfg, obj) 
 窗口关闭前的回调函数
+elem是当前dom对象的引用 得到jq对象$(elem)
+cfg是option对象的引用  
+obj是构造函数Modal的引用
 #####  pos  ['fixed', 'absolute'] 默认 absolute
 指定弹窗的定位方式
 #####  type  ['inline', 'html', 'ajax', 'iframe'] 默认inline

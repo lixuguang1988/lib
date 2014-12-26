@@ -24,7 +24,7 @@
 		
 		_.$modalcontent.append(_.$header, _.$body, _.$btn);
 		_.$modal.append(_.$modalcontent);
-		$("body").append(_.$backdrop, _.$modal)
+		$("body").append(_.$backdrop, _.$modal);
 		
 		_.$backdrop.on('click',  $.proxy(_.close, _));
 		
@@ -40,7 +40,7 @@
 	    
 	    //运行打开前的回调函数
 	   	if(typeof _.cfg.onopen === 'function'){
-			this.cfg.onopen();
+			this.cfg.onopen(_.cfg.elem, _.cfg, _);
 		}
 	    
 		_.$body.html('<div class="jmodal-loading">正在加载...</div>').css("height", _.cfg.height);
@@ -84,6 +84,9 @@
 			    "class" : "jmodal-title",
 			    "html" : _.cfg.title
 			}).appendTo(_.$header);
+			_.$header.removeClass("jmodal-header-null");
+		}else{
+			_.$header.addClass("jmodal-header-null");
 		}
 		$("<a/>",{
 		    "href" : "javascript:void(0)",
@@ -104,7 +107,7 @@
 		
 		//控制背景
 		if(_.cfg.overlay == false){
-			_.$backdrop.hide();
+			_.$backdrop.css('opacity', '0');
 		}else{
 			_.$backdrop.animate({
 				opacity : '.5'
@@ -137,23 +140,22 @@
 			}
 			_.$modal.addClass('jmodal-fixed');
 		}
-		_.$modal.animate({top :  _posTop + "px"}, _.cfg.easing)
+		_.$modal.animate({top :  _posTop + "px"}, _.cfg.easing);
 				
 	};
 	
 	Modal.prototype.fixedIE6Postion =  function(){
 		var _ = this, 
 		_renderTop = renderAbsolutePosition(_.cfg.top, $(window).scrollTop(), _.$modal.height(), $(window).height());
-		_.$modal.animate({top :  _renderTop + "px"}, _.cfg.easing)
+		_.$modal.animate({top :  _renderTop + "px"}, _.cfg.easing);
 	};	
 	
 	
 
 	Modal.prototype.close = function(noDispatchEvent){
 		//关闭jmodal之前调用回调函数
-		console.log(noDispatchEvent);
 		if(typeof this.cfg.onclose === 'function' && typeof noDispatchEvent === "undefined"){
-			this.cfg.onclose();
+			this.cfg.onclose(this.cfg.elem, this.cfg, this);
 		}
 		if(this.cfg.type === "inline" && this.cfg.id){
 			$("#" + this.cfg.id).hide().appendTo($('body'));
@@ -174,21 +176,21 @@
 	
 	Modal.prototype.readerBtn= function(btnName, btnCallback){
 		var _ = this, flag = true; //flag根据回调函数的返回值确定是否关闭弹窗
-		if(!btnName){return false}
+		if(!btnName){return false;}
 		$("<a/>",{
 		    "href" : "javascript:void(0)",
 		    "html" : btnName,
 		    "click" : function(ev){
 		    	ev.preventDefault();
 		    	if(typeof btnCallback === "function"){
-		    		flag = btnCallback();
+		    		flag = btnCallback(_.cfg.elem, _.cfg, _);
 		    	}
 		    	if(flag !== false){
 		    		_.close();
 		    	}
 		    }
 		}).appendTo(_.$btn);		
-	}
+	};
 	
 	/*
 	 * type 指定的定位方式 ['center', number]
@@ -197,7 +199,7 @@
 	 * widthHeight 视口的高度
 	 */
 	function renderAbsolutePosition(type, scrollTop, modalHeight, widthHeight){
-		var _top
+		var _top;
 		if(type == "center"){//定位到视口中间
 			_top = (widthHeight - modalHeight)/2 + scrollTop;
 		}else{ 
@@ -212,6 +214,7 @@
 		     width : 500, //number 单位px
 		     height : 'auto', //[number, auto] 单位px
 		     wrapClass : '',  //指定弹窗自定义的类名
+		     overlay : true, //背景色 boolean
 		     title : '', //指定弹窗窗口的名称
 		     top : 'center', //['center', number] 弹出窗口里视口顶端的距离
 		     easing : 600, //弹出窗口显示出来的时间
@@ -231,6 +234,9 @@
 			var config  = {}, modal;
 			
 			ev.preventDefault();
+			
+			//保存当前元素到config里面
+			config.elem = this;
 			
     		if(defaults.type === 'inline'){
     			config.id = $(this).data('id');
@@ -256,16 +262,16 @@
 			if(typeof index === 'number'){
 				$(".jmodal-close").eq(index).data('dispatchevent', true).trigger('click');
 			}else{
-				$(".jmodal-close").data('dispatchevent', true).trigger('click')
+				$(".jmodal-close").data('dispatchevent', true).trigger('click');
 			}
 		}
-	}
+	};
 	
 	$.fn.jmodal.open = function(options){
 		options = $.extend({url : null}, options);
 		var triggerDom = $('<a style="display:none" data-url="'+ options.url + '"  href="'+ (options.url ? options.url : "javascript:void(0);") + '"></a>');
 		triggerDom.appendTo($('body'));
 		triggerDom.jmodal(options).trigger('click').remove();
-	}
+	};
 	
 })(jQuery);

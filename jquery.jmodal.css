@@ -1,20 +1,16 @@
-.jmodal{z-index:10005;left:50%;font-family:"simsun", arial, sans-serif;position: absolute;display:none;padding:5px;
-background:rgba(0, 0, 0, .3);
-filter: progid:DXImageTransform.Microsoft.gradient(startcolorstr=#4d000000,endcolorstr=#4d000000,gradientType=1);
--ms-filter: progid:DXImageTransform.Microsoft.gradient(startcolorstr=#4d000000,endcolorstr=#4d000000,gradientType=1);
-}
-.jmodal-fixed{position:fixed;_position:absolute;}
-.jmodal-content{background: #fff;}
-.jmodal-header{position:relative;width:100%;/*width:100%; for IE6*/}
-.jmodal-close{position:absolute;width:40px;height:40px;line-height:40px;text-align:center;right:0;top:0;font-family:"simsun";font-size:20px;color:#fff;text-decoration:none;}
-.jmodal-close:hover{color: #fff;background: #A72424;}
-.jmodal-title{font-size:22px;font-weight:100;margin:0;background:#31afd8;border-bottom: 1px solid #eee;padding:5px 20px;line-height:30px;color:#fff;}
-.jmodal-body{color: #434343;font-size:16px;}
-.jmodal-body h1, .jmodal-body h2, .jmodal-body h3, .jmodal-body p{margin:0;}
-.jmodal-loading{padding:50px;text-align:center;color: #666;font-size: 14px;font-family: "microsoft yahei";}
-.jmodal-btn{text-align:center;padding:20px 0;}
-.jmodal-btn a{display:inline-block;margin:0 10px;width:120px;height:40px;line-height:40px;background:#31afd8;font-size:16px;color:#fff;text-align:center;text-decoration:none;}
-
-.jmodal-backdrop{display:none;position:fixed;top:0;left:0;width: 100%;height:100%;background:#000;opacity: .4;filter:alpha(opacity=40);z-index:10004;_position:absolute;_height:expression(eval(document.documentElement.clientHeight)); }
-iframe.jmodal-backdrop{z-index:10003};
-
+.jmodal{z-index:10005;left:50%;font-family:"simsun",arial,sans-serif;position:absolute;display:none;padding:5px;background:rgba(0,0,0,.3);filter:progid:DXImageTransform.Microsoft.gradient(startcolorstr=#4d000000,endcolorstr=#4d000000,gradientType=1);-ms-filter:progid:DXImageTransform.Microsoft.gradient(startcolorstr=#4d000000,endcolorstr=#4d000000,gradientType=1)}
+.jmodal-fixed{position:fixed;_position:absolute}
+.jmodal-content{background:#fff}
+.jmodal-header{position:relative;width:100%}
+.jmodal-close{position:absolute;width:40px;height:40px;line-height:40px;text-align:center;right:0;top:0;font-family:"simsun";font-size:20px;color:#fff;text-decoration:none}
+.jmodal-header-null .jmodal-close{width:26px;height:26px;line-height:26px;color:#a72424}
+.jmodal-close:hover{color:#fff;background:#a72424}
+.jmodal-header-null .jmodal-close:hover{color:#fff}
+.jmodal-title{font-size:22px;font-weight:100;margin:0;background:#31afd8;border-bottom:1px solid #eee;padding:5px 20px;line-height:30px;color:#fff}
+.jmodal-body{color:#434343;font-size:16px}
+.jmodal-body h1,.jmodal-body h2,.jmodal-body h3,.jmodal-body p{margin:0}
+.jmodal-loading{padding:50px;text-align:center;color:#666;font-size:14px;font-family:"microsoft yahei"}
+.jmodal-btn{text-align:center;padding:20px 0}
+.jmodal-btn a{display:inline-block;margin:0 10px;width:120px;height:40px;line-height:40px;background:#31afd8;font-size:16px;color:#fff;text-align:center;text-decoration:none}
+.jmodal-backdrop{position:fixed;top:0;left:0;width:100%;height:100%;background:#000;opacity:0;filter:alpha(opacity=0);z-index:10004;_position:absolute;_height:expression(eval(document.documentElement.clientHeight))}
+iframe.jmodal-backdrop{z-index:10003}
