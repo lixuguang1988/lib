@@ -63,17 +63,17 @@ obj是构造函数Modal的引用
 指定确认的文字
 #####  onconfirm  function(elem, cfg, obj) 
 点击确认的回调函数, 函数返回__===false__不关闭窗口   
-elem, cfg, obj通oncancle
+elem, cfg, obj同oncancle
 #####  onopen  function(elem, cfg, obj) 
 窗口打开前的回调函数  
 elem是当前dom对象的引用 得到jq对象$(elem)  
-elem, cfg, obj通oncancle
+elem, cfg, obj同oncancle  
 <code>cfg.wrapClass = "custome-modal";</code>  
 更改html的内容  
 <code>cfg.html = "我是实际的html内容";</code>  
 #####  onclose  function(elem, cfg, obj) 
 窗口关闭前的回调函数
-elem, cfg, obj通oncancle
+elem, cfg, obj同oncancle
 #####  pos  ['fixed', 'absolute'] 默认 absolute
 指定弹窗的定位方式
 #####  type  ['inline', 'html', 'ajax', 'iframe'] 默认inline
