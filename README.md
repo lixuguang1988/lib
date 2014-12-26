@@ -40,7 +40,8 @@ $('.example').jmodal({
 #####  width  [number]
 指定弹窗窗口的宽度
 #####  height [number]
-指定弹窗窗口的高度, tips: type值为ajax,iframe时,最好设置弹出窗口的高度
+指定弹窗窗口的高度  
+tips: type值为ajax,iframe时,最好设置弹出窗口的高度
 #####  wrapClass string
 为弹窗自定义类名
 #####  overlay boolean
@@ -62,30 +63,24 @@ obj是构造函数Modal的引用
 指定确认的文字
 #####  onconfirm  function(elem, cfg, obj) 
 点击确认的回调函数, 函数返回__===false__不关闭窗口   
-elem是当前dom对象的引用 得到jq对象$(elem)   
-cfg是option对象的引用    
-obj是构造函数Modal的引用   
-#####  onopen  function 
+elem, cfg, obj通oncancle
+#####  onopen  function(elem, cfg, obj) 
 窗口打开前的回调函数  
 elem是当前dom对象的引用 得到jq对象$(elem)  
-cfg是option对象的引用   
-更改jmodal的自定义类名  
+elem, cfg, obj通oncancle
 <code>cfg.wrapClass = "custome-modal";</code>  
 更改html的内容  
 <code>cfg.html = "我是实际的html内容";</code>  
-obj是构造函数Modal的引用
 #####  onclose  function(elem, cfg, obj) 
 窗口关闭前的回调函数
-elem是当前dom对象的引用 得到jq对象$(elem)
-cfg是option对象的引用  
-obj是构造函数Modal的引用
+elem, cfg, obj通oncancle
 #####  pos  ['fixed', 'absolute'] 默认 absolute
 指定弹窗的定位方式
 #####  type  ['inline', 'html', 'ajax', 'iframe'] 默认inline
 弹出窗口的类型  
 type为html是,需要设置html的的内容
 type为inline时 ,从触发的元素data-id = "xx"中取页面中id为xx的元素显示弹窗的内容  
-type为ajax,iframe时 , 从触发的元素data-url = "xx"的值加载页面xx为弹窗的内容  
+type为ajax,iframe时 , 从触发的元素data-url = "xx"的值加载页面xx为弹窗的内容   
 #####  scrolling  ['no', 'auto'] 默认 auto
 当type=iframe 指定iframe的滚动条
 #####  html  string 
