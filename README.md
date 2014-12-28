@@ -19,7 +19,7 @@ $('.example').jmodal({
      width : 500, //number 单位px
      height : 'auto', //[number, auto] 单位px
      wrapClass : '',  //指定弹窗自定义的类名
-     overlay : true, //背景色 boolean
+     overlay : true, //是否显示遮罩层 boolean
      title : '', //指定弹窗窗口的名称
      top : 'center', //['center', number] 弹出窗口里视口顶端的距离
      easing : 600, //弹出窗口显示出来的时间
@@ -44,8 +44,8 @@ $('.example').jmodal({
 tips: type值为ajax,iframe时,最好设置弹出窗口的高度
 #####  wrapClass string
 为弹窗自定义类名
-#####  overlay boolean
-背景色 boolean
+#####  overlay boolean 默认值 true
+是否显示遮罩层 
 #####  title string
 指定弹窗窗口的标题
 #####  top  ['center', number] 默认值 center
