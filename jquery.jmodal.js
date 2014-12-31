@@ -1,7 +1,8 @@
 ;(function($){
     
 	function Modal(options){
-		this.isIE6 = $.browser.msie && $.browser.version < 7 && !window.XMLHttpRequest;
+		var userAgent = navigator.userAgent;
+		this.isIE6 = userAgent.indexOf("MSIE") && userAgent.indexOf("6.0") && !window.XMLHttpRequest && userAgent.indexOf("Opera") == -1;
 		this.cfg = options;
 		this.init();
 	};
@@ -153,6 +154,7 @@
 	
 
 	Modal.prototype.close = function(noDispatchEvent){
+		$(this).removeData('initialization');
 		//关闭jmodal之前调用回调函数
 		if(typeof this.cfg.onclose === 'function' && typeof noDispatchEvent === "undefined"){
 			this.cfg.onclose(this.cfg.elem, this.cfg, this);
@@ -230,13 +232,17 @@
 		     html : '' //当type=html 设置弹出窗口的显示的html内容
 		}, options);
 		
-		return this.on('click', function(ev){
-			var config  = {}, modal;
+		return this.on('click.jmodal', function(ev){
+			var config  = {}, modal = null;
 			
 			ev.preventDefault();
 			
 			//保存当前元素到config里面
 			config.elem = this;
+			
+			//一个元素只让显示一个
+			if($(this).data('initialization')){return false;}
+			$(this).data('ing', true);
 			
     		if(defaults.type === 'inline'){
     			config.id = $(this).data('id');
@@ -271,7 +277,7 @@
 		options = $.extend({url : null}, options);
 		var triggerDom = $('<a style="display:none" data-url="'+ options.url + '"  href="'+ (options.url ? options.url : "javascript:void(0);") + '"></a>');
 		triggerDom.appendTo($('body'));
-		triggerDom.jmodal(options).trigger('click').remove();
+		triggerDom.jmodal(options).trigger('click.jmodal').remove();
 	};
 	
 })(jQuery);
