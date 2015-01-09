@@ -1,3 +1,4 @@
+// 用 /lib/cookie.js来代替
 var Cookie = {
   set: function(c, e, d, f, a, b) {
     document.cookie = c + "=" + (b ? e : escape(e)) + ((a) ? "; expires=" + a.toGMTString() : "") + ((f) ? "; path=" + f : "; path=/") + ((d) ? "; domain=" + d : "")
