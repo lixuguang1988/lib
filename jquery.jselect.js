@@ -14,31 +14,36 @@
  
  */
 ;(function($){
-	$.fn.jselect = function(){
+	$.fn.jselect = function(options){
+		var config  = $.extend({
+			prefix : 'nice-select',
+			onclick : null  //function(value, selectedIndex)
+		}, options);
+		
 		this.each(function(){
     			var that = this, //dom node
     				elem = $(this), //jq对象
     				wrap = $("<div />",{
-    					"class" : "nice-select",
+    					"class" : config.prefix,
     					"click" : function(event){
     						/*
     						event.stopPropagation();
     						event.preventDefault();
     						*/
-    						$(this).find('.nice-select-lst').toggle();
-    						$(this).toggleClass('nice-select-active');
+    						$(this).find('.' + config.prefix + '-lst').toggle();
+    						$(this).toggleClass('.' + config.prefix + '-active');
     					
     						/*点击其他元素关闭下拉选项*/
     						$(document).on('click', function(e){
     							if(!(e.target == wrap[0] || $.contains(wrap[0], e.target))) {
-									wrap.removeClass('nice-select-active').find('.nice-select-lst').hide();
+									wrap.removeClass(config.prefix + '-active').find('.' + config.prefix + '-lst').hide();
 								}
 			    			});
     					}	
     				}),
-    				arrow = $("<div class=\"nice-select-arrow\"></div>"),
-    				title = $("<div class=\"nice-select-title\"></div>"),
-    				niceStr = '<ul class="nice-select-lst">',
+    				arrow = $("<div class=\"" + config.prefix + "-arrow\"></div>"),
+    				title = $("<div class=\"" + config.prefix + "-title\"></div>"),
+    				niceStr = '<ul class="' + config.prefix + '-lst">',
     				options = elem.find('option'),
     				selectedIndex = that.selectedIndex,
     				cur;
@@ -68,6 +73,10 @@
     				title.html(this.innerHTML);
     				//关闭下拉选项
     				arrow.trigger('click');
+    				
+    				if(typeof config.onclick === "function"){
+    					config.onclick(this.innerHTML, that.selectedIndex);
+    				}
     			});
 		});
 		return this;
