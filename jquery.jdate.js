@@ -1,12 +1,12 @@
 ;(function($, window, undefined){
 	
 	/**
-	 * jDate的构造函数,用于实例化一个jDate兑现
+	 * jDate的构造函数,用于实例化一个jDate对象
 	 * @param {object} jo jquery object
 	 * @param {object} cfg plain object
 	 */
 	function jDate(jo, cfg){
-		this.elem = jo; //触发事件jquery 对象
+		this.elem = jo; //触发事件jquery对象
 		this.cfg = cfg; //配置信息
 		this.wrap = $('<div class="ui-date-wrap"></div>'); //包围元素
 		
@@ -18,7 +18,6 @@
 		//渲染头部
 		this.renderHeader();
 	}
-	
 	
 	jDate.prototype.renderHeader =  function(){
 		
@@ -46,7 +45,6 @@
 			year = sd.getFullYear(),
 			month = sd.getMonth(),
 			date = sd.getDate(),
-			day = sd.getDay(),
 			
 			temp = new Date(year, month, date),
 			tempdate, 
@@ -131,7 +129,7 @@
 		
 		/**
 		 * 返回格式化日期字符串
- 		 * @param {Object} date Date object
+ 		 * @param {Object} d Date object
 		 */
 		function formatdate(d){
 			var tdstr = '<td class="';
@@ -155,15 +153,13 @@
 	};
 	
 	jDate.prototype.renderThead =  function(){
-		var _ = this,
-			thead = '<thead><tr>';
-		
-		_.table = $('<table class="ui-date-table"></table>');
+		var thead = '<thead><tr>';
+		this.table = $('<table class="ui-date-table"></table>');
 		for(var i = 0 ; i < 7 ; i ++){
-			thead += '<th>' + _.cfg.week[i] + '</th>';
+			thead += '<th>' + this.cfg.week[i] + '</th>';
 		}
 		thead +='</tr></thead>';
-		_.table.append(thead);		
+		this.table.append(thead);		
 	};
 	
 	jDate.prototype.show =  function(){
@@ -199,7 +195,6 @@
 		var _ = this;
 		
 		this.table.find("td:not('.ui-date-disabled')").on("click.jdate", function(){
-			
 			if(typeof _.cfg.click === "function"){
 				_.cfg.click(this);				
 			}
@@ -244,6 +239,7 @@
 		}, options);
 		
 		return this.each(function(){
+			var jd;
 			//是input元素或者type为toggle
 			if(config.type === "toggle" || this.tagName.toLowerCase() == "input"){
 				$(this).on("click", function(ev){
@@ -267,13 +263,13 @@
 					}
 					
 					$(this).data("jdid", "jdate" + ev.timeStamp);			
-					new jDate($(this), config);
+					jd = new jDate($(this), config);
 				});				
 			}else{
 				if($(this).data('date')){
 					config.date = getDate($(this).data('date'));
 				}
-				new jDate($(this), config);
+				jd = new jDate($(this), config);
 			}
 		});
 			
