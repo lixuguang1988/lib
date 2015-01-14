@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>jquery.jdate.js example</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/normalize.css">
+        <style>
+        	input{border:1px solid #ddd;padding:4px 10px;line-height:20px;height:20px;width:120px;}
+        	
+        	/*jdate css*/
+        	.ui-date-wrap{width:300px;background:#EEEEEE;line-height:30px;color:#555555;font-size:14px;font-family:"Microsoft yahei", "simHei", "simsun", sans-serif;}
+        	.ui-date-header{text-align:center;height:30px;}
+        	.ui-date-btn{font-family:Helvetica, sans-serif;font-size:24px;float:left;text-decoration: none;width:30px;text-align:center;color:#336699}
+        	.ui-date-btn:hover{color:#0077FF}
+        	.ui-date-btn:active{color:#336699}
+        	.ui-date-next{float:right}
+        	.ui-date-table{width:100%;text-align:center}
+        	.ui-date-table th{background:#9e9e9e;color:#fff;line-height:40px}
+        	.ui-date-table td{cursor: pointer}
+        	.ui-date-table .ui-date-disabled{color:#999;cursor: default}
+        	.ui-date-table .ui-date-today{color:#24B999;}
+        	.ui-date-table .ui-date-active{background:#24B999;color:#fff}
+        </style>
+    </head>
+    <body>
+    	<div style="margin:40px auto;width:600px;padding:20px;">
+			<div id="date1" class="date" data-date =""></div>
+		</div>
+
+		
+		<div style="margin:40px auto;width:600px;padding:20px;">
+			<h1>点击输入框弹出弹出框</h1>
+			选择日期:<input type="text" value="2015-12-13" id="date3" readonly>
+		</div>
+		<div style="margin:40px auto;width:600px;padding:20px;">
+			<h1>点击文字弹出弹出框</h1>
+			<span id="date4" data-jdfor="date5" class="date">选择日期:</span><input type="text" value="2015-12-13" id="date5" readonly>
+			<div>
+				<small><code>$("#date5").click(function(){
+				$("#date4").click();
+			});</code></small>
+			</div>
+		</div>
+		<script src="./js/jquery.1.7.2.js"></script>
+		<script src="../jquery.jdate.js"></script>
+		<script>
+			$("#date1").jdate({
+				//date : new Date(2015, 11, 13),
+				monthchange : function(date){
+					alert(date.toString());
+				},
+				click : function(elem){
+					alert($(elem).data('date'));
+				},
+				monthchangeafter : function(elem, cfg, obj){
+	
+				}
+			});
+			$("#date3").jdate();
+			$("#date4").jdate({
+				type : 'toggle'
+			});
+			$("#date5").click(function(){
+				$("#date4").click();
+			});
+		</script>
+    </body>
+</html>
