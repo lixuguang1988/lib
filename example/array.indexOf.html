@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>indexOf Array</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/normalize.css">
+        <script>
+        	
+        	if(!Array.prototype.indexOf){
+        		Array.prototype.indexOf =  function(item){
+        			for(var i = 0, len = this.length; i < len; i++){
+        				if(this[i] === item){
+        					return i;
+        				}
+        			}
+        			return -1;
+        		};
+        	}
+        	
+        	
+        	
+        </script>        
+    </head>
+    <body>
+        <script>
+        	
+        	if(!Array.prototype.indexOf){
+        		Array.prototype.indexOf =  function(item){
+        			for(var i = 0, len = this.length; i < len; i++){
+        				if(this[i] === item){
+        					return i;
+        				}
+        			}
+        			return -1;
+        		};
+        	}
+        	
+        	var sz = ['12', '24', 34, 56, ,],
+        		card = {
+        			name : "lixuguang",
+        			phone : '15651967976'
+        		};
+        		
+        	sz.push(card);
+        	
+        	document.write(sz.indexOf('34') + "<hr>");
+        	document.write(sz.indexOf(56) + "<hr>");
+        	document.write(sz.indexOf({
+        			name : "lixuguang",
+        			phone : '15651967976'
+        		}) + "<hr>");
+        	document.write(sz.indexOf(card) + "<hr>");
+        </script> 		
+    </body>
+</html>

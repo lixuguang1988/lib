@@ -11,20 +11,20 @@
 .nice-select-lst{position: absolute;left:-1px;top:33px;width:102px;background:#fff;border-bottom:1px solid #a1b4da;display:none}
 .nice-select-lst li{text-indent:15px;border:1px solid #a1b4da;border-top:none;border-bottom:none;cursor: pointer}
 .nice-select-lst li.selected{background:#ccc}
- 
  */
 ;(function($){
 	$.fn.jselect = function(options){
 		var config  = $.extend({
 			prefix : 'nice-select',
-			onclick : null  //function(value, selectedIndex)
+			extraclass : '',
+			click : null  //function(value, selectedIndex)
 		}, options);
 		
 		this.each(function(){
     			var that = this, //dom node
     				elem = $(this), //jq对象
     				wrap = $("<div />",{
-    					"class" : config.prefix,
+    					"class" : config.prefix + config.extraclass,
     					"click" : function(event){
     						/*
     						event.stopPropagation();
@@ -74,8 +74,8 @@
     				//关闭下拉选项
     				arrow.trigger('click');
     				
-    				if(typeof config.onclick === "function"){
-    					config.onclick(this.innerHTML, that.selectedIndex);
+    				if(typeof config.click === "function"){
+    					config.click(this.innerHTML, that.selectedIndex);
     				}
     			});
 		});
