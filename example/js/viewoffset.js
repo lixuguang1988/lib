@@ -30,9 +30,9 @@ function getViewportSize(w){
   //对标准模式下的IE（或其他浏览器）
   var doc = w.document;
   if(document.compatMode == "CSS1Compat"){
-    return {w : doc.documentElement.clientWidth, h : doc.documentElement.clientWidth};
+    return {w : doc.documentElement.clientWidth, h : doc.documentElement.clientHeight};
   }
   
   //怪异模式下的浏览器
-  return {w : doc.body.clientWidth, h : doc.body.clientWidth};
+  return {w : doc.body.clientWidth, h : doc.body.clientHeight};
 }
