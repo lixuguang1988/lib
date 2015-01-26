@@ -190,11 +190,16 @@ MapX.getBounds = function(){
 };
 
 MapX.renderOverlay = function(){
-	var index; /*存储银行网点的覆盖物*/
+	var index, /*存储银行网点的覆盖物*/
+	    lastpoint,
+	    point;
 		
 	//清除非激活的覆盖物	
 	this.clearOverlay();
 	index = this.overlays.length;
+	if(index == 1){
+		lastpoint = this.overlays[0];
+	}	
 	//清空面板
 	this.panel.innerHTML = '';
 	
@@ -205,8 +210,8 @@ MapX.renderOverlay = function(){
 			continue;
 		}
 		
-		var point = new BMap.Point(msdot[i].lng, msdot[i].lat);	
-		if(this.overlays.length== 1 && point.equals(this.overlays[0])){
+		point = new BMap.Point(msdot[i].lng, msdot[i].lat);	
+		if(point.equals(lastpoint)){
 			continue;
 		}
 		var bankdot = new BankDotOverlay(this.map, point, msdot[i].title, index, {width:34,height:44});
@@ -223,8 +228,10 @@ MapX.renderOverlay = function(){
  * 清除非激活的覆盖物 
  */
 MapX.clearOverlay = function(){
-	var temp = [];
-	for(var i = 0 ; i < this.overlays.length; i++){
+	var temp = [],
+	i = 0,
+	len = this.overlays.length;
+	for( ; i < len ; i++){
 		if(this.overlays[i]._active !== true){
 			this.map.removeOverlay(this.overlays[i]);
 		}else{
