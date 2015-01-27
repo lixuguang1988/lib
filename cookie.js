@@ -1,4 +1,4 @@
-//base on  Professional JavaScript for Web(2)
+//base on  Professional JavaScript for Web(1)
 //cookie设置的格式
 //cookie_name=cookie_value; expires=expiration_time; path=domain_pah; domain=domain_name; secure
 var Cookie = Cookie || {};
@@ -7,7 +7,7 @@ var Cookie = Cookie || {};
  * 设置cookie的值
  * @param {string} sName cookie的名字
  * @param {string} sValue cookie的值
- * @param {Date} oExpires cookie的过期日期
+ * @param {date} oExpires cookie的过期日期
  * @param {string} sPath  cookie的路径
  * @param {string} sDomain cookie的域名 
  * @param {boolean} bSecure cookie是否是安全连接https||ssl
