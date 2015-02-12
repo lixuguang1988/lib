@@ -89,7 +89,7 @@ XGallery.prototype.showPrevNext =  function(event){
 	//console.log(this);
 	this.imgsource = this.ul.eq(this.index).get(0).src;
 	this.show(this.imgsource);
-}
+};
 
 XGallery.prototype.show =  function(imgsource){
 	var _ = this,
