@@ -28,7 +28,7 @@
 			 //要移动的元素没有超出,禁用
 			 if(realWidth < wrapWidth ){
 				 _next.addClass('disabled'); 
-				 _prev.addClass('disabled') 
+				 _prev.addClass('disabled'); 
 				 return false;
 		     }
 			 _content.css('width', realWidth);
