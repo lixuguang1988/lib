@@ -14,7 +14,7 @@ var mobile =  function(){
 		}(),
 		alert : function(options){
 			var  _ = this, fw;
-			options = $.extend({header: "", button: "确定"}, options);
+			options = $.extend({title: "", button: "确定"}, options);
 			this.close();
 			
 			fw = this.fixWidth(options.width);
@@ -22,7 +22,7 @@ var mobile =  function(){
 			this.modal.css({
 				"width" : fw.width,
 				"margin-left": fw.marginLeft
-			}).append("<div class=\"modal-header\">" + options.header + "<\/div><div class=\"modal-content\">" + options.content + "<\/div><div class=\"modal-action\">" + options.button + "<\/div>");
+			}).append("<div class=\"modal-header\">" + options.title + "<\/div><div class=\"modal-content\">" + options.content + "<\/div><div class=\"modal-action\">" + options.button + "<\/div>");
 			
 			$('body').append(this.mask, this.modal);
 			
@@ -35,7 +35,7 @@ var mobile =  function(){
 		},
 		confirm : function(options){
 			var  _ = this, fw;
-			options = $.extend({header: "", cancel: "返回", ok: "确定"}, options);
+			options = $.extend({title: "", cancel: "返回", ok: "确定"}, options);
 			this.close();
 			
 			fw = this.fixWidth(options.width);
@@ -43,7 +43,7 @@ var mobile =  function(){
 			this.modal.css({
 				"width" : fw.width,
 				"margin-left": fw.marginLeft
-			}).append("<div class=\"modal-header\">" + options.header + "<\/div><div class=\"modal-content\">" + options.content + "<\/div><div class=\"modal-action modal-confirm-action\"><span class=\"modal-action-cancel\">" + options.cancel + "<\/span><span class=\"modal-action-ok\">" + options.ok + "<\/span><\/div>");
+			}).append("<div class=\"modal-header\">" + options.title + "<\/div><div class=\"modal-content\">" + options.content + "<\/div><div class=\"modal-action modal-confirm-action\"><span class=\"modal-action-cancel\">" + options.cancel + "<\/span><span class=\"modal-action-ok\">" + options.ok + "<\/span><\/div>");
 			
 			$('body').append(this.mask, this.modal);
 			
