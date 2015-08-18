@@ -7,7 +7,9 @@
 示例：example/slide.html
 
 ******
-
+   
+   
+   
 ## mobile.js
 
 移动端的弹出层
@@ -41,7 +43,9 @@ $("h3").click(function(){
 });
 ```
 ******
-
+   
+   
+   
 ## jquery.jmodal.js
 
 一个弹出层jquery插件.支持ajax(必须http(s)://来访问),html,ID及各种回调函数   
