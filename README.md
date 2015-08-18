@@ -15,8 +15,8 @@
 ## mobile.js
 
 移动端的弹出层
-###使用方法：
-####提示框
+####使用方法：
+#####提示框
 ```javascript
 mobile.modal.alert({
  title: "提示",
@@ -24,14 +24,14 @@ mobile.modal.alert({
  button: "知道了"
 });
 ```
-####加载中...
+#####加载中...
 ```javascript
 mobile.modal.modern({type: "ing", content: "加载中.."});
 setTimeout(function(){
  mobile.modal.close();
 }, 3000)
 ```
-####确认框
+#####确认框
 ```javascript
 $("h3").click(function(){
  var elem = this;
