@@ -4,10 +4,11 @@
  *
  */
 function parseXml(xml){
-    var xmldoc = null;
+    var xmldoc = null,
+        errors;
     if(typeof DOMParse != "undefined"){
         xmldoc = (new DOMParse).parseFromString(xml, "text/xml");
-        var errors = xmldoc.getElementsByTagName("parseError");
+        errors = xmldoc.getElementsByTagName("parseError");
         if(errors.length){
             throw new Error("XML parsing error:" + errors[0].textContent);
         }
