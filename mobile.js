@@ -1,23 +1,21 @@
 var mobile =  function(){
 	//弹出层
 	var  modal = {
-		mask : function(){
-			return $("<div class=\"modal-mask\" \/>");
-		}(),
-		modal : function(){
-			return $("<div class=\"modal-main\" \/>");
-		}(),
-		eventName : function(){
+		init: function(){
+			this.modal = $("<div class=\"modal-main\" \/>");
+			this.mask = $("<div class=\"modal-mask\" \/>");
 			//是否是手机浏览器返回对应的事件
 			//click事件在手机上点击有阴影
-			return navigator.userAgent.indexOf("Mobile") > - 1 ? "touchstart" : "click";
-		}(),
-		timer : null,
+			this.eventName = navigator.userAgent.indexOf("Mobile") > - 1 ? "touchstart" : "click";
+			this.timer = null;
+		},
 		alert : function(options){
 			var  self = this, fw;
 			options = $.extend({title: "", button: "确定"}, options);
 			self.close();
 			self.clearTimer();
+			
+			self.init();
 			
 			fw = self.fixWidth(options.width);
 			
