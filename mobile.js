@@ -12,55 +12,68 @@ var mobile =  function(){
 			//click事件在手机上点击有阴影
 			return navigator.userAgent.indexOf("Mobile") > - 1 ? "touchstart" : "click";
 		}(),
+		timer : null,
 		alert : function(options){
-			var  _ = this, fw;
+			var  self = this, fw;
 			options = $.extend({title: "", button: "确定"}, options);
-			this.close();
+			self.close();
+			self.clearTimer();
 			
-			fw = this.fixWidth(options.width);
+			fw = self.fixWidth(options.width);
 			
-			this.modal.css({
+			self.modal.css({
 				"width" : fw.width,
 				"margin-left": fw.marginLeft
 			}).append("<div class=\"modal-header\">" + options.title + "<\/div><div class=\"modal-content\">" + options.content + "<\/div><div class=\"modal-action\">" + options.button + "<\/div>");
 			
-			$('body').append(this.mask, this.modal);
+			$('body').append(self.mask, self.modal);
 			
 			//bind event
-			$(".modal-action").one(this.eventName, function(e){
+			$(".modal-action").one(self.eventName, function(e){
 				e.preventDefault();
-				_.close();
+				self.timer = setTimeout(function(){
+					self.close();
+				},250);
+				if(typeof options.callback === "function"){
+					options.callback.apply(null, options.args);
+				}
 			});
-			
 		},
 		confirm : function(options){
-			var  _ = this, fw;
-			options = $.extend({title: "", cancel: "返回", ok: "确定"}, options);
-			this.close();
+			var  self = this, fw;
+			options = $.extend({title: "", cancel: "返回", ok: "确定", args: []}, options);
+			self.close();
+			self.clearTimer();
 			
-			fw = this.fixWidth(options.width);
+			fw = self.fixWidth(options.width);
 			
-			this.modal.css({
+			self.modal.css({
 				"width" : fw.width,
 				"margin-left": fw.marginLeft
 			}).append("<div class=\"modal-header\">" + options.title + "<\/div><div class=\"modal-content\">" + options.content + "<\/div><div class=\"modal-action modal-confirm-action\"><span class=\"modal-action-cancel\">" + options.cancel + "<\/span><span class=\"modal-action-ok\">" + options.ok + "<\/span><\/div>");
 			
-			$('body').append(this.mask, this.modal);
+			$('body').append(self.mask, self.modal);
 			
 			//bind event
-			$(".modal-action-cancel").one(this.eventName, function(e){
-				_.close();
+			$(".modal-action-cancel").one(self.eventName, function(e){
+				self.close();
 			});
 			//bind event
 			$(".modal-action-ok").one(this.eventName, function(e){
+				self.close();
 				if(typeof options.callback === "function"){
-					options.callback();
+					options.callback.apply(null, options.args);
 				}
-				_.close();
 			});	
+		},
+		clearTimer : function(){
+			if(this.timer){
+				clearTimeout(this.timer);
+			}
 		},
 		modern : function(options){
 			this.close();
+			this.clearTimer();
 			this.modal.css({
 				"width" : "80px",
 				"margin-left": "-40px",
@@ -70,8 +83,12 @@ var mobile =  function(){
 			
 		},
 		close : function(){
-			this.modal.empty().remove();
-			this.mask.empty().remove();
+			var self = this;
+			//console.log(this.timer);
+			self.modal.empty().remove();
+			self.timer = setTimeout(function(){
+				self.mask.empty().remove();
+			}, 300);
 		},
 		//定位modal-main的位置
 		fixWidth: function(w){
@@ -84,7 +101,6 @@ var mobile =  function(){
 			
 			return fw;
 		}
-		
 	};
 	
 	
