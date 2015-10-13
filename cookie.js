@@ -23,7 +23,7 @@ Cookie.set =  function(sName, sValue, oExpires, sPath, sDomain, bSecure){
 		sCookie +="; domain=" + sDomain;
 	}
 	if(bSecure){
-		sCookie +="; secure=" + bSecure;
+		sCookie +="; secure";
 	}
 	document.cookie = sCookie;
 };
