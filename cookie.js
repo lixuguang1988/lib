@@ -46,8 +46,9 @@ Cookie.get = function(sName){
  * @param {string} sName 待删除cookie的名字
  * @param {string} sPath 待删除cookie的路径  (删除指定的cookie sPath,sDomain要和设置的时候一致才可删除成功)
  * @param {string} sDomain 待删除cookie的域名
+ * @param {boolean} bSecure cookie是否是安全连接https||ssl
  */
-Cookie.clear =  function(sName, sPath, sDomain){
-	this.set(sName, "", new Date(0), sPath, sDomain);
+Cookie.clear =  function(sName, sPath, sDomain, bSecure){
+	this.set(sName, "", new Date(0), sPath, sDomain, bSecure);
 };
 
