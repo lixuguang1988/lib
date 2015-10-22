@@ -1,4 +1,4 @@
-//ie8以前的node是com对象
+//ie8以前的NodeList是com对象
 function convertToArray(nodes){
     var array = null;
     try{
