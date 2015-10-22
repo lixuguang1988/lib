@@ -13,7 +13,7 @@ function outputAttributes(element){
         if(attrs[i].specified){
             attrName = attrs[i].nodeName;
             attrValue = attrs[i].nodeValue;
-            pairs.push(attrName + "=" + attrValue;
+            pairs.push(attrName + "=\"" + attrValue + "\"";
         }
         i++;
     }
