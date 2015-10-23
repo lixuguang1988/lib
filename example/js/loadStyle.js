@@ -1,7 +1,8 @@
+//link一定要添加到head里,才能保证浏览器兼容
 function loadStyle(url){
     var link = document.createElement("link");
+    link.rel="stylesheet";    
     link.type= "text/style";
-    link.rel="stylesheet";
     link.href = url;
     document.getElementsByTagName("head")[0].appendChild(link);
 }
