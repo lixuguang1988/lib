@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>FullPage</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/normalize.css">
+        <style>
+            .fullpage{position:relative;left:0;right:0;overflow: hidden;}
+            .fullpage-item{height:100%;width:100%;position:absolute;left:0;right:0;color:#fff;}
+            .fullpage-item:nth-child(1){background:#6495ed}
+            .fullpage-item:nth-child(2){background:#78A7FB}
+            .fullpage-item:nth-child(3){background:#1e90ff}
+            .fullpage-item:nth-child(4){background:#96B8F7}
+            .fullpage-item:nth-child(5){background:#B1CAF9}
+        </style>
+    </head>
+    <body>
+        <div class="fullpage">
+            <div class="fullpage-item">
+                <h2>习近平：十三五经济增速不应低于6.5%</h2>
+                <div class="">昨日，新华社发布《中共中央关于制定国民经济和社会发展第十三个五年规划的建议》(下称《建议》)，不仅保护环境被明确列为宏观调控的目标之一，能源和水资源消耗、建设用地等指标，也将形成总量和强度双控约束。一套兼顾质量、效益、环境和中长期协调的多元目标体系，由此将成为中国各项经济发展政策的新指导框架。</div>
+            </div>
+            <div class="fullpage-item">
+                <h2>天津金改33条或近期出台 与北京错位发展</h2>
+                <div>
+                    <p>天津滨海新区多位知情人士告诉21世纪经济报道，天津金融改革33条将出台，目前文件已经成形，只剩一些细则的修改，或于11月下旬公布。</p>
+                    <p>10月底，上海自贸区金改新40条【即《进一步推进中国(上海)自由贸易试验区金融开放创新试点、加快上海国际金融中心建设方案》】刚出炉，提出率先实现人民币资本项目可兑换、进一步扩大人民币跨境使用、不断扩大金融服务业对内对外开放、加快建设面向国际的金融市场、不断加强金融监管和切实防范风险。</p>
+                </div>
+            </div>
+            <div class="fullpage-item">
+                3<span></span>
+            </div>
+            <div class="fullpage-item">
+                4
+            </div>
+            <div class="fullpage-item">
+                5
+            </div>
+        </div>
+        <script src="js/jquery.1.7.2.js"></script>
+        <script src="../fullpage.js"></script>
+        <script>
+            $(document).ready(function(){
+                var fp = new Fullpage({
+                    element : $(".fullpage")
+                });
+                console.log(fp);
+            })
+        </script>
+    </body>
+</html>
