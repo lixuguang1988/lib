@@ -101,6 +101,12 @@ Fullpage.prototype= {
         }
 
     },
+    /**
+     *
+     * @param diff
+     * 实时移动元素位置
+     *
+     */
     moveElement: function (diff){
         var self = this,
             top;
@@ -113,6 +119,9 @@ Fullpage.prototype= {
             "top" : top
         });
     },
+    /**
+     * 移动元素到最终位置
+     */
     moveEnd: function(){
         var self = this;
         this.moveTarget.animate({
@@ -134,6 +143,10 @@ Fullpage.prototype= {
             self.flag = false;
         });
     },
+    /**
+     * 取消移动元素，重置移动元素为初始位置
+     *
+     */
     moveCancel: function(diff){
         var self = this,
             top ;
