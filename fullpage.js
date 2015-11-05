@@ -162,7 +162,7 @@ Fullpage.prototype= {
         });
     },
     getViewport: function(){
-        if (window.innerWidth) {
+        if (typeof window.innerWidth == "number") {
             return {width: window.innerWidth, height: window.innerHeight};
         }
         if (document.compatMode === "CSS1Compat") {
