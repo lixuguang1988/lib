@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title></title>
+    <style>
+        .progress{position: relative;margin:50px;background: #eee;float:left;width: 110px;height:110px;}
+        .progress-circle{position: absolute;z-index:3;left:0;top:0;border:5px solid #FCD5D5;width:100px;height:100px;border-radius:50%;-webkit-border-radius:50%;}
+        #cvs{position: relative;z-index:5;}
+    </style>
+
+</head>
+<body>
+        <div class="progress">
+            <div class="progress-circle"></div>
+            <canvas id="cvs" width="110" height="110"></canvas>
+        </div>
+        <script>
+            var cvs = document.getElementById("cvs"),
+                    context2d = null;
+            if(cvs.getContext("2d")){
+                context2d = cvs.getContext("2d");
+//                context2d.beginPath();
+//                context2d.arc(cvs.width/2 , cvs.height/2, 52, angleToRadian(270), angleToRadian(180), false);
+//                context2d.strokeStyle = "red";
+//                context2d.lineWidth = 4;
+//                context2d.stroke();
+
+                drawArc(context2d, cvs.width/2 , cvs.height/2, 52, 0, 100);
+            }
+
+            //角度制转换为弧度制
+            function angleToRadian(angle){
+                return Math.PI / 180 * angle;
+            }
+            //r = Math.PI /180 * angle;
+
+            //弧度制转换成角度制
+            function radianToAngle(radian){
+                return radian * 180 / Math.PI;
+            }
+
+            //百分比56(%)转换成弧度制
+            function percentToRadian(percent){
+                //Math.PI / 180 * (percent / 100 * 360)
+                return Math.PI  * percent / 50;
+            }
+
+            function drawArc(ctx, x, y, radius, currentAngle, endAngle){
+                if(!endAngle){return false;}
+                ctx.canvas.width = ctx.canvas.width; //清除画布
+                ctx.beginPath(); //开始路径
+//                if(currentAngle == 100){
+//                    ctx.arc(x, y, radius, angleToRadian(270), angleToRadian(-90), false);
+//                }else{
+                    //画弧 从0点钟位置开始 画到百分比(%)-25(也从0点钟位置开始) ,顺时针方向画
+                    ctx.arc(x, y, radius, angleToRadian(-90), percentToRadian(currentAngle - 25), false);
+//                }
+                ctx.strokeStyle = "red"; //设置秒边颜色为红色
+                ctx.lineWidth = 4; //设置县宽度为4px
+                ctx.stroke(); //描边
+                currentAngle++;
+                if(currentAngle <= endAngle){
+                    setTimeout(function(){
+                        drawArc(ctx, x, y, radius, currentAngle, endAngle);
+                    }, 10);
+                }
+            }
+
+        </script>
+</body>
+</html>
