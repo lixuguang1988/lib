@@ -64,7 +64,7 @@ function Modal(options){
     self.btn(); //设置按钮
     self.renderPosition(); //调整窗口位置
 
-    return self;
+    //return self; 构造函数就返回self了.
 };
 
 //主要用来控制主窗口里面显示的内容
