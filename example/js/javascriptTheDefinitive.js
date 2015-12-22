@@ -318,6 +318,206 @@ function fadeOut(elem, oncomplete, time){
 
 
 
+function classList(e){
+    if(e.classList){
+        return e.classList;
+    }else{
+        return new CSSClassList(e);
+    }
+}
+
+function CSSClassList(e){
+    this.e = e;
+}
+
+CSSClassList.prototype.contains =  function(c){
+    var classes = this.e.className,
+        reg = new RegExp("\\b" + c + "\\b", "g");
+    if(!c || c.length == 0 || c.indexOf(" ") > -1 || c.indexOf("\"") > -1 || c.indexOf("'") > -1){
+        throw new Error("Invalid Class Name")
+    }
+
+    //常规检查
+    if(!classes) return false;
+    if(classes === c) return true;
+
+    return reg.test(classes);
+};
+
+CSSClassList.prototype.add = function(c){
+    var classes = this.e.className;
+
+    if(!this.contains(c)){
+        this.e.className = (classes.length > 0) ? (classes + " " + c) : c;
+    }
+};
+
+CSSClassList.prototype.remove =  function(c){
+    var classes = this.e.className,
+        classArray = classes.split(/\s+/g),
+        i = 0,
+        len = classArray.length;
+
+    if(!this.contains(c)) {
+        return ;
+    }
+
+    for(; i < len; i++){
+        if(c === classArray[i] || classArray[i] == ""){
+            delete classArray[i];
+        }
+    }
+    console.log(classArray)
+
+    //把头尾的空格去掉，多个空格换成一个空格
+    this.e.className = classArray.join(" ").replace(/^\s+|\s+$/g, "").replace(/\s+/g, " ");
+};
+
+CSSClassList.prototype.toggle = function(c){
+    if(this.contains(c)){
+        this.remove(c)
+        return false;
+    }else{
+        this.add(c);
+        return true;
+    }
+};
+
+CSSClassList.prototype.toString =  function(){
+    return this.e.className;
+};
+
+CSSClassList.prototype.toArray =  function(){
+    return this.e.className.split(/\s+/g);
+};
+
+//var x = classList(document.querySelector("h1"));
+//x.add("xxxx")
+//x.add("uuu");
+//x.contains("xxxx");
+//x.remove("xxxx");
+
+
+//Array.map方法
+(function(){
+    if(Array.prototype.map){return;}
+    Array.prototype.map =  function(func, context){
+        var self = this.slice(0), //不改变原数组
+            result = [];
+        for(var i = 0; i < self.length ; i++){
+            result.push(func.call(context, self[i], i, self));
+        }
+        return result;
+    }
+}());
+
+
+
+function onLoad(func){
+    if(onLoad.loaded){
+        setTimeout(func, 0);
+    }else if(window.addEventListener){
+        window.addEventListener("load", func, false);
+    }else{
+        window.attachEvent("onload", func);
+    }
+}
+onLoad.loaded = false;
+
+onload(function(){onLoad.loaded = true});
+
+
+//function onLoad2(func){
+//    if(onLoad2.loaded){
+//        setTimeout(func, 0);
+//    }else{
+//        onLoad2.delayList.push(func);
+//        window.onload = function(){
+//            for(var i = 0; i < onLoad2.delayList.length; i++){
+//                onLoad2.delayList.shift()();
+//            }
+//        }
+//    }
+//}
+//onLoad2.loaded = false;
+//onLoad.delayList = [];
+
+//回头要试一下能不能用
+//var loaded = (function(){
+//    var funcs = [],
+//        loaded = false,
+//        register = false;
+//
+//    return function(func){
+//       if(loaded){
+//           setTimeout(func, 0);
+//       }else{
+//           funcs.push(func);
+//           if(!register){
+//               window.onload = function(){
+//
+//                   for(var i = 0; i < funcs.length; i++){
+//                       funcs[i]();
+//                   }
+//                   loaded = true;
+//                   funcs = null;
+//               }
+//               register = true;
+//           }
+//       }
+//    }
+//
+//}());
+
+
+var whenReady = (function(){/*立即执行的函数*/
+    var ready = false,
+        funcs = [] /*待执行的函数队列*/;
+
+    function handler(e){
+        if(ready) return;
+
+        //readystatechange 但不是 文档加载完成
+        if(e.type === "readystatechange" && document.readyState !== "complete"){
+            return
+        }
+
+        /**
+         * 运行待执行的函数队列
+         * funcs.length不要优化为 var length = funcs.length;
+         * 防止事件队列执行过程中，funcs添加了更多事件
+         */
+        for(var i = 0; i < funcs.length ; i++){
+            funcs[i].call(document);
+        }
+
+        ready = true;
+        funcs = null
+
+    }
+
+    //注册页面加载完成的事件
+    if(document.addEventListener){
+        document.addEventListener("DOMContentLoaded", handler, false);
+        document.addEventListener("readystatechange", handler, false);
+        window.addEventListener("load", handler, false);
+    }else {
+        //document.attachEvent("onDOMContentLoaded", handler); //IE8<=没有DOMContentLoaded
+        document.attachEvent("onreadystatechange", handler);
+        window.attachEvent("onload", handler);
+    }
+
+
+    //返回whenReady为一个函数
+    return function(f){
+        if(ready){ //如果页面已经加载好了，立即执行函数
+            f.call(document);
+        }else{
+            funcs.push(f);
+        }
+    }
+}());
+
 
 
 
