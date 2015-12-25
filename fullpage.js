@@ -87,7 +87,7 @@ Fullpage.prototype= {
                     }
                     break;
                 case pointer[2] :
-                    if(self.moveTarget.length && element){
+                    if(self.moveTarget && self.moveTarget.length && element){
                         self.flag = true;
                         if(Math.abs(diffY) > self.gap){
                             self.moveEnd();

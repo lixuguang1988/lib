@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>拖拽排序</title>
+    <style type="text/css">
+        .enclose{border:1px solid #ddd;margin:10px;}
+    </style>
+
+</head>
+<body>
+        <input id="uploadfile" name="fileToUpload" type="file" data-uploadto="./app/filexhr2.php">
+        <script>
+            document.addEventListener("DOMContentLoaded", function(){
+                document.querySelector("#uploadfile").addEventListener("change", function(){
+                    var xhr = new XMLHttpRequest(),
+                            file = this.files[0],
+                            formData = new FormData();
+
+                    if(!file) return;
+                    formData.append("fileToUpload", file);
+                    xhr.open("POST", this.dataset.uploadto, true);
+                    xhr.send(formData);
+
+                }, false);
+            }, false)
+
+        </script>
+</body>
+</html>

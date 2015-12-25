@@ -642,6 +642,423 @@ function getScrollOffsets(w){
 
 
 
+function enclose(content, framewidth, frameheight, contentX, contentY){
+    framewidth = Math.max(framewidth, 50);
+    frameheight = Math.max(frameheight, 50);
+    contentX = Math.min(contentX, 0) || 0;
+    contentY = Math.min(contentY, 0) || 0;
+
+
+    var frame = document.createElement("div")
+    frame.className = "enclose";
+    frame.style.width = framewidth + "px";
+    frame.style.height =  frameheight + "px"
+    frame.style.overflow = "hidden";
+    frame.style.boxSizing = "border-box";
+    frame.style.webkitBoxSizing = "-webkit-border-box";
+    frame.style.mozBoxSizing = "-moz-border-box";
+
+    //把frame作为content的父节点
+    content.parentNode.insertBefore(frame, content);
+    frame.appendChild(content);
+
+    //更新content位置
+    content.style.position = "relative";
+    content.style.left = contentX + "px";
+    content.style.top = contentY + "px";
+
+
+    //不能放到其他项目上用
+    //firefox、chrome、safari、opera navigator.userAgent都包含Gecko的字符串
+    var isMacWebkit = navigator.userAgent.indexOf("Macintosh") !== -1 && navigator.userAgent.indexOf("Webkit") !== -1;
+    var isSupportDOMMouseScroll = (function() {
+        var div = document.createElement("div"), result;
+        result = "onDOMMouseScroll" in div;
+        div = null;
+        return result;
+    }());
+
+    //注册mousewheel事件处理程序
+    frame.onwheel = wheelHandler;
+    frame.onmousewheel = wheelHandler;
+
+    if(isSupportDOMMouseScroll){
+        frame.addEventListener("DOMMouseScroll", wheelHandler, false);
+    }
+
+
+    function wheelHandler(event){
+        var e = event || window.event; //获得事件对象
+
+        var deltaX = e.deltaX * -30 || e.wheelDeltaX/4 || 0;
+        var deltaY = e.deltaY * -30 || e.wheelDelta/4 || (e.wheelDeltaY === undefined && e.wheelDelta/4) || e.detail* -10 || 0;
+
+        if(isMacWebkit){
+            deltaX /= 30;
+            deltaY /= 30;
+        }
+
+        deltaY  /= 50;
+        console.log(deltaX);
+
+        if(isSupportDOMMouseScroll  && e.type !== "DOMMouseScroll"){
+            frame.removeEventListener("DOMMouseScroll", wheelHandler, false);
+        }
+
+        var contentbox = content.getBoundingClientRect();
+        var contentwidth = contentbox.right - contentbox.left;
+        var contentheight = contentbox.bottom - contentbox.top;
+
+        if(e.altKey){
+            if(deltaX){
+                framewidth -= deltaX;
+                framewidth = Math.min(framewidth, contentwidth);
+                framewidth = Math.max(framewidth, 50);
+                frame.style.width = framewidth + "px";
+            }
+            if(deltaY){
+                frameheight -= deltaX;
+                frameheight = Math.min(frameheight, contentheight);
+                frameheight = Math.max(frameheight, 50);
+                frame.style.width = frameheight + "px";
+            }
+        }else{
+            if(deltaX) {
+                var minoffset = Math.min(framewidth - contentwidth, 0);
+                contentX = Math.max(contentX + deltaX, minoffset);
+                contentX = Math.min(contentX, 0);
+                content.style.left = contentX + "px"
+            }
+            if(deltaY){
+                var minoffset = Math.min(frameheight - contentheight, 0);
+                contentY = Math.max(contentY + deltaY, minoffset);
+                contentY = Math.min(contentY, 0);
+                console.log(contentY);
+                content.style.top = contentY + "px"
+            }
+        }
+
+        //阻止事件的默认行为
+        if(e.preventDefault){
+            e.preventDefault();
+        }else{
+            e.cancelBubble = true;
+        }
+
+        //阻止事件冒泡,不让其他元素看到
+        if(e.stopPropagation){
+            e.stopPropagation();
+        }else{
+            e.returnValue = false;
+        }
+        return false;
+
+
+    }
+}
+
+
+/**
+ *  返回parent是否是child的父级(祖先)节点
+ * @param child 待判定的子节点
+ * @param parent 待判定的子节点
+ * @returns {boolean}
+ */
+
+function isChild(child, parent){
+    for( ; child ; child = child.parentNode){
+        if(child === parent){
+            return true;
+        }
+    }
+    return false;
+}
+
+
+function dnd(list){
+    //保存list的原始类
+    var original_class = list.className,
+        entered = 0 ; //跟踪进入和离开  dragenter ,dragleave事件是冒泡的
+
+    //处理拖放目标的dragenter、dragover、dragleave、drop事件
+    list.ondragenter = function(e){
+        e = e || window.event;//获得事件对象或者IE<=8的事件对象
+        var from = e.relatedTarget; //标准里面通过relatedTarget判断从哪里来的， IE<=8 里通过entered来判断
+
+
+        entered++;
+        console.log("dragenter: " + entered);
+
+        //从list外面首次进入list
+        if( (from && !isChild(from, list)) || entered == 1){
+            var dt = e.dataTransfer, //获取DnD的 dataTransfer
+                types = dt.types; //dataTransfer中可用的数据类型 IE<=8中不存在
+            console.log(dt);
+            //如果没有任何类型的数据ie8 或 可用数据是纯文本格式
+            //高亮显示
+            //同时返回false通知浏览器
+            if(!types || (types.contains && types.contains("text/plain")) &&  types.indexOf && types.indexOf("text/plain") != -1 ){
+                list.className = original_class + " droppable";
+                return false;
+            }
+
+            return; //没有取消
+        }
+
+        return false; //如果不是第一次进入，继续返回false通知浏览器
+    }
+
+    //程序返回false，否则拖放操作就取消了
+    list.ondragover = function(){return false;}
+
+    list.ondragleave =  function(e){
+        e  =  e || window.event;
+        var to = e.relatedTarget;
+
+        entered--;
+        console.log("dragleave:" + entered);
+
+        //如果离开list 或者 打破离开进入次数的平衡
+        //那么取消高亮显示列表
+        if((to && !isChild(to, list)) &&  entered <=0){
+            list.className = original_class;
+            entered = 0;
+        }
+        return false;
+    }
+
+
+    list.ondrop = function(e){
+        e = e || window.event;
+
+        var dt = e.dataTransfer,//得到dataTransfer
+            text = dt.getData("Text");
+
+        console.log(text);
+        if(text){
+            list.appendChild(document.getElementById(text));
+
+            list.className = original_class;
+            entered = 0 ;
+            return false;
+        }
+    }
+
+    var items = list.getElementsByTagName('li');
+    for(var i = 0 ; i < items.length ; i++){
+        items[i].draggable = true;
+    }
+
+
+    //设置拖动源的dragstart、dragend事件
+    list.ondragstart = function(e){
+        e = e || window.event;
+        var target = e.target || e.srcElement,
+            dt  = e.dataTransfer;
+
+        //如果拖动的不是li
+        if(target.tagName !== "LI") {return false;}
+
+        console.log(target.textContent);
+        //设置拖动数据和拖动效果
+        dt.setData("Text", target.id);
+        dt.effectAllowed = "copyMove";
+
+    }
+
+    list.ondragend = function(e){
+        e = e || window.event;
+        var target = e.target || e.srcElement;
+
+
+        //if(e.dataTransfer.dropEffect === "move"){
+        //    target.parentNode.removeChild(target);
+        //}
+    }
+
+    //网上说可以fixedie9，这里没有用
+    list.onselectstart = function(evt) {
+        this.dragDrop();
+        return false;
+    };
+
+
+}
+
+/**
+ * keyppress对中文没多大用
+ * @param element
+ * @returns {boolean}
+ */
+function inputFilter(element){
+    //如果是字符串就获得node节点
+    if(typeof element  === "string") element = document.getElementById(element);
+
+    var allowChars = element.getAttribute("data-allow-chars"),
+        messageid = element.getAttribute("data-messageid"),
+        messageNode = messageid ? document.getElementById(messageid) : undefined;
+
+    if(!!allowChars === false){
+        return false;
+    }
+
+    if(element.addEventListener){
+        element.addEventListener("keypress", filter, false);
+        element.addEventListener("textinput", filter, false);
+        element.addEventListener("textInput", filter, false); //早期非标准事件
+    }else{
+        element.attachEvent("onkeypress", filter); //ie8< 不支持textinput事件
+    }
+
+
+
+    function filter(event){
+        event = event || window.event;
+        var target = event.target || event.srcElement,
+            code, //输入文本的charcode
+            text,//输入的文本
+            char;
+        console.log(event);
+        if(event.type === "textinput" || event.type === "textInput"){
+            text = event.data;
+        }else{
+            code = event.keyCode || event.charCode;
+            if(code < 32 || event.charCode == 0 /*firefox*/ ){
+                return;
+            }else{
+                text = String.fromCharCode(code);
+            }
+        }
+
+
+        for(var i = 0; i < text.length; i++){
+            char = text.charAt(i);
+            if(allowChars.indexOf(char) === -1){
+                if(messageNode){
+                    messageNode.style.visibility = "visible";
+                }
+                if(event.preventDefault){
+                    event.preventDefault()
+                }else{
+                    event.returnValue = false;
+                }
+                return false; //这个是退出for
+            }
+        }
+        if(messageNode){
+            messageNode.style.visibility = "hidden";
+        }
+
+    }
+}
+
+function forceToUpperCase(element) {
+    if (typeof element === "string") element = document.getElementById(element);
+    element.oninput = upcase;
+    element.onpropertychange = upcaseOnPropertyChange;
+
+    // Easy case: the handler for the input event
+    function upcase(event) {
+        this.value = this.value.toUpperCase();
+    }
+    // Hard case: the handler for the propertychange event
+    function upcaseOnPropertyChange(event) {
+        var e = event || window.event;
+        // If the value property changed
+        if (e.propertyName === "value") {
+            // Remove onpropertychange handler to avoid recursion
+            this.onpropertychange = null;
+            // Change the value to all uppercase
+            this.value = this.value.toUpperCase();
+            // And restore the original propertychange handler
+            this.onpropertychange = upcaseOnPropertyChange;
+        }
+    }
+}
+
+
+
+//implement XMLHttpRequest for ie <=6
+(function(){
+    if(window.XMLHttpRequest === undefined){
+        window.XMLHttpRequest = function(){
+            try{
+                return new ActiveXObject("Msxml2.XMLHTTP.6.0");
+            }catch(e1){
+                try{
+                    return new ActiveXObject("Msxml2.XMLHTTP.3.0");
+                }catch(e2){
+                    throw new Error("don't support XMLHttpReqeust");
+                }
+            }
+        }
+    }
+}());
+
+/**
+ * 把传入的对象转为表单数据 a=xx&b=yy&c=ddd;
+ * @param data
+ * @returns {*}
+ */
+function encodeFormData(data){
+    if(!data) return "";
+    var pairs = [],
+        value;
+    for(var name in data){
+        value = data[name];
+        if(!data.hasOwnProperty(name) || (typeof value === "function") ) continue;
+        name = encodeURIComponent(name);
+        value = encodeURIComponent(value);
+        pairs.push(name + "=" + value);
+    }
+    return pairs.join("&");
+}
+
+
+function postData(url, data, callback){
+    var xhr = new XMLHttpRequest(); //实例化XMLHttpRequest对象
+    xhr.open("POST", url, true); //调用open方法
+    //注册readystatechange事件
+    xhr.onreadystatechange = function(){
+        if( (xhr.status == 304 || (xhr.status >= 200 && xhr.status < 300) ) && xhr.readyState === 4 && callback){
+             callback(xhr.responseText);
+        }
+    };
+    //设置请求头
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    //发送数据
+    xhr.send(encodeFormData(data));
+}
+
+
+function postQuery(url, what, where, radius, callback){
+    var xhr = new XMLHttpRequest(); //实例化XMLHttpRequest对象
+    xhr.open("POST", url, true); //调用open方法
+    //注册readystatechange事件
+    xhr.onreadystatechange = function(){
+        if((xhr.status == 304 || (xhr.status >= 200 && xhr.status < 300) ) && xhr.readyState === 4 && callback){
+            callback(xhr.responseText);
+        }
+    };
+
+    //穿件xml数据
+    //<query>
+    //  <find zipcode="200100" radius="1000">
+    //      pizza
+    //  </find>
+    //</query>
+    var doc = document.implementation.createDocument("", "query", null);
+    var query = doc.documentElement;
+    var find = document.createElement("find");
+    find.setAttribute("zipcode", where);
+    find.setAttribute("radius", radius);
+    find.appendChild(document.createTextNode(what));
+    query.appendChild(find);
+
+
+    //发送数据xml会自动设置requestHeader格式
+    xhr.send(doc);
+}
 
 
 

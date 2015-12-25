@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>拖拽排序</title>
+    <style type="text/css">
+    </style>
+    <script src="./js/jtd.js"></script>
+    <script>
+
+
+        whenReady(function(){
+            console.log("whenReady")
+            var uls = document.getElementsByTagName("ul"),
+                    regexp = /\bdnd\b/;
+            for(var i = 0; i < uls.length; i++ ){
+                if(regexp.test(uls[i].className)){
+                    dnd(uls[i]);
+                }
+            }
+        })
+    </script>
+</head>
+<body>
+    <ul class="dnd">
+        <li id="jr">
+            <div class="hd"><h2><a href="http://finance.qq.com/jrsc.htm" title="" target="_blank">金　融</a></h2><i></i></div>
+
+        </li>
+        <li id="mg">
+            <div class="hd"><h2><a href="http://stock.qq.com/usstock/" title="" target="_blank">美　股</a></h2><i></i></div>
+
+        </li>
+        <li id="gg">
+            <div class="hd"><h2><a href="http://stock.qq.com/hk/" title="" target="_blank">港　股</a></h2><i></i></div>
+
+        </li>
+    </ul>
+</body>
+</html>
