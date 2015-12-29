@@ -22,6 +22,11 @@ function Fullpage(options){
     this.init();
     this.bind();
 
+    //让items里面的超链接可以点击
+    this.items.find("a").on("click touchstart touchmove touchend pointermove pointerdown pointermove mousedown mousemove mouseup", function(event){
+        event.stopPropagation();
+    });
+
 }
 
 Fullpage.prototype= {

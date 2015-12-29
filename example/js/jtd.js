@@ -1062,6 +1062,114 @@ function postQuery(url, what, where, radius, callback){
 
 
 
+function createDropFileUpload(target, url){
+    var uploading = false;
+
+    target.ondragenter = function(event){
+        if(uploading) return;//正在上传，就忽略
+        var types = event.dataTransfer.types;
+        //进来的里面有文件
+        if(types && ( (types.contains && types.contains("Files")) || (types.indexOf && types.indexOf("Files") !== -1) ) ){
+            target.classList.add("wantdrop");
+            return false;
+        }
+    }
+
+    target.ondragover = function(){
+        //如果没有在上传就，就通知浏览器保持兴趣
+        if(!uploading){
+            return false;
+        }
+    }
+
+    target.ondragleave = function(){
+        if(!uploading){
+            target.classList.remove("wantdrop");
+        }
+    }
+
+    target.ondrop = function(event){
+        if(uploading){return false;}
+        var files = event.dataTransfer.files;
+        if(!files || files.length == 0){return false;}
+
+        uploading = true;
+
+        var xhr = new XMLHttpRequest(),
+            formdata = new FormData(),
+            total = 0;
+
+        xhr.open("post", url, true);
+
+
+
+        formdata.append("filelength", files.length);
+        for(var i = 0 ; i < files.length ; i++){
+            formdata.append("file"+ i, files[i]);
+            total +=files[i]["size"];
+        }
+
+        xhr.upload.onprogress = function(event){
+            target.innerHTML = event.total + ":" + event.loaded;
+        };
+
+        xhr.upload.onload = function(){
+            uploading = false;
+            target.innerHTML = "";
+            target.classList.remove("wantdrop");
+        }
+        xhr.upload.onload = function(){
+            uploading = false;
+            target.innerHTML = "";
+            target.classList.remove("wantdrop");
+        }
+        xhr.send(formdata);
+        target.innerHTML = total + ": 0";
+        return false;
+    }
+}
+
+/**
+ * 得到JSONP的函数
+ *
+ * getJSONP("http://api.example.com/profile.php?id=10235", function(data){process(data)});
+ * 请求的地址可能为：http://api.example.com/profile.php?id=10235&jsonp=getJSONP.cb22
+ * 返回值
+ * getJSONP.cb22({
+ *  name : "lixuguang",
+ *  age : 27
+ * })
+ * @param url
+ * @param callback
+ */
+function getJSONP(url, callback){
+    var cbnum = "cb" + getJSONP.counter++;
+    var cbname = "getJSONP." + cbnum;
+
+    if(url.indexOf("?") === -1){
+        url += "?jsonp=" + cbname;
+    }else{
+        url += "&jsonp=" + cbname;
+    }
+
+    var script = document.createElement("script");
+
+    getJSONP[cbnum] = function(respone){
+        try{
+            callback(respone);
+        }finally{
+            delete  getJSONP[cbnum];
+            script.parentNode.removeChild(script);
+        }
+    };
+
+    script.src= url;
+    document.body.appendChild(script);
+
+}
+
+
+
 
 
 
