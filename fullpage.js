@@ -24,7 +24,7 @@ function Fullpage(options){
     this.bind();
 
     //让items里面的超链接可以点击
-    this.items.find("a").on("click touchstart touchmove touchend pointermove pointerdown pointermove mousedown mousemove mouseup", function(event){
+    this.items.find("a").on("touchstart touchmove touchend pointermove pointerdown pointermove", function(event){
         event.stopPropagation();
     });
 
@@ -73,7 +73,7 @@ Fullpage.prototype= {
         function pointerHandle(event){
             var type;
             if(self.flag){return false;}
-            event.preventDefault();
+            event.preventDefault(); //阻止默认的页面滑动的动作
             type = event.type;
             event = type.indexOf("touch") > -1 ? event.originalEvent.changedTouches[0] : event;
             switch(type){
@@ -170,8 +170,9 @@ Fullpage.prototype= {
             self.flag = false;
         });
     },
+    //获得视口大小
     getViewport: function(){
-        if (typeof window.innerWidth == "number") {
+        if (window.innerWidth != null) {
             return {width: window.innerWidth, height: window.innerHeight};
         }
         if (document.compatMode === "CSS1Compat") {
