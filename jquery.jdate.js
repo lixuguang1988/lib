@@ -147,6 +147,7 @@
 			}
 			//格式化日期
 			tdstr += '" data-date="' + d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate() + '"';
+			tdstr += '" data-holiday="' + (d.getMonth()+1) + '-' + d.getDate() + '"';
 			tdstr += '>' + d.getDate() + '</td>';
 			return tdstr;
 		} //end formatdate
