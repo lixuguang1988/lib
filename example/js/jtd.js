@@ -1169,6 +1169,47 @@ function getJSONP(url, callback){
 }
 
 
+/**
+ * IE7< 的web存储
+ * 实现了 localStorage 的 setItem,getItem, removeItem
+ * 没有显示key,clear方法
+ * userData上没有枚举key的方法
+ * @param maxage 设置过期时间，不设置为不过期
+ * @constructor
+ */
+function UserDataStorage(maxage){
+
+    var memory = document.createElement("div");
+    memory.style.behavior = "url('#default#userData')";
+    memory.style.display = "block";
+    document.body.appendChild(memory);
+
+    //设置失效日期/要不就不会失效
+    if(maxage){
+        var now = new Date().getTime();
+        var expires = now + maxage * 1000;
+        memory.expires = (new Date(expires)).toUTCString();
+    }
+
+    //
+    memory.load("UserDataStorage");
+
+    this.setItem = function(key, value){
+        memory.setAttribute(key, value);
+        memory.save("UserDataStorage");
+    };
+
+    this.getItem = function(key){
+        return memory.getAttribute(key);
+    };
+
+    this.removeItem = function(key){
+        memory.removeAttribute(key);
+        memory.save("UserDataStorage");
+    };
+}
+
+
 
 
 

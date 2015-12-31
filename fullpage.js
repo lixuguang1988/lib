@@ -3,12 +3,13 @@
  */
 
 function Fullpage(options){
-    options = $.extend({index: 0, zIndex : 101, gap : 100}, options);
+    options = $.extend({index: 0, zIndex : 101, gap : 100, current: "current"}, options);
 
     this.index = options.index;
     this.zIndex = options.zIndex;
     this.element = options.element;
     this.gap = options.gap;
+    this.currentClass = options.current;
 
     this.items = this.element.children();
     this.length = this.items.length;
@@ -146,6 +147,9 @@ Fullpage.prototype= {
                 "top" : -self.viewport.height + "px"
             });
             self.flag = false;
+            self.items.removeClass(self.currentClass);
+            self.currentItem.addClass(self.currentClass);
+
         });
     },
     /**
