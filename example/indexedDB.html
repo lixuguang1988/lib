@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>IndexedDB</title>
+    <style type="text/css">
+    </style>
+    <script>
+        var indexedDB = window.indexedDB || window.msIndexedDB || window.mozIndexedDB || window.webkitIndexedDB,
+                IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction,
+                IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange,
+                db;
+
+        //异步获取数据库,(需要的时候，创建数据库，并初始化)
+        //然后把创建的数据库传递给f
+        function openDB(dbname, dbversion){
+            dbversion = dbversion || 1;
+            var request = indexedDB.open(dbname, dbversion); //打开存储邮政编码的数据库
+            request.onerror = function(event){
+                console.dir(event);
+            };
+            request.onsuccess = function(){
+                console.log("success");
+                console.log("db:" + db);
+                db = request.result;
+            };
+            request.onupgradeneeded = function(event){
+                if(event.oldVersion < 1){
+                    var store = event.currentTarget.result.createObjectStore("zipcodes", {keyPath : 'zipcode'});
+                    store.createIndex("city", "city", {unique : false});
+                    store.createIndex("state", "state", {unique : false});
+                    console.log("onupgradeneeded");
+                    //同步数据库内容
+                    //setTimeout(initdb, 50);
+                    //initdb();
+                    store.transaction.oncomplete = function(){
+                        initdb();
+                    }
+                }
+            }
+        }
+
+
+        function initdb(){
+            //数据库初始化的状态信息
+            var statusline = document.createElement("div");
+            statusline.style.cssText = "position:fixed;background:#000;left:0px;top:0px;width:100%;color:#fff;font:18pt sans-serif;padding:10px;"
+            document.body.appendChild(statusline);
+
+            function status(msg){statusline.innerHTML = msg.toString();}
+
+            status("initializing zipcode database.");
+
+
+
+            //初始化数据库
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "./app/zipcode.csv", true);
+            xhr.send();
+
+            var lastChar = 0, numlines = 0;
+
+            xhr.onprogress = xhr.onload = function(event){
+                console.log(event.type)
+                var lastNewline = xhr.responseText.lastIndexOf("\n");
+
+                var transaction = db.transaction(["zipcodes"], "readwrite");
+                var store = transaction.objectStore("zipcodes");
+
+                if(lastNewline > lastChar){
+                    var chunk = xhr.responseText.substring(lastChar, lastNewline);
+                    lastChar = lastNewline + 1;
+                    var lines = chunk.split("\n");
+                    numlines += lines.length;
+
+                    for(var i = 0 ; i < lines.length ; i++){
+                        //console.log(lines[i]);
+                        var fields = lines[i].split(",");
+                        var record = {
+                            zipcode : fields[0],
+                            city : fields[2],
+                            state : fields[3],
+                            latitude : fields[5],
+                            longitude : fields[6]
+                        };
+                        store.add(record);
+                    }
+
+
+                }
+
+
+                if(event.type == "load"){
+                    console.log("async data success!")
+                    status("initialize zipcode database success!");
+                }
+
+            }
+
+
+        }
+
+//        window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
+//        var db;
+//
+//        //创建新的数据库
+//        function createDatabase(dbname, dbversion){
+//            dbversion = dbversion || 2;
+//            var request = indexedDB.open(dbname, dbversion);
+//            request.onerror =  function(event){
+//                console.log("Database error:" + event.target.errorCode);
+//            };
+//
+//            request.onsuccess =  function(event){
+//                console.log("Database created");
+//                db = event.target.result;
+//            };
+//
+//            request.onupgradeneeded =  function(event){
+//
+//            }
+//        }
+//
+//        //打开数据库
+//        function createDatabase(dbname, dbversion){
+//            dbversion = dbversion || 2;
+//            var request = indexedDB.open(dbname, dbversion);
+//            request.onerror =  function(event){
+//                console.log("Database error:" + event.target.errorCode);
+//            };
+//
+//            request.onsuccess =  function(event){
+//                console.log("Database created");
+//                db = event.target.result;
+//            };
+//
+//        }
+//
+//        //删除数据库
+        function deleteDatabase(dbname){
+            var request = indexedDB.deleteDatabase(dbname);
+
+            request.onerror =  function(event){
+                console.log("Database error:" + event.target.errorCode);
+            };
+
+            request.onsuccess =  function(event){
+                console.log("Database delete");
+                //openDB("zipcodes", 3);
+            };
+        }
+//
+//        function createObjectStore(storename, storeconfig, dbname, dbversion){
+//            dbversion = dbversion || 2;
+//            var request = indexedDB.open(dbname, dbversion + 1);
+//            request.onerror =  function(event){
+//                console.log("Database error:" + event.target.errorCode);
+//            };
+//
+//            request.onsuccess =  function(event){
+//                console.log("Database created");
+//                db = event.target.result;
+//            };
+//
+//            request.onupgradeneeded =  function(event){
+//                var store = evt.currentTarget.result.createObjectStore(storename, storeconfig)
+//            }
+//        }
+
+    </script>
+</head>
+<body>
+
+
+        <script>
+            //deleteDatabase("zipcodes");
+//            withDB("yb2", function(db){
+//                console.log(db);
+//            });
+        </script>
+</body>
+</html>

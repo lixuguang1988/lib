@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Canvas</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/normalize.css">
+        <style>
+
+        </style>
+    </head>
+    <body>
+    	<canvas id="squar" width="900" height="300"></canvas>
+        <script>
+            var squar = document.getElementById("squar"),
+                    c = squar.getContext("2d");
+
+//            c.fillStyle = "#f00";
+//            c.fillRect(0, 0 , 30, 30);
+//
+//            c.beginPath();
+//            c.fillStyle = "#0f0";
+//            c.arc(50, 50, 15, 0, 2 * Math.PI, true);
+//            c.fill();
+//            c.closePath();
+
+//            c.beginPath();
+//            c.moveTo(20, 20);
+//            c.lineTo(150, 150);
+//            c.lineTo(75, 175);
+//            c.strokeStyle = "rgba(56, 56, 56, .1)";
+//            c.lineWidth = 5;
+//            c.fillStyle = "#0f0";
+//            c.closePath();
+//            c.stroke();
+//            c.fill();
+
+
+            function ploygon(c, n, x, y, r, angle, counterclockwise){
+                angle = angle || 0;
+                counterclockwise =  counterclockwise || false;
+                c.moveTo(x + r * Math.sin(angle), y - r * Math.cos(angle));
+
+                var delta = 2 * Math.PI / n;
+                for(var i = 0 ; i < n ; i++){
+                    angle += counterclockwise ? -delta : delta;
+                    c.lineTo(x + r * Math.sin(angle), y - r * Math.cos(angle));
+                }
+
+                c.closePath();
+            }
+
+            c.beginPath();
+            ploygon(c, 3, 50, 70, 50);
+            ploygon(c, 4, 150, 60, 50, Math.PI/4);
+            ploygon(c, 5, 255, 55, 50);
+            ploygon(c, 6, 365, 53, 50, Math.PI/6);
+            ploygon(c, 4, 365, 53, 20, Math.PI/4, true);
+            c.fill();
+
+        </script>
+    </body>
+</html>

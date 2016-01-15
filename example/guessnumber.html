@@ -1,0 +1,126 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>I'm thinging of a number...</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/normalize.css">
+        <style>
+            #low{background: dodgerblue}
+            #mid{background: darkcyan}
+            #high{background: #333333}
+            table{width:100%;margin-bottom:20px}
+            td{height:20px;}
+        </style>
+    </head>
+    <body>
+        <h1 id="heading">I'm thinging of a number...</h1>
+        <table>
+            <tr>
+                <td id="low"></td>
+                <td id="mid"></td>
+                <td id="high"></td>
+            </tr>
+        </table>
+        <label id="prompt"></label><input type="text" id="input">
+        <script>
+            window.onload = newgame;
+            window.onpopstate = popState;
+            var state, ui;
+            function newgame(playagin){
+                //初始化一个包含需要的文档元素的对象
+                ui = {
+                    heading: null,
+                    prompt: null,
+                    input: null,
+                    low: null,
+                    mid: null,
+                    high : null
+                };
+                for(var id in ui) ui[id] = document.getElementById(id);
+
+                ui.input.onchange = handleGuess;
+
+                //生成随机数来初始化游戏状态
+                state = {
+                    n : Math.floor(Math.random() * 99 ) + 1,
+                    low : 0,
+                    high : 100,
+                    guessnum : 0,
+                    guess : undefined
+                };
+
+                //修改文档来显示初始化状态
+                display(state);
+
+                //if(playagin === true){
+                    save(state);
+                //}
+
+            }
+
+            function save(state){
+                if(!history.pushState) return false;
+
+                var url = "#guess" + state.guessnum;
+
+                history.pushState(state, "", url);
+            }
+
+            function popState(event){
+                if(event.state){
+                    state = event.state;
+                    display(state);
+                }else{
+                    console.log("replaceState")
+                    history.replaceState(state, "", "#guess" + state.guessnum);
+                }
+            }
+
+            function handleGuess(){
+                var g = parseInt(this.value);
+                if(g > state.low && g < state.high){
+                    if(g < state.n){
+                        state.low = g;
+                    }else if(g > state.n){
+                        state.high = g;
+                    }
+                    state.guess = g;
+                    state.guessnum++;
+                    save(state);
+                    display(state);
+                }else{
+                    alert("your number should less than " + state.high + " and more than " + state.low);
+                }
+            }
+
+            function display(){
+                ui.heading.innerHTML = document.title = "I'm thinging of a number between " + state.low + " and  " + state.high;
+
+                ui.low.style.width = state.low + "%"
+                ui.mid.style.width = (state.high - state.low) + "%"
+                ui.high.style.width = (100 - state.high) + "%"
+
+
+                ui.input.style.visibility = "visible";
+                ui.input.value = "";
+                ui.input.focus();
+
+
+                if(state.guess === undefined){
+                    ui.prompt.innerHTML = "Type your guess and hit Enter:"
+                }else if(state.guess < state.n ){
+                    ui.prompt.innerHTML = "Your number is too low. guess again:"
+                }else if(state.guess > state.n ){
+                    ui.prompt.innerHTML = "Your number is too high. guess again:"
+                }else{
+                    ui.input.style.visibility = "hidden";
+                    ui.heading.innerHTML = document.title = state.guess +  " is correct!";
+                    ui.prompt.innerHTML = "Your win. <button onclick='newgame(true)'>play again<\/button>"
+                }
+            }
+        </script>
+    </body>
+</html>
