@@ -136,7 +136,7 @@
 			localmonth = d.getMonth(),
 			lcoaldate = d.getDate();
 			//不是当前月
-			if(month != d.getMonth()){
+			if(month != localmonth){
 				tdstr += 'ui-date-disabled ';
 			}
 			//激活的天
@@ -147,8 +147,9 @@
 			if( d.toDateString() == (new Date()).toDateString() ){
 				tdstr += 'ui-date-today ';
 			}
+			++localmonth;
 			if(_.cfg.addzero){
-				localmonth = ++localmonth  >= 10  ? localmonth : "0" + localmonth;
+				localmonth = localmonth  >= 10  ? localmonth : "0" + localmonth;
 				lcoaldate = lcoaldate  >= 10  ? lcoaldate : "0" + lcoaldate;				
 			}
 
