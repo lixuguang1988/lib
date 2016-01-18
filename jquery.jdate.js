@@ -28,7 +28,7 @@
 		//下一月
 		this.next  = $('<a class="ui-date-btn ui-date-next" href="javascript:void(0);" data-month="1">'+ this.cfg.next +'</a>').appendTo(this.header);		
 		//xxxx年x月
-		this.header.append('<span class="ui-date-title"><strong class="ui-date-year">' + this.cfg.date.getFullYear() + '年</strong><strong class="ui-date-month">' + this.cfg.month[this.cfg.date.getMonth()] + '</strong></span>');
+		this.header.append('<span class="ui-date-title"><strong  class="ui-date-year" data-year="' + this.cfg.date.getFullYear() + '">' + this.cfg.date.getFullYear() + '年</strong><strong class="ui-date-month" data-month="' + this.cfg.month[this.cfg.date.getMonth()] + '">' + this.cfg.month[this.cfg.date.getMonth()] + '月</strong></span>');
 
 		//添加到包围元素中
 		this.wrap.html(this.header);
@@ -132,7 +132,9 @@
  		 * @param {Object} d Date object
 		 */
 		function formatdate(d){
-			var tdstr = '<td class="';
+			var tdstr = '<td class="',
+			localmonth = d.getMonth(),
+			lcoaldate = d.getDate();
 			//不是当前月
 			if(month != d.getMonth()){
 				tdstr += 'ui-date-disabled ';
@@ -145,8 +147,13 @@
 			if( d.toDateString() == (new Date()).toDateString() ){
 				tdstr += 'ui-date-today ';
 			}
+			if(_.cfg.addzero){
+				localmonth = ++localmonth  >= 10  ? localmonth : "0" + localmonth;
+				lcoaldate = lcoaldate  >= 10  ? lcoaldate : "0" + lcoaldate;				
+			}
+
 			//格式化日期
-			tdstr += '" data-date="' + d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate() + '"';
+			tdstr += '" data-date="' + d.getFullYear() + '-' + localmonth + '-' + lcoaldate + '"';
 			tdstr += '" data-holiday="' + (d.getMonth()+1) + '-' + d.getDate() + '"';
 			tdstr += '>' + d.getDate() + '</td>';
 			return tdstr;
@@ -211,36 +218,48 @@
 
 	};
 	
-	jDate.prototype.monthNavigator =  function(){
+	jDate.prototype.monthNavigator =  function(date){
 		var _ = this;
-		this.next.add(this.prev).on("click", function(ev){
-			ev.preventDefault();
+		if(date){
 			//导航月份
-			_.cfg.date.setMonth(_.cfg.date.getMonth() + $(this).data('month'));
+			_.cfg.date.setFullYear(date.getFullYear());
+			//导航月份
+			_.cfg.date.setMonth(date.getMonth());
 			//月份更改的回调函数
 			if(typeof _.cfg.monthchange === "function"){
 				_.cfg.monthchange(_.cfg.date);
 			}			
-			_.renderHeader();//重新渲染头部
-		});
+			_.renderHeader();//重新渲染头部			
+		}else{
+			this.next.add(this.prev).on("click", function(ev){
+				ev.preventDefault();
+				//导航月份
+				_.cfg.date.setMonth(_.cfg.date.getMonth() + $(this).data('month'));
+				//月份更改的回调函数
+				if(typeof _.cfg.monthchange === "function"){
+					_.cfg.monthchange(_.cfg.date);
+				}			
+				_.renderHeader();//重新渲染头部
+			});			
+		}
 	};
 		
 	$.fn.jdate = function(options){
 		var config  = $.extend({
 			date: new Date(), //初始化指定的一天
 			before : null, //初始化的回调函数  callback(elem, cfg, obj)
-			month : ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", '12月'],
+			month : ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", '12'],
 			week: ["日", "一", "二", "三", "四", "五", "六"], //周日~周六
 			prev : "&lsaquo;", //上个月
 			next : "&rsaquo;", //下一月
 			type : "init" ,//['init', 'toggle', ['input']] input是程序自动添加
-			click : null ,//点击日期的callback(elem)
+			click : null ,//点击日期的callback(elem),
+			addzero: true,//1~9是否补零
 			monthchange: null, //月份变化的callback(date) object
 			monthchangeafter : null //月份变化渲染完毕的回调函数 
 		}, options);
 		
 		return this.each(function(){
-			var jd;
 			//是input元素或者type为toggle
 			if(config.type === "toggle" || this.tagName.toLowerCase() == "input"){
 				$(this).on("click", function(ev){
@@ -264,13 +283,13 @@
 					}
 					
 					$(this).data("jdid", "jdate" + ev.timeStamp);			
-					jd = new jDate($(this), config);
+					$(this).data("jd", new jDate($(this), config));
 				});				
 			}else{
 				if($(this).data('date')){
 					config.date = getDate($(this).data('date'));
 				}
-				jd = new jDate($(this), config);
+				$(this).data("jd", new jDate($(this), config));
 			}
 		});
 			
