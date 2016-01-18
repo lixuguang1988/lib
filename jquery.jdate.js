@@ -226,23 +226,21 @@
 			_.cfg.date.setFullYear(date.getFullYear());
 			//导航月份
 			_.cfg.date.setMonth(date.getMonth());
-			//月份更改的回调函数
-			if(typeof _.cfg.monthchange === "function"){
-				_.cfg.monthchange(_.cfg.date);
-			}			
-			_.renderHeader();//重新渲染头部			
+
+
 		}else{
 			this.next.add(this.prev).on("click", function(ev){
 				ev.preventDefault();
 				//导航月份
 				_.cfg.date.setMonth(_.cfg.date.getMonth() + $(this).data('month'));
 				//月份更改的回调函数
-				if(typeof _.cfg.monthchange === "function"){
-					_.cfg.monthchange(_.cfg.date);
-				}			
-				_.renderHeader();//重新渲染头部
 			});			
 		}
+        //月份更改的回调函数
+        if(typeof _.cfg.monthchange === "function"){
+            _.cfg.monthchange(_.cfg.date);
+        }
+        _.renderHeader();//重新渲染头部
 	};
 		
 	$.fn.jdate = function(options){
