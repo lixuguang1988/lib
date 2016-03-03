@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>QUnit.assert</title>
+    <link rel="stylesheet" href="http://code.jquery.com/qunit/qunit-1.21.0.css">
+</head>
+<body>
+    <div id="qunit"></div>
+    <div id="qunit-fixture"><input id="test-input" type="text" name="textinput" placeholder="please enter word"></div>
+
+    <script src="http://code.jquery.com/qunit/qunit-1.21.0.js"></script>
+    <script >
+        QUnit.log(function(obj){
+            var actual = QUnit.dump.parse(obj);
+            console.log(actual);
+        });
+        console.log(QUnit.dump.parse({"name": "lixuguang", "age" : 29, "job" : "fed" }));
+        setTimeout(function(){
+            console.log(QUnit.dump.parse(document.getElementById("qunit-header")));
+        }, 500);
+
+        var input = {
+                      parts: {
+                        front: [],
+                        back: []
+                      }
+                    };
+
+        QUnit.dump.maxDepth = 1;
+        console.log(QUnit.dump.parse(input));
+
+        QUnit.dump.maxDepth = 2;
+        console.log(QUnit.dump.parse(input));
+
+        QUnit.dump.maxDepth = 3;
+        console.log(QUnit.dump.parse(input));
+    </script>
+</body>
+</html>

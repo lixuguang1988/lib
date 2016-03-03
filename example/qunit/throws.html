@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>assert.shrows</title>
+    <link rel="stylesheet" href="http://code.jquery.com/qunit/qunit-1.21.0.css">
+</head>
+<body>
+    <div id="qunit"></div>
+    <div id="qunit-fixture"><input id="test-input" type="text" name="textinput" placeholder="please enter word"></div>
+
+    <script src="http://code.jquery.com/qunit/qunit-1.21.0.js"></script>
+    <script >
+        QUnit.test("assert.throws() test", function(assert){
+
+            function CustomError(message){
+                this.message = message
+            }
+
+            CustomError.prototype.toString = function(){
+                return this.message;
+            }
+
+
+            assert.throws(function(){
+                throw "error"
+            }, "throws with just a message, not using the 'expected' argument");
+
+
+            assert.throws(function(){
+                throw new CustomError("some error description")
+            }, "raised error message contains 'description'");
+
+            assert.throws(function(){
+                throw new CustomError("some error description")
+            },
+                    new CustomError("some error description"),
+                    "raised error message contains 'description'");
+
+            assert.throws(function(){
+                throw new CustomError("some error description")
+            },
+                    function (err){
+                       return err.toString() === "some error description";
+                    },
+                    "raised error message contains 'description'")
+        });
+    </script>
+</body>
+</html>

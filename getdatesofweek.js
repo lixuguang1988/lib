@@ -56,10 +56,12 @@
 var baseDates = {
     dayMilliseconds : 1000 * 24 * 60 * 60, /*一天毫秒数*/
     //  @param date 传入指定的日期对象
+    //  @param islocal [周一~周日]
     // @returns {Array} 返回该周的日期对象 [周日，周一...周六]
-    getWeek : function(date){
+    getWeek : function(date, islocal){
         date = date || new Date();
-        var day = date.getDay(), /*周几*/
+        islocal = islocal ? -1 : 0;
+        var day = date.getDay() + islocal, /*周几*/
             timestamp = date.getTime(), /*改天的毫秒表示法*/
             dates = [],
             i = -day;
@@ -72,8 +74,9 @@ var baseDates = {
     },
     //  @param date 传入指定的日期对象
     //  @param matrix 是否是二位数组
+    //  @param islocal [周一~周日]
     // @returns {Array} 返回该周的日期对象 [周日，周一...周六]
-    getMonth: function(date, matrix){
+    getMonth: function(date, matrix, islocal){
         date = date || new Date();
         var timestamp = date.getTime(), /*改天的毫秒表示法*/
             dates = [],
@@ -84,7 +87,7 @@ var baseDates = {
 
         //一月不可能超过6周
         for( ; i < 5; i++){
-            tempDates =  this.getWeek(new Date(timestamp + this.dayMilliseconds * i * 7));
+            tempDates =  this.getWeek(new Date(timestamp + this.dayMilliseconds * i * 7), islocal);
             //只要有一天在当前月就算
             if(tempDates[0].getMonth() == month  || tempDates[6].getMonth() == month ){
                 if(matrix){

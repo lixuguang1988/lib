@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>assert.async</title>
+    <link rel="stylesheet" href="http://code.jquery.com/qunit/qunit-1.21.0.css">
+</head>
+<body>
+    <div id="qunit"></div>
+    <div id="qunit-fixture"><input id="test-input" type="text" name="textinput" placeholder="please enter word"></div>
+
+    <script src="http://code.jquery.com/qunit/qunit-1.21.0.js"></script>
+    <script >
+        QUnit.test("assert.async() test", function(assert){
+
+            assert.expect(2)
+            var done1 = assert.async(),
+                    done2 = assert.async();
+
+            setTimeout(function(){
+                assert.ok(true, "test resumed from async operation 1");
+                done1();
+            }, 500);
+            setTimeout(function(){
+                assert.ok(true, "test resumed from async operation 1");
+                done2();
+            }, 150);
+        });
+    </script>
+</body>
+</html>

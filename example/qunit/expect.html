@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>assert.expect</title>
+    <link rel="stylesheet" href="http://code.jquery.com/qunit/qunit-1.21.0.css">
+</head>
+<body>
+    <div id="qunit"></div>
+    <div id="qunit-fixture"></div>
+    <script src="http://code.jquery.com/qunit/qunit-1.21.0.js"></script>
+    <script >
+        QUnit.test("assert.expect", function(assert){
+            assert.expect(2);
+
+            function calc(x, operation){
+                return operation(x);
+            }
+
+            var result = calc(2, function(x){
+                assert.ok(true, "calc functions call");
+                return x * x;
+            });
+
+            assert.equal(result, 4,  "equal");
+
+        });
+    </script>
+</body>
+</html>

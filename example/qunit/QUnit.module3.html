@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" href="http://code.jquery.com/qunit/qunit-1.21.0.css">
+</head>
+<body>
+    <div id="qunit"></div>
+    <div id="qunit-fixture"><input id="test-input" type="text" name="textinput" placeholder="please enter word"></div>
+
+    <script src="http://code.jquery.com/qunit/qunit-1.21.0.js"></script>
+    <script >
+
+        QUnit.module("grouped test argument hooks", function(hooks){
+            hooks.beforeEach(function(assert){
+                assert.ok(1, "success before");
+            });
+            hooks.afterEach(function(assert){
+                assert.ok(1, "success after");
+            });
+
+            QUnit.test("grouped ", function(assert){
+                assert.expect(2);
+            });
+
+            QUnit.module("stacked hooks", function(hooks){
+                hooks.beforeEach(function(assert){
+                    assert.ok(1, "success nest before");
+                });
+
+                hooks.afterEach(function(assert){
+                    assert.ok(1, "success nest after");
+                });
+
+                QUnit.test("grouped nest", function(assert){
+                    assert.expect(4);
+                });
+            });
+
+        });
+    </script>
+</body>
+</html>

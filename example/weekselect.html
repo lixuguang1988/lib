@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>按月选周</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/normalize.css">
+        <style>
+
+        </style>
+    </head>
+    <body>
+        <select id="selectYear" name="selectyear">
+            <option value="2015">2015年</option>
+            <option value="2016">2016年</option>
+            <option value="2017">2017年</option>
+        </select>
+        <select id="selectMonth" name="selectmonth">
+            <option value="1">1月</option>
+            <option value="2">2月</option>
+            <option value="3">3月</option>
+            <option value="4">4月</option>
+            <option value="5">5月</option>
+            <option value="6">6月</option>
+            <option value="7">7月</option>
+            <option value="8">8月</option>
+            <option value="9">9月</option>
+            <option value="10">10月</option>
+            <option value="11">11月</option>
+            <option value="12">12月</option>
+        </select>
+        <select id="selectOption" name="selectOption">
+            <option>...</option>
+        </select>
+        <script src="js/jquery.1.7.2.js"></script>
+        <script src="../getdatesofweek.js"></script>
+        <script>
+            $(document).ready(function(){
+                $("#selectYear, #selectMonth").on("change", changeWeeks);
+                changeWeeks();
+            });
+
+
+            function changeWeeks(){
+                var weeks = baseDates.getMonth(new Date($("#selectYear").val(), parseInt($("#selectMonth").val()) -1, 1 ), true, true),
+                        weekstr = ["第一周", "第二周", "第三周", "第四周", "第五周", "第六周"],
+                        options = "",
+                        date1 = null,
+                        date2 = null;
+
+                //"<option value=''></option>"
+                for(var i= 0; i < weeks.length; i++) {
+                    date1 = weeks[i][0];
+                    date2 = weeks[i][6];
+                    options += "<option value ='";
+                    options += date1.getFullYear() + "/" + (date1.getMonth() + 1) + "/" + date1.getDate()
+                    options += "~" + date2.getFullYear() + "/" + (date2.getMonth() + 1) + "/" + date2.getDate()
+                    options += "'>"
+                    options += weekstr[i] + "(" + (date1.getMonth() + 1) + "/" + date1.getDate() + "~";
+                    options += "" + (date2.getMonth() + 1) + "/" + date2.getDate() + ")";
+                    options += "</option>";
+                }
+
+                $("#selectOption").html(options);
+            }
+        </script>
+    </body>
+</html>
