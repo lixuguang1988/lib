@@ -1,0 +1,16 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <%- include partials/stylesheet %>
+        <title><%= title %></title>
+    </head>
+    <body>
+        <h1><%= header %></h1>
+        <form action="/send" method="POST">
+            <input type="text" length="140" name="tweet">
+            <input type="submit" value="Tweet">
+        </form>
+        <%- include partials/tweets %>
+    </body>
+</html>
