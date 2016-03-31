@@ -1,3 +1,4 @@
+//Deprecated
 ;(function($){
     
 	function Modal(options){
