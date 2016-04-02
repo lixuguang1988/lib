@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Meadowlark Travel</title>
+		<link rel="stylesheet" href="/css/main.css">
+	</head>
+	<body>
+		<div id="tpl">
+			<div class="xxx">{{name}}</div>
+			<div class="xxx">{{age}}</div>
+			<div class="xxx">{{job}}</div>
+		</div>
+		<script>
+			function jstpl(html, data){
+				var  tempstr ="";
+				tempstr = html.replace(/({{)([^}]*)(}})/g, function($1, $2, $3, $4){
+					return data[$3];
+				});
+				return tempstr;
+			}
+			
+			window.addEventListener("DOMContentLoaded", function(){
+				var tpl = document.querySelector("#tpl");
+				
+				tpl.innerHTML = jstpl(tpl.innerHTML, {name : "lixuguang", age : 28, job: "fed"});
+			}, false);
+
+		</script>
+	</body>
+</html>
