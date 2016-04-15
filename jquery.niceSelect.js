@@ -22,8 +22,6 @@
 			select.hide();
 			_.append(domStr);
 
-
-
 			_.on("click", "li", function(){
 				var index = $(this).index();
 				$(this).addClass("current").siblings().removeClass("current").parent().hide();
@@ -37,18 +35,16 @@
 			});
 
 
-            if(!_.hasClass("g-select-disabled")){
-                /**
-                 * 显示，隐藏select选项
-                 */
-                _.hover(function(){
-                    _.css('z-index', '205').find("ul").show();
-                }, function(){
-                    _.css('z-index', '105').find("ul").hide();
-                });
-            }
-
-		});
-	};
-
+            		if(!_.hasClass("g-select-disabled")){
+		                /**
+		                 * 显示，隐藏select选项
+		                 */
+		                _.hover(function(){
+		                    _.css('z-index', '205').find("ul").show();
+		                }, function(){
+		                    _.css('z-index', '105').find("ul").hide();
+		                });
+		          }
+		 });
+	}
 })(jQuery);
