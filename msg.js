@@ -35,5 +35,7 @@
 	        }, defaults.delay);
 	    }	
 	};
+	
+	$.message = Message;
 
 }(jQuery));
