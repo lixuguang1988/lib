@@ -1,12 +1,13 @@
 ;(function($){
-	$.fn.message =  function(options){
+	function Message(options){
 	    var defaults = $.extend({
 	        width : 200,
-	        ease : 500
+	        ease : 500,
+	        wrapClass : "warn"
 	    }, options);
 	    
 	    var $message = $('<div  class="message message-'+ defaults.wrapClass +'"><div class="message-main">' + defaults.message + '</div></div>'),
-	    	$close = $('<a href="javascript:void(0);>&#x000D7;</a>');
+	    	$close = $('<a href="javascript:void(0);">&#x000D7;</a>');
 	    	
 	    $message.append($close);
 	    $('body').append($message);
