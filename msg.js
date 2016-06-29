@@ -1,43 +1,38 @@
 ;(function($){
-	$.msg =  function(options){
+	$.fn.message =  function(options){
 	    var defaults = $.extend({
-	        width : '200px'
+	        width : 200,
+	        ease : 500
 	    }, options);
 	    
-	    //关闭已有窗口
-	    $("#msg").remove();
-
-	    $('body').append('<div id="msg" class="msg '+ defaults.wrapClass +'" style="width:'+ defaults.width +';margin-left:'+ -Math.ceil(parseInt(defaults.width)/2) +'px">' + defaults.message + '</div>');
+	    var $message = $('<div  class="message message-'+ defaults.wrapClass +'"><div class="message-main">' + defaults.message + '</div></div>'),
+	    	$close = $('<a href="javascript:void(0);>&#x000D7;</a>');
+	    	
+	    $message.append($close);
+	    $('body').append($message);
+	    
+	    $message.css({
+	    	"position" : "fixed",
+	    	"top" : "0",
+	    	"width" : defaults.width + "px",
+	    	"left" : "50%",
+	    	"margin-left" : (- Math.ceil(defaults.width/2) ) + "px"
+	    });
+	    
+	    $close.on("click", function(){
+	    	$message.animate({
+	    		opacity : 0,
+	    	}, defaults.ease, function(){
+	    		$message.remove();
+	    	})	
+	    });
 	    
 	    //自动关闭窗口
 	    if(defaults.delay){
-	        defaults.timer = setTimeout('$.closeMsg()', defaults.delay);
+	        defaults.timer = setTimeout(function(){
+	        	$close.click();
+	        }, defaults.delay);
 	    }	
-	};
-	
-	$.closeMsg =  function(){
-	    $("#msg").animate({
-	    		opacity : 0
-	    	}, 800, function(){
-	        	$("#msg").remove();
-	    });
 	};
 
 }(jQuery));
-
-/*
-.msg{background: #000;padding:10px;color:#fff;font-size: 12px;line-height:18px;position: absolute;width: 200px;top: 25%;left:50%;text-align: center;
-    -webkit-border-radius: 10px;
-        -moz-border-radius:10px;
-            border-radius: 10px;
-}
-.danger-msg{background:#c00;text-shadow:0 -1px 0 #900}
-
-msg({
-  message : "提示消息",
-  width: "200px",
-  delay : 1000, //1s之后关闭
-  wrapClass : 'danger-msg'  // [danger-msg]
-});
-
-*/
