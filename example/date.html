@@ -49,14 +49,12 @@
 		<script>
 			$("#date1").jdate({
 				//date : new Date(2015, 11, 13),
-				monthchange : function(date){
-					alert(date.toString());
-				},
+
 				click : function(elem){
 					alert($(elem).data('date'));
 				},
 				monthchangeafter : function(elem, cfg, obj){
-	
+
 				}
 			});
 			$("#date3").jdate();

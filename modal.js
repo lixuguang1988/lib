@@ -14,6 +14,7 @@ var isIE6 = function(){
  * @param options
  * @returns {Modal} 实例对象
  * @constructor
+ * css ./jquery.jmodal.css
  */
 
 function Modal(options){
@@ -22,18 +23,22 @@ function Modal(options){
         height : 'auto', //[number, auto] 单位px
         wrapClass : '',  //指定弹窗自定义的类名
         overlay : true, //背景色 boolean
+        elem: null, // 主要用在回调函数中
         title : '', //指定弹窗窗口的名称
-        top : 'center', //['center', number] 弹出窗口里视口顶端的距离 center=vertical-align
+        top : 'middle', //['middle', number] 弹出窗口里视口顶端的距离 middle=vertical-align
         easing : 600, //弹出窗口显示出来的时间
         cancle : '', //指定取消的文字
-        oncancle : null, //点击取消的回调函数(函数返回===false不关闭窗口)
+        oncancle : null, //点击取消的回调函数(函数返回===false不关闭窗口) 函数签名(instance.cfg.elem, instance.cfg, instance)
         confirm : '', //指定确定的文字
-        onconfirm : null, //点击确认的回调函数(函数返回===false不关闭窗口)
-        onopen : null, //窗口打开前的回调函数
+        onconfirm : null, //点击确认的回调函数(函数返回===false不关闭窗口) 函数签名(instance.cfg.elem, instance.cfg, instance)
+        onopen : null, //窗口打开前的回调函数 函数签名(instance.cfg.elem, instance.cfg, instance)
         onclose : null, //窗口关闭前的回调函数
         pos : 'absolute', //['fixed', 'absolute'] 指定弹窗的定位方式
-        type : 'inline', //['inline', 'html', 'ajax', 'iframe']
+        type : 'html', //['inline', 'html', 'ajax', 'iframe']
         scrolling : 'auto', //当type=iframe 指定iframe的滚动条
+        //id : '', 当type=inline 待显示页面中元素的id
+        //url : '', 当type=ajax|iframe  待加载内容url
+        //data : {}, 当type=ajax|iframe  待加载内容url的参数
         html : '' //当type=html 设置弹出窗口的显示的html内容
     }, options);
 
@@ -41,21 +46,22 @@ function Modal(options){
 
     //创建骨架, 设置快捷的jquery对象访问
     self.$modal = $('<div class="jmodal"></div>');
-    self.$modalcontent = $('<div class="jmodal-content"></div>');
-    self.$body = $('<div class="jmodal-body"></div>');
+    self.$modalmain = $('<div class="jmodal-main"></div>');
     self.$header = $('<div class="jmodal-header"></div>');
+    self.$body = $('<div class="jmodal-body"></div>');
     self.$btn = $('<div class="jmodal-btn"></div>');
 
-    self.$modalcontent.append(self.$header, self.$body, self.$btn);
-    self.$modal.append(self.$modalcontent);
+    self.$modalmain.append(self.$header, self.$body, self.$btn);
+    self.$modal.append(self.$modalmain);
+    $("body").append(self.$backdrop);
 
     if(self.cfg.overlay){
         if(isIE6){ //fixed object z-index
-            self.$backdrop = $('<iframe class="jmodal-backdrop" src="' + (/^https/i.test(window.location.href || '') ? 'javascript:void(false)' : 'about:blank' ) + '" scrolling="no" border="0" frameborder="0" tabindex="-1"></iframe>');
+            self.$backdrop = $('<iframe class="jmodal-backdrop" src="' + (/^https/i.test(window.location.href || '') ? 'javascript:void(false)' : 'about:blank' ) + '" scrolling="no"  frameborder="0" tabindex="-1"></iframe>');
         }else{
             self.$backdrop = $('<div class="jmodal-backdrop"></div>');
         }
-        $("body").append(self.$backdrop, self.$modal);
+        $("body").append(self.$modal);
         self.$backdrop.on('dblclick',  $.proxy(self.close, self));
     }
 
@@ -64,8 +70,7 @@ function Modal(options){
     self.btn(); //设置按钮
     self.renderPosition(); //调整窗口位置
 
-    //return self; 构造函数就返回self了.
-};
+}
 
 //主要用来控制主窗口里面显示的内容
 Modal.prototype.open = function(){
@@ -76,7 +81,10 @@ Modal.prototype.open = function(){
         this.cfg.onopen(self.cfg.elem, self.cfg, self);
     }
 
-    self.$body.html('<div class="jmodal-loading">正在加载...</div>').css("height", self.cfg.height);
+    self.$body.html('<div class="jmodal-loading">正在加载...</div>');
+    if(self.cfg.height !== "auto"){
+        self.$body.css("height", self.cfg.height);
+    }
 
     //显示document里面的页面元素
     if(self.cfg.type === "inline" && self.cfg.id){
@@ -102,7 +110,7 @@ Modal.prototype.open = function(){
     }
     //加载iframe
     if(self.cfg.type === "iframe"  && self.cfg.url){
-        self.$body.html('<iframe id="jmodal-frame" name="jmodal-frame' + (new Date()).getTime() + '"  hspace="0" ' + ($.browser.msie ? 'allowtransparency="true"' : '') + ' src="' + self.cfg.url + '" width="'+ self.cfg.width +'"  height="'+ self.cfg.height +'" scrolling="' + self.cfg.scrolling + '" frameborder="0" ></iframe>');
+        self.$body.html('<iframe id="jmodal-frame" name="jmodal-frame' + (new Date()).getTime() + ($.browser.msie ? 'allowtransparency="true"' : '') + ' src="' + self.cfg.url + '" width="'+ self.cfg.width +'"  height="'+ self.cfg.height +'" scrolling="' + self.cfg.scrolling + '" frameborder="0" ></iframe>');
     }
 };
 
@@ -120,7 +128,7 @@ Modal.prototype.title = function(){
         "html" : '×',
         "class" : "jmodal-close",
         "click" : function(){
-            self.close($(this).data('dispatchevent'));
+            self.close(true); //不触发关闭的回调函数
         }
     }).appendTo(self.$header);
 };
@@ -138,7 +146,7 @@ Modal.prototype.renderPosition = function(){
     if(self.cfg.overlay){
         self.$backdrop.animate({
             opacity : '.5'
-        },300);
+        }, self.cfg.easing);
     }
 
     //把遮罩层覆盖整个窗口
@@ -148,15 +156,15 @@ Modal.prototype.renderPosition = function(){
 
     //显示主体并重置类名追加新设置的类名
     self.$modal.css({
-        width : self.cfg.width,
-        marginLeft : -self.cfg.width/2,
+        width : self.cfg.width + "px",
+        marginLeft : -self.cfg.width/2 + "px",
         display : 'block'
     }).addClass(self.cfg.wrapClass);
 
 
     //定位的方式[absolute, fixed]
     if(self.cfg.pos == "absolute" || isIE6 ){  //IE6只支持absolute
-        if(self.cfg.top == "center"){//定位到视口中间
+        if(self.cfg.top == "middle"){//定位到视口中间
             _posTop = (_winHeight - _modalHeight)/2 + _scrollTop;
         }else{
             _posTop = self.cfg.top + _scrollTop;
@@ -165,7 +173,7 @@ Modal.prototype.renderPosition = function(){
             $(window).on('scroll.jmodal', $.proxy(self.fixedIE6Postion, self));
         }
     }else{
-        if(self.cfg.top === "center"){
+        if(self.cfg.top === "middle"){
             _posTop = ($(window).height() - self.$modal.height())/2;
         }else{
             _posTop = self.cfg.top ;
@@ -180,7 +188,7 @@ Modal.prototype.fixedIE6Postion =  function(){
     var self = this,
         _posTop = 0;
 
-    if(self.cfg.top === "center"){
+    if(self.cfg.top === "middle"){
         _posTop = ($(window).height() - self.$modal.height())/2;
     }else{
         _posTop = self.cfg.top;
@@ -209,7 +217,7 @@ Modal.prototype.readerBtn= function(btnName, btnCallback){
         "click" : function(ev){
             ev.preventDefault();
             if(typeof btnCallback === "function"){
-                flag = btnCallback(self.cfg.elem, self.cfg, self);
+                flag = btnCallback(this, self.cfg, self);
             }
             if(flag !== false){
                 self.close();

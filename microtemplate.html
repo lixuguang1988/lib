@@ -14,16 +14,16 @@
 			function jstpl(html, data){
 				var  tempstr ="";
 				tempstr = html.replace(/({{)([^}]*)(}})/g, function($1, $2, $3, $4){
-					return data[$3];
+					return data[$3] ? data[$3] : "";
 				});
 				return tempstr;
 			}
 			
-			window.addEventListener("DOMContentLoaded", function(){
-				var tpl = document.querySelector("#tpl");
+			window.onload = function(){
+				var tpl = document.getElementById("tpl");
 				
-				tpl.innerHTML = jstpl(tpl.innerHTML, {name : "lixuguang", age : 28, job: "fed"});
-			}, false);
+				tpl.innerHTML = jstpl(tpl.innerHTML, {name : "lixuguang",  job: "fed"});
+			}
 
 		</script>
 	</body>

@@ -41,26 +41,64 @@
        
        _._content.on('touchstart', function(event){
            event.preventDefault();
+
            var oe = event.originalEvent;
+           console.log(oe);
            _.tsPageX = oe.changedTouches[0] ? oe.changedTouches[0].pageX : 0;
        });
+
+        _._content.on('touchmove', function(event){
+            var oe  = event.originalEvent,
+                tsPageX = _.tsPageX,
+                lastPagex = _.lastPagex ? _.lastPagex : _.tsPageX,
+                tePageX = oe.changedTouches[0] ? oe.changedTouches[0].pageX : 0,
+                index,
+                diff = tePageX - lastPagex;
+            if(tsPageX && tePageX){
+                if(diff > 0){
+                    console.log(diff);
+                    _._items.eq(_._index).css("left", "+=" + diff );
+                    index = (_._index + _._len - 1) % _._len;
+                    _._items.eq(index).css("left", "+=" + diff );
+                    _._items.eq((_._index + _._len + 1) % _._len).css("left", "+=" + diff );
+                }if(diff < 0){
+                    console.log("--" + diff);
+                    _._items.eq(_._index).css("left", "+=" + diff );
+                    index = (_._index + 1) % _._len;
+                    _._items.eq(index).css("left", "+=" + diff );
+                    _._items.eq((_._index + _._len - 1) % _._len).css("left", "+=" + diff );
+
+                    // _.switchTo(index, 1);
+                }
+                _.lastPagex = tePageX;
+            }
+
+        });
        
        _._content.on('touchend', function(event){
            var oe  = event.originalEvent,
                tsPageX = _.tsPageX,
                tePageX = oe.changedTouches[0] ? oe.changedTouches[0].pageX : 0,
+               diff = tePageX - tsPageX,
                index;
            if(tsPageX && tePageX){
-               if(tePageX - tsPageX > 50){
+               if(diff > 100){
                     index = (_._index + _._len - 1) % _._len;
                     _.switchTo(index, -1);
-               }if(tsPageX - tePageX > 50){
+               }else if(diff < -100){
                     index = (_._index + 1) % _._len;
                     _.switchTo(index, 1);  
-               }    
+               }else{
+                   _.touchCancel(diff);
+               }
            }
-           
-       });     
+       });
+    };
+
+    Jswitch.prototype.touchCancel =  function(){
+        var _ = this;
+        _._items.eq(_._index).css("left", "0px");
+        _.updatePostion();
     };
     
     Jswitch.prototype.init = function(){
@@ -74,6 +112,7 @@
                 'width' : this._width,
                 'left' : this._width
             }).eq(0).css( 'left',  '0');
+            this.updatePostion();
         }else{
             this._content.css({
                 'position' : 'relative'
@@ -142,7 +181,9 @@
     };
     
     Jswitch.prototype.switchTo =  function(index, flag){
-        var _ = this;
+        var _ = this,
+            trigger1 = false,
+            trigger2 = false;
         
         if(index == _._index ){return;} //避免快速点击动画频闪及到本身的点击
         
@@ -150,18 +191,23 @@
         _._items.stop(true, true);
         
         if(_.cfg.effect ==="slideLeft"){
-            _._items.eq(index).css({
-                left : flag * _._width
-            }).animate({
+            _._items.eq(index).animate({
                 left : "0"
             }, _.cfg.duration, function(){
                 _.auto(); // 开启定时器
+                trigger1 = true;
+                if(trigger2){
+                    _.updatePostion();
+                }
             });
             
             _._items.eq(this._index).animate({
                 left : - flag * _._width
             }, _.cfg.duration,function(){
-                $(this).css('left', _._width);
+                trigger2 = true;
+                if(trigger1){
+                    _.updatePostion();
+                }
             });         
         }else{
         
@@ -184,6 +230,14 @@
         
         _._index = index;  //更新_index
         _.updateTrigger(); //更新trigger
+    };
+
+    Jswitch.prototype.updatePostion = function(){
+        var _ = this;
+        if(_.cfg.effect !=="slideLeft"){return false;}
+        _._items.eq(_._index).siblings().css("left", _._width + 'px');
+        _._items.eq((_._index + _._len - 1) % _._len).css("left", - _._width + 'px' );
+        // _._items.eq((_._index + _._len + 1) % _._len).css("left",  _._width + 'px' );
     };
     
     Jswitch.prototype.updateTrigger =  function(){

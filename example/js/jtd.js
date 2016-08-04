@@ -527,9 +527,8 @@ var whenReady = (function(){/*立即执行的函数*/
 
 function drag(elementToDrag, event){
     //把鼠标的相对视口的坐标转换为文档坐标
-    var scroll = getScrollOffsets();
-    var startX = event.clientX + scroll.x;
-    var startY = event.clientY + scroll.y;
+    var startX = event.clientX;
+    var startY = event.clientY;
 
     //获得元素相对于文档的坐标
     var origX = elementToDrag.offsetLeft;
@@ -539,6 +538,7 @@ function drag(elementToDrag, event){
     var deltaX = startX - origX;
     var deltaY = startY - origY;
 
+    elementToDrag.style.cursor = "move";
     //绑定mousemove和mouseup事件
     //用事件捕获
     if(elementToDrag.addEventListener){
@@ -569,10 +569,8 @@ function drag(elementToDrag, event){
     function movehandle(e){
         e = e || window.event; //或者事件对象
 
-        var scroll = getScrollOffsets();
-
-        elementToDrag.style.left = e.clientX + scroll.x - deltaX + "px";
-        elementToDrag.style.top = e.clientY + scroll.y - deltaY + "px";
+        elementToDrag.style.left = e.clientX - deltaX + "px";
+        elementToDrag.style.top = e.clientY - deltaY + "px";
 
         //阻止事件冒泡，不让其他元素看到
         if(e.stopPropagation){

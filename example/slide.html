@@ -52,6 +52,7 @@ js:
 	triggerClass : "slide-trigger", // trigger的类名未实现
 	trigger : true, //true(有trigger), false(无trigger), classname(用页面已有的dom来控制切换) 
 	duration : 500, //动画延续的时间
+    enableTouch : true,
 	effect : 'fade' // fade, slideLeft, -slideUp未实现-
   })
 </pre>
@@ -81,11 +82,15 @@ js:
         <script>
             $(".s1").jswitch({
         	    effect : 'slideLeft',
+                enableTouch : true,
+                autoplay: false,
         	    next : ".s1 .slide-next",
         	    prev : ".s1 .slide-prev"
         	}).addClass('d1');
         	
-        	$(".s2").jswitch().addClass('d2');
+        	$(".s2").jswitch({
+                enableTouch : true
+            }).addClass('d2');
         	
         
         </script>

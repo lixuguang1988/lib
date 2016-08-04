@@ -155,7 +155,7 @@
 
 			//格式化日期
 			tdstr += '" data-date="' + d.getFullYear() + '-' + localmonth + '-' + lcoaldate + '"';
-			tdstr += '" data-holiday="' + (d.getMonth()+1) + '-' + d.getDate() + '"';
+			tdstr += ' data-holiday="' + (d.getMonth()+1) + '-' + d.getDate() + '"';
 			tdstr += '>' + d.getDate() + '</td>';
 			return tdstr;
 		} //end formatdate
@@ -226,21 +226,23 @@
 			_.cfg.date.setFullYear(date.getFullYear());
 			//导航月份
 			_.cfg.date.setMonth(date.getMonth());
-
-
+			//月份更改的回调函数
+			if(typeof _.cfg.monthchange === "function"){
+				_.cfg.monthchange(_.cfg.date);
+			}
+			_.renderHeader();//重新渲染头部
 		}else{
 			this.next.add(this.prev).on("click", function(ev){
 				ev.preventDefault();
 				//导航月份
 				_.cfg.date.setMonth(_.cfg.date.getMonth() + $(this).data('month'));
 				//月份更改的回调函数
-			});			
+				if(typeof _.cfg.monthchange === "function"){
+					_.cfg.monthchange(_.cfg.date);
+				}
+				_.renderHeader();//重新渲染头部
+			});
 		}
-        //月份更改的回调函数
-        if(typeof _.cfg.monthchange === "function"){
-            _.cfg.monthchange(_.cfg.date);
-        }
-        _.renderHeader();//重新渲染头部
 	};
 		
 	$.fn.jdate = function(options){
@@ -255,6 +257,7 @@
 			click : null ,//点击日期的callback(elem),
 			addzero: true,//1~9是否补零
 			monthchange: null, //月份变化的callback(date) object
+            time : false,
 			monthchangeafter : null //月份变化渲染完毕的回调函数 
 		}, options);
 		
@@ -280,8 +283,9 @@
 						config.type = "input";
 						config.offsetElem = $(this);						
 					}
-					
-					$(this).data("jdid", "jdate" + ev.timeStamp);			
+
+                    console.log((new Date).getTime());
+					$(this).data("jdid", "jdate" + (new Date).getTime());
 					$(this).data("jd", new jDate($(this), config));
 				});				
 			}else{
