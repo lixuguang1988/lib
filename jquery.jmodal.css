@@ -1,4 +1,4 @@
-.jmodal{z-index:10005;left:50%;font-family:"simsun",arial,sans-serif;position:absolute;display:none;padding:5px;background:rgba(0,0,0,.3);filter:progid:DXImageTransform.Microsoft.gradient(startcolorstr=#4d000000,endcolorstr=#4d000000,gradientType=1);-ms-filter:progid:DXImageTransform.Microsoft.gradient(startcolorstr=#4d000000,endcolorstr=#4d000000,gradientType=1)}
+.jmodal{z-index:10005;left:50%;top:-100%;font-family:"simsun",arial,sans-serif;position:absolute;display:none;padding:5px;background:rgba(0,0,0,.3);filter:progid:DXImageTransform.Microsoft.gradient(startcolorstr=#4d000000,endcolorstr=#4d000000,gradientType=1);-ms-filter:progid:DXImageTransform.Microsoft.gradient(startcolorstr=#4d000000,endcolorstr=#4d000000,gradientType=1)}
 .jmodal-fixed{position:fixed;_position:absolute}
 .jmodal-content{background:#fff}
 .jmodal-header{position:relative;width:100%}
