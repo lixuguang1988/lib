@@ -103,7 +103,7 @@ Modal.prototype.open = function(){
             dateType : "html"
         }).done(function(data){
             self.$body.html(data);
-            self.pos(); //成功之后再次调整遮罩层的位置
+            self.renderPosition(); //成功之后再次调整遮罩层的位置
         }).fail(function(){
             self.$body.html("系统异常!");
         });
