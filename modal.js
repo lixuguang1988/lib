@@ -110,7 +110,7 @@ Modal.prototype.open = function(){
     }
     //加载iframe
     if(self.cfg.type === "iframe"  && self.cfg.url){
-        self.$body.html('<iframe id="jmodal-frame" name="jmodal-frame' + (new Date()).getTime() + ($.browser.msie ? 'allowtransparency="true"' : '') + ' src="' + self.cfg.url + '" width="'+ self.cfg.width +'"  height="'+ self.cfg.height +'" scrolling="' + self.cfg.scrolling + '" frameborder="0" ></iframe>');
+        self.$body.html('<iframe id="jmodal-frame" name="jmodal-frame' + (new Date()).getTime()  + '"' + ($.browser.msie ? 'allowtransparency="true"' : '') + ' src="' + self.cfg.url + '" width="'+ self.cfg.width +'"  height="'+ self.cfg.height +'" scrolling="' + self.cfg.scrolling + '" frameborder="0" ></iframe>');
     }
 };
 

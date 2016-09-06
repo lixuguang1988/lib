@@ -54,7 +54,7 @@
                 tePageX = oe.changedTouches[0] ? oe.changedTouches[0].pageX : 0,
                 index,
                 diff = tePageX - lastPagex;
-            if(tsPageX && tePageX){
+            if(tsPageX && tePageX && _._len > 1){
                 if(diff > 0){
                     console.log(diff);
                     _._items.eq(_._index).css("left", "+=" + diff );
@@ -67,7 +67,6 @@
                     index = (_._index + 1) % _._len;
                     _._items.eq(index).css("left", "+=" + diff );
                     _._items.eq((_._index + _._len - 1) % _._len).css("left", "+=" + diff );
-
                     // _.switchTo(index, 1);
                 }
                 _.lastPagex = tePageX;
@@ -92,6 +91,7 @@
                    _.touchCancel(diff);
                }
            }
+           _.lastPagex = null;
        });
     };
 
@@ -238,6 +238,7 @@
         _._items.eq(_._index).siblings().css("left", _._width + 'px');
         _._items.eq((_._index + _._len - 1) % _._len).css("left", - _._width + 'px' );
         // _._items.eq((_._index + _._len + 1) % _._len).css("left",  _._width + 'px' );
+        _._items.eq(_._index).css("left", 0); //_._items.length == 1
     };
     
     Jswitch.prototype.updateTrigger =  function(){
@@ -269,11 +270,16 @@
         },
         el = [];
         defaults = $.extend(defaults, options);
-        this.each(function(i, v){
+
+        return this.each(function(i, v){
+            if(defaults.effect == "slideLeft" && defaults.enableTouch == true){
+                if($(this).find(".slide-item").length == 2){
+                    $(this).find(".slide-content").append($(this).find(".slide-content").html());
+                }
+            }
             el[i]   = new Jswitch(defaults, $(this));
         });
-        
-        return this; 
+
     };
     
 })(jQuery, window);

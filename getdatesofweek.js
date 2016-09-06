@@ -55,9 +55,12 @@
 
 var baseDates = {
     dayMilliseconds : 1000 * 24 * 60 * 60, /*一天毫秒数*/
-    //  @param date 传入指定的日期对象
-    //  @param islocal [周一~周日]
-    // @returns {Array} 返回该周的日期对象 [周日，周一...周六]
+    /**
+     * 返回该周的日期对象
+     * @param date Date 传入指定的日期对象
+     * @param islocal Boolean [周一~周日]
+     * @returns {Array}
+     */
     getWeek : function(date, islocal){
         date = date || new Date();
         islocal = islocal ? -1 : 0;
@@ -72,10 +75,14 @@ var baseDates = {
 
         return dates;
     },
-    //  @param date 传入指定的日期对象
-    //  @param matrix 是否是二位数组
-    //  @param islocal [周一~周日]
-    // @returns {Array} 返回该周的日期对象 [周日，周一...周六]
+
+    /**
+     * 返回该月的日期对象
+     * @param date Date 传入指定的日期对象
+     * @param matrix Boolean  是否是二位数组
+     * @param islocal Boolean [周一~周日]
+     * @returns {Array} 返回该月的日期对象 [周日，周一...周六]
+     */
     getMonth: function(date, matrix, islocal){
         date = date || new Date();
         var timestamp = date.getTime(), /*改天的毫秒表示法*/
