@@ -59,7 +59,6 @@ jDate.prototype.renderBody =  function(){
     var _ = this,
         tbody = '<tbody>',
         sd = _.cfg.date, //设置快捷访问
-        year = sd.getFullYear(),
         month = sd.getMonth(),
         date = sd.getDate(),
         datesOfMonth;
