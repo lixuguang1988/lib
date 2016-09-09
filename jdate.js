@@ -1,7 +1,7 @@
 /**
  * jDate的构造函数,用于实例化一个jDate对象
- * @param {object} jo jquery object
- * @param {object} cfg plain object
+ * @param jo Object jquery对象
+ * @param cfg Object 配置对象
  */
 function jDate(jo, cfg){
     var config  = $.extend({
@@ -14,22 +14,25 @@ function jDate(jo, cfg){
         type : "toggle" ,//['init', 'toggle', ['input']] input是程序自动添加
         click : null ,//点击日期的callback(elem),
         monthchange: null, //月份变化的callback(date) object
-        time : false,
+        time : false, //是否同时显示时间选项
+        afterClose : null, //页面关闭的回调函数
         monthchangeafter : null //月份变化渲染完毕的回调函数
     }, cfg);
     this.elem = jo; //触发事件jquery对象
     this.cfg = config; //配置信息
     this.wrap = $('<div class="ui-date-wrap"></div>'); //包围元素
+    
+    // if(this.elem.data("single")){return false;}
+    // this.elem.data("single", true);
 
-    this.elem.data("jdid", "jdid" + (new Date()).getTime());
+    this.jdid = "jdid" + (new Date()).getTime());
     if(this.elem.data("jdfor")){
         this.offsetElem = $("#" + this.elem.data("jdfor"));
     }else{
         this.offsetElem = this.elem;
     }
-    if(this.offsetElem.val()){
-        this.cfg.date = getDate(this.offsetElem.val());
-    }
+    
+    this.cfg.date = this.offsetElem.val() ? getDate(this.offsetElem.val()) : this.cfg.date;
 
     //初始化的回调函数
     if(typeof this.cfg.before === "function"){
@@ -269,7 +272,7 @@ jDate.prototype.renderPostion =  function(){
         zIndex : '10005',
         left : this.offsetElem.offset().left,
         top : this.offsetElem.offset().top + this.offsetElem.outerHeight()
-    }).attr("id", this.elem.data('jdid'));
+    }).attr("id", this.jdid);
 };
 
 jDate.prototype.dateClick =  function(){
@@ -288,7 +291,7 @@ jDate.prototype.dateClick =  function(){
                 date = "";
             }
             _.offsetElem.val(date);
-            $("#" + _.elem.data('jdid') ).remove();
+            $("#" + this.jdid ).remove();
         }else{
             _.table.find('td').removeClass('ui-date-active');
             $(this).addClass('ui-date-active');
