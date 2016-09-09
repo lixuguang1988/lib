@@ -21,17 +21,17 @@ function jDate(jo, cfg){
     this.elem = jo; //触发事件jquery对象
     this.cfg = config; //配置信息
     this.wrap = $('<div class="ui-date-wrap"></div>'); //包围元素
-    
-    // if(this.elem.data("single")){return false;}
-    // this.elem.data("single", true);
 
-    this.jdid = "jdid" + (new Date()).getTime());
+    if(this.elem.data("single")){return false;}
+    this.elem.data("single", true);
+
+    this.jdid = "jdid" + (new Date()).getTime();
     if(this.elem.data("jdfor")){
         this.offsetElem = $("#" + this.elem.data("jdfor"));
     }else{
         this.offsetElem = this.elem;
     }
-    
+
     this.cfg.date = this.offsetElem.val() ? getDate(this.offsetElem.val()) : this.cfg.date;
 
     //初始化的回调函数
@@ -290,12 +290,16 @@ jDate.prototype.dateClick =  function(){
             if(_.clear == true){
                 date = "";
             }
+            if(_.bodyclose == true){
+                date = _.offsetElem.val();
+            }
             _.offsetElem.val(date);
-            $("#" + this.jdid ).remove();
+            $("#" + _.jdid ).remove();
         }else{
             _.table.find('td').removeClass('ui-date-active');
             $(this).addClass('ui-date-active');
         }
+        _.elem.data("single", null);
         if(typeof _.cfg.afterClose === "function"){
             _.cfg.afterClose(_);
         }
@@ -312,7 +316,7 @@ jDate.prototype.bodyClick =  function(){
     //});
 
     $('body').one("click", function(){
-        _.clear = true;
+        _.bodyclose = true;
         _.table.find(".ui-date-active").click();
     });
 }
