@@ -89,11 +89,11 @@ var baseDates = {
             dates = [],
             tempDates = [],
             month = date.getMonth(),
-            i = -5,
+            i = -6,
             j;
 
         //一月不可能超过6周
-        for( ; i < 5; i++){
+        for( ; i < 6; i++){
             tempDates =  this.getWeek(new Date(timestamp + this.dayMilliseconds * i * 7), islocal);
             //只要有一天在当前月就算
             if(tempDates[0].getMonth() == month  || tempDates[6].getMonth() == month ){
