@@ -92,7 +92,7 @@ var baseDates = {
             i = -6,
             j;
 
-        //一月不可能超过6周
+        //一月不可能超过7周
         for( ; i < 6; i++){
             tempDates =  this.getWeek(new Date(timestamp + this.dayMilliseconds * i * 7), islocal);
             //只要有一天在当前月就算
