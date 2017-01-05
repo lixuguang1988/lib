@@ -43,7 +43,7 @@
            event.preventDefault();
 
            var oe = event.originalEvent;
-           console.log(oe);
+           //console.log(oe);
            _.tsPageX = oe.changedTouches[0] ? oe.changedTouches[0].pageX : 0;
        });
 
@@ -56,13 +56,11 @@
                 diff = tePageX - lastPagex;
             if(tsPageX && tePageX && _._len > 1){
                 if(diff > 0){
-                    console.log(diff);
                     _._items.eq(_._index).css("left", "+=" + diff );
                     index = (_._index + _._len - 1) % _._len;
                     _._items.eq(index).css("left", "+=" + diff );
                     _._items.eq((_._index + _._len + 1) % _._len).css("left", "+=" + diff );
                 }if(diff < 0){
-                    console.log("--" + diff);
                     _._items.eq(_._index).css("left", "+=" + diff );
                     index = (_._index + 1) % _._len;
                     _._items.eq(index).css("left", "+=" + diff );
@@ -145,7 +143,12 @@
             return false;
         }
         for( ; i < this._len; i++){
-            arr.push("<li>"+ (i+1) +"</li>");
+            if(this.cfg.slideItemLen && i >= this.cfg.slideItemLen){
+                arr.push("<li style='display:none;'>"+ (i+1) +"</li>");
+            }else{
+                arr.push("<li>"+ (i+1) +"</li>");
+            }
+
         }
         trigger  = $("<ul/>", {
             'class' : this.cfg.triggerClass,
@@ -242,8 +245,12 @@
     };
     
     Jswitch.prototype.updateTrigger =  function(){
+        var index = this._index;
         if(!this.cfg.trigger){return false;}
-        this._triggers.removeClass('current').eq(this._index).addClass('current');
+        if(this.cfg.slideItemLen && index >= this.cfg.slideItemLen){
+            index = index +  this.cfg.slideItemLen - this._len;
+        }
+        this._triggers.removeClass('current').eq(index).addClass('current');
     };
     
     Jswitch.prototype.auto =  function(){
@@ -274,6 +281,7 @@
         return this.each(function(i, v){
             if(defaults.effect == "slideLeft" && defaults.enableTouch == true){
                 if($(this).find(".slide-item").length == 2){
+                    defaults.slideItemLen = 2;
                     $(this).find(".slide-content").append($(this).find(".slide-content").html());
                 }
             }
